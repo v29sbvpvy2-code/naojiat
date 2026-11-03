@@ -20,10 +20,10 @@
     0 calc(var(--w)*.035) 0 #e6dbbb,
     0 calc(var(--w)*.065) 0 #d6c9a3,
     0 calc(var(--w)*.075) 0 var(--bk1,#3f8a5e),
-    0 calc(var(--w)*.13) 0 var(--bk2,#2a6b48),
-    0 calc(var(--w)*.17) 0 var(--bk4,#123a25),
-    0 calc(var(--w)*.2) calc(var(--w)*.16) rgba(0,0,0,.45);
-  margin-bottom:calc(var(--w)*.17);
+    0 calc(var(--w)*.15) 0 var(--bk2,#2a6b48),
+    0 calc(var(--w)*.2) 0 var(--bk4,#123a25),
+    0 calc(var(--w)*.23) calc(var(--w)*.16) rgba(0,0,0,.5);
+  margin-bottom:calc(var(--w)*.2);
   transition:transform .16s ease, box-shadow .16s;
 }
 .t svg{position:absolute;left:4.5%;top:4%;width:91%;height:92%;overflow:visible}
@@ -626,8 +626,8 @@ h1,h2,.hdr h1,.panel h2{font-family:var(--serif);letter-spacing:2px}
 .cbtn.pass{background:radial-gradient(circle at 40% 30%,#6a5a4a,#45382c 60%,#2a2219)!important}.cbtn.ting2{background:radial-gradient(circle at 40% 30%,#e6cf8e,#b48c40 60%,#7a5a24)!important;color:#2a1a0b;text-shadow:none}
 .pillnote{color:var(--cream);background:linear-gradient(180deg,rgba(40,25,14,.92),rgba(20,12,6,.94))!important;border:1px solid var(--line)!important}
 
-.river .t.last,.hand .t.sel,.hand .t.sel:hover,.hand .t.win{box-shadow:inset 0 calc(var(--w)*.02) 0 rgba(255,255,255,.95),0 calc(var(--w)*.035) 0 #e6dbbb,0 calc(var(--w)*.065) 0 #d6c9a3,0 calc(var(--w)*.075) 0 var(--bk1),0 calc(var(--w)*.13) 0 var(--bk2),0 calc(var(--w)*.17) 0 var(--bk4),0 calc(var(--w)*.2) calc(var(--w)*.16) rgba(0,0,0,.45)}
-.river .t.last::before,.hand .t.sel::before,.hand .t.win::before{content:"";position:absolute;left:-2px;right:-2px;top:-2px;bottom:calc(var(--w)*-.17 - 2px);border-radius:calc(var(--w)*.1);box-shadow:0 0 0 2px #e8d39a,0 0 12px rgba(232,211,154,.75);pointer-events:none}
+.river .t.last,.hand .t.sel,.hand .t.sel:hover,.hand .t.win{box-shadow:inset 0 calc(var(--w)*.02) 0 rgba(255,255,255,.95),0 calc(var(--w)*.035) 0 #e6dbbb,0 calc(var(--w)*.065) 0 #d6c9a3,0 calc(var(--w)*.075) 0 var(--bk1),0 calc(var(--w)*.15) 0 var(--bk2),0 calc(var(--w)*.2) 0 var(--bk4),0 calc(var(--w)*.23) calc(var(--w)*.16) rgba(0,0,0,.5)}
+.river .t.last::before,.hand .t.sel::before,.hand .t.win::before{content:"";position:absolute;left:-2px;right:-2px;top:-2px;bottom:calc(var(--w)*-.2 - 2px);border-radius:calc(var(--w)*.1);box-shadow:0 0 0 2px #e8d39a,0 0 12px rgba(232,211,154,.75);pointer-events:none}
 .river .t.last::before{box-shadow:0 0 0 2px #e0614f,0 0 10px rgba(224,97,79,.7)}
 .hand .t .tp{background:linear-gradient(180deg,#efd99c,#b38b3f);color:#2a1a0b;border:1px solid #7a5a24}
 .ting{color:var(--cream)}
@@ -750,6 +750,7 @@ h1,h2,.hdr h1,.panel h2{font-family:var(--serif);letter-spacing:2px}
 .meld{background:rgba(0,0,0,.22);border-radius:4px}
 /* 結算面板：按鈕固定在底部，844×390 也不會被切掉 */
 .modal .panel .foot{position:sticky;bottom:-22px;margin:14px -26px -22px;padding:10px 26px 14px;background:linear-gradient(180deg,rgba(44,26,14,.0),rgba(44,26,14,.96) 30%);z-index:3}
+#game .hand{top:438px}#game .w-b{top:426px}
 
 </style>
 </head>
