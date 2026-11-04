@@ -14,7 +14,7 @@
 /* 台灣麻將牌：大而厚的方正牌身，象牙白牌面＋厚實的有色牌背（雙層），圓角較小 */
 .t{--w:46px;width:var(--w);height:calc(var(--w)*1.34);position:relative;flex:none;display:inline-block;
   border-radius:calc(var(--w)*.085);
-  background:linear-gradient(172deg,#fffef8 0%,#fbf6e6 45%,#f0e7cd 100%);
+  background:linear-gradient(180deg,#f8f9fb 0%,#eceef2 45%,#d9dde3 100%);
   box-shadow:
     inset 0 calc(var(--w)*.02) 0 rgba(255,255,255,.95),
     inset calc(var(--w)*.018) 0 0 rgba(255,255,255,.6),
@@ -790,7 +790,7 @@ html,body{background:#0b1a33}
 #game .felt::before{content:"";position:absolute;inset:10px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:none;width:auto;height:auto;transform:none;left:10px;top:10px}
 #game .felt::after{display:none}
 /* --- 牌：薄邊、象牙白牌面、藍色牌背 --- */
-#game .t{box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(160,145,110,.35),0 1px 0 #d9d0b3,0 2px 0 var(--bk2),0 3px 0 var(--bk4),0 4px 4px rgba(0,0,0,.35);
+#game .t{box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(160,145,110,.35),0 1px 0 #cdd2da,0 2px 0 var(--bk2),0 3px 0 var(--bk4),0 4px 4px rgba(0,0,0,.35);
   margin-bottom:4px;border-radius:calc(var(--w)*.1)}
 #game .t.back{background:linear-gradient(180deg,var(--bk1),var(--bk2) 70%,var(--bk3));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 1px 0 var(--bk4),0 2px 0 #e9e1c8,0 3px 3px rgba(0,0,0,.35)}
 #game .t::before{bottom:-2px!important}
@@ -870,11 +870,11 @@ html,body{background:#0b1a33}
 #game .r1{left:calc(50% + var(--rin) + 85px - 72.5px);right:auto;transform:rotate(-90deg)}
 #game.two .r0,#game.two .r2{left:calc(50% - 174px);width:348px}
 #game.two .r0{top:calc(var(--cy) + var(--rin))}
-#game .river .t.last{box-shadow:inset 0 1px 0 #fff,0 1px 0 #d9d0b3,0 2px 0 var(--bk2),0 3px 0 var(--bk4),0 4px 4px rgba(0,0,0,.35)}
+#game .river .t.last{box-shadow:inset 0 1px 0 #fff,0 1px 0 #cdd2da,0 2px 0 var(--bk2),0 3px 0 var(--bk4),0 4px 4px rgba(0,0,0,.35)}
 #game .river .t.last::before{left:-2px;right:-2px;top:-2px;bottom:-5px!important;border-radius:4px;box-shadow:0 0 0 2px #ff5a3c,0 0 10px rgba(255,90,60,.85)}
 /* --- 自己的手牌：一排，牌頂露出藍色牌背 --- */
 #game .hand{left:96px;right:8px;top:430px;height:104px;gap:2px;align-items:flex-end}
-#game .hand .t.h,#game .hand .meld .t{box-shadow:inset 0 2px 0 #fff,inset 0 -1px 0 rgba(160,145,110,.4),0 calc(var(--w)*-.11) 0 var(--bk1),0 calc(var(--w)*-.13) 0 var(--bk3),0 1px 0 #d6cba9,0 3px 5px rgba(0,0,0,.4);margin-bottom:6px}
+#game .hand .t.h,#game .hand .meld .t{box-shadow:inset 0 2px 0 #fff,inset 0 -1px 0 rgba(160,145,110,.4),0 calc(var(--w)*-.11) 0 var(--bk1),0 calc(var(--w)*-.13) 0 var(--bk3),0 1px 0 #c9ced6,0 3px 5px rgba(0,0,0,.4);margin-bottom:6px}
 #game .hand .meld{margin-right:2px}
 #game .hand .meld .t{margin-bottom:6px}
 #game .hand .t.sel,#game .hand .t.sel:hover{transform:translateY(-14px)}
@@ -959,11 +959,11 @@ html,body{background:#0b1a33}
 #game .sideb{width:20px;height:16px;border-radius:2px;margin-bottom:1px;background:linear-gradient(180deg,#5d95e0,var(--bk1) 45%,var(--bk2))!important;box-shadow:0 2px 0 #e9e1c8,0 3px 2px rgba(0,0,0,.4)}
 /* 自己手牌：大、白、厚底邊（立牌） */
 #game .hand{left:100px;right:6px;top:420px;height:118px;gap:1px}
-#game .hand .t.h{background:linear-gradient(180deg,#ffffff 0%,#fbfaf4 70%,#efece0 100%);border-radius:calc(var(--w)*.09);
+#game .hand .t.h{background:linear-gradient(180deg,#f7f8fa 0%,#e9ecf0 55%,#d6dae1 100%);border-radius:calc(var(--w)*.09);
   box-shadow:inset 0 2px 0 #fff,inset 0 -2px 0 rgba(170,160,130,.35),0 calc(var(--w)*-.09) 0 var(--bk1),0 calc(var(--w)*-.11) 0 var(--bk3),
-  0 2px 0 #e4dfcf,0 4px 0 #d3ccb6,0 6px 0 #c2baa1,0 7px 0 #a99f84,0 9px 7px rgba(0,0,0,.45);margin-bottom:10px}
+  0 2px 0 #dde1e7,0 4px 0 #c9ced6,0 6px 0 #b4bac4,0 7px 0 #98a0ad,0 9px 7px rgba(0,0,0,.45);margin-bottom:10px}
 #game .hand .meld{align-self:flex-end;margin-right:6px}
-#game .hand .meld .t{box-shadow:0 1px 0 #ddd6c0,0 3px 0 #c8c0a6,0 4px 3px rgba(0,0,0,.35);margin-bottom:6px}
+#game .hand .meld .t{box-shadow:0 1px 0 #d5dae1,0 3px 0 #bfc5ce,0 4px 3px rgba(0,0,0,.35);margin-bottom:6px}
 #game .hand .gap{width:16px}
 #game .hand .t.sel::before,#game .hand .t.win::before{bottom:-9px!important}
 /* 按鈕：手牌上方右側 */
@@ -2221,50 +2221,40 @@ const TileArt = (() => {
     8: [9.6, [[17, 10, BL], [43, 10, BL], [17, 30, BL], [43, 30, BL], [17, 50, BL], [43, 50, BL], [17, 70, BL], [43, 70, BL]]],
     9: [9.4, [[11, 13, BL], [30, 13, BL], [49, 13, BL], [11, 40, RD], [30, 40, RD], [49, 40, RD], [11, 67, GR], [30, 67, GR], [49, 67, GR]]],
   };
-  // ---- 條：台灣 App 風格「骨節竹」──深綠描邊、綠身、中央白色亮線、兩端與中段圓節（原創繪製） ----
-  const SG = '#1f9440', SGD = '#0a4a1c', SR = '#d8262b', SRD = '#74090e';
-  function stick(x, y, c, h, rot = 0, w = 8) {
-    const red = c === RD, f = red ? SR : SG, o = red ? SRD : SGD, hw = w / 2, hh = h / 2, n = hw * .52, k = hw * .78;
-    // 輪廓：上端圓節 → 收腰 → 中段節 → 收腰 → 下端圓節
-    const R = [[-hh, k * .7], [-hh + w * .45, hw], [-hh * .55, n], [-w * .32, n * 1.05], [0, k], [w * .32, n * 1.05], [hh * .55, n], [hh - w * .45, hw], [hh, k * .7]];
-    let d = `M0 ${-hh - .6}`;
-    R.forEach(([yy, xx]) => d += ` L${xx.toFixed(2)} ${yy.toFixed(2)}`);
-    d += ` L0 ${hh + .6}`;
-    R.slice().reverse().forEach(([yy, xx]) => d += ` L${(-xx).toFixed(2)} ${yy.toFixed(2)}`);
-    d += ' Z';
-    return `<g transform="translate(${x} ${y}) rotate(${rot})"><path d="${d}" fill="${f}" stroke="${o}" stroke-width="1.5" stroke-linejoin="round"/>` +
-      `<path d="M0 ${(-hh + w * .55).toFixed(2)} L0 ${(-w * .45).toFixed(2)} M0 ${(w * .45).toFixed(2)} L0 ${(hh - w * .55).toFixed(2)}" stroke="#fff" stroke-opacity=".9" stroke-width="${(w * .2).toFixed(2)}" stroke-linecap="round"/>` +
-      `<path d="M${(-k).toFixed(2)} 0 L${k.toFixed(2)} 0" stroke="${o}" stroke-width="1"/></g>`;
+  // ---- 條：台灣 App 風格「三節骨竹」──粗深綠外框、白色中空芯、上中下三個圓節（原創繪製） ----
+  const SG = '#0f6e22', SGL = '#2fa33f', SR = '#c8161e', SRL = '#ef4a4a';
+  function stick(x, y, c, h, rot = 0, w = 12) {
+    const red = c === RD, f = red ? SR : SG, l = red ? SRL : SGL, hh = h / 2, hw = w / 2, N = 36;
+    const prof = (u) => (0.71 + 0.29 * Math.cos(u * 2.5 * Math.PI)) * Math.pow(Math.max(0, 1 - Math.pow(Math.abs(u), 6)), 0.5);
+    const shape = (sx, sy) => { const L = [], R = []; for (let k = 0; k <= N; k++) { const u = -1 + 2 * k / N; const ww = hw * sx * prof(u); R.push(`${ww.toFixed(2)} ${(u * hh * sy).toFixed(2)}`); L.unshift(`${(-ww).toFixed(2)} ${(u * hh * sy).toFixed(2)}`); } return 'M' + R.join(' L') + ' L' + L.join(' L') + 'Z'; };
+    return `<g transform="translate(${x} ${y}) rotate(${rot})"><path d="${shape(1, 1)}" fill="${f}"/><path d="${shape(.62, .92)}" fill="${l}" opacity=".35"/><path d="${shape(.3, .82)}" fill="#fff"/></g>`;
   }
   const STICKS = {
-    2: [[30, 21, GR, 32], [30, 59, GR, 32]],
-    3: [[30, 21, GR, 32], [17, 59, GR, 32], [43, 59, GR, 32]],
-    4: [[18, 21, GR, 32], [42, 21, GR, 32], [18, 59, GR, 32], [42, 59, GR, 32]],
-    5: [[13, 21, GR, 32], [47, 21, GR, 32], [30, 40, RD, 32], [13, 59, GR, 32], [47, 59, GR, 32]],
-    6: [[13, 22, GR, 33], [30, 22, GR, 33], [47, 22, GR, 33], [13, 58, GR, 33], [30, 58, GR, 33], [47, 58, GR, 33]],
-    7: [[30, 14, RD, 23], [13, 41, GR, 23], [30, 41, GR, 23], [47, 41, GR, 23], [13, 67, GR, 23], [30, 67, GR, 23], [47, 67, GR, 23]],
-    8: [[11, 21, GR, 32, -17], [23.5, 21, GR, 32, 17], [36.5, 21, GR, 32, -17], [49, 21, GR, 32, 17],
-        [11, 59, GR, 32, 17], [23.5, 59, GR, 32, -17], [36.5, 59, GR, 32, 17], [49, 59, GR, 32, -17]],
-    9: [[13, 14, GR, 23], [30, 14, RD, 23], [47, 14, GR, 23], [13, 41, GR, 23], [30, 41, RD, 23], [47, 41, GR, 23], [13, 67, GR, 23], [30, 67, RD, 23], [47, 67, GR, 23]],
+    2: [[30, 21, GR, 36, 0, 16.1], [30, 59, GR, 36, 0, 16.1]],
+    3: [[30, 21, GR, 36, 0, 14.9], [16, 59, GR, 36, 0, 14.9], [44, 59, GR, 36, 0, 14.9]],
+    4: [[17, 21, GR, 36, 0, 14.9], [43, 21, GR, 36, 0, 14.9], [17, 59, GR, 36, 0, 14.9], [43, 59, GR, 36, 0, 14.9]],
+    5: [[12, 21, GR, 35, 0, 13.8], [48, 21, GR, 35, 0, 13.8], [30, 40, RD, 35, 0, 13.8], [12, 59, GR, 35, 0, 13.8], [48, 59, GR, 35, 0, 13.8]],
+    6: [[11, 21, GR, 37, 0, 15.5], [30, 21, GR, 37, 0, 15.5], [49, 21, GR, 37, 0, 15.5], [11, 59, GR, 37, 0, 15.5], [30, 59, GR, 37, 0, 15.5], [49, 59, GR, 37, 0, 15.5]],
+    7: [[30, 13, RD, 22, 0, 12.6], [13, 41, GR, 24, 0, 12.6], [30, 41, GR, 24, 0, 12.6], [47, 41, GR, 24, 0, 12.6], [13, 67, GR, 24, 0, 12.6], [30, 67, GR, 24, 0, 12.6], [47, 67, GR, 24, 0, 12.6]],
+    8: [[11, 21, GR, 37, -20, 11.5], [23.5, 21, GR, 37, 20, 11.5], [36.5, 21, GR, 37, -20, 11.5], [49, 21, GR, 37, 20, 11.5],
+        [11, 59, GR, 37, 20, 11.5], [23.5, 59, GR, 37, -20, 11.5], [36.5, 59, GR, 37, 20, 11.5], [49, 59, GR, 37, -20, 11.5]],
+    9: [[12, 13, GR, 24, 0, 13.2], [30, 13, RD, 24, 0, 13.2], [48, 13, GR, 24, 0, 13.2], [12, 40, GR, 24, 0, 13.2], [30, 40, RD, 24, 0, 13.2], [48, 40, GR, 24, 0, 13.2], [12, 67, GR, 24, 0, 13.2], [30, 67, RD, 24, 0, 13.2], [48, 67, GR, 24, 0, 13.2]],
   };
-  function bird() { // 一條：線描風格雀鳥──紅冠紅頭、綠色羽線、紅褐長尾垂下、藍色橫枝（原創繪製）
-    const g = '#178a3a', r = '#c8202a', b = '#2a3fae';
-    let s = '<g transform="translate(30 40) scale(1.12) translate(-30 -40)" fill="none" stroke-linecap="round" stroke-linejoin="round">';
-    // 藍色橫枝（左下往右上）與枝端
-    s += `<path d="M6 50 C 20 47, 36 44, 55 38" stroke="${b}" stroke-width="2.6"/><path d="M10 49 L5 45 M48 40 L53 34" stroke="${b}" stroke-width="1.8"/>`;
-    // 紅褐長尾（多條垂下）
-    s += `<path d="M30 46 C 31 56, 30 66, 27 77 M33 46 C 35 57, 36 67, 35 78 M36 45 C 39 55, 42 64, 43 75 M28 47 C 26 56, 23 63, 19 71" stroke="${r}" stroke-width="1.7"/>`;
-    s += `<path d="M31 52 L29 56 M35 55 L37 59 M40 58 L42 62 M25 57 L23 60" stroke="#7d1a12" stroke-width="1"/>`;
-    // 身體（綠色羽線）
-    s += `<path d="M22 22 C 15 30, 16 42, 26 47 C 34 50, 42 46, 43 38 C 44 31, 39 25, 32 23" fill="#fff" stroke="${g}" stroke-width="2.2"/>`;
-    s += `<path d="M24 30 C 26 36, 31 40, 38 40 M23 36 C 26 41, 31 44, 37 44 M28 27 C 30 32, 35 35, 41 34" stroke="${g}" stroke-width="1.6"/>`;
-    // 頭：紅冠、紅頭、喙、眼
-    s += `<path d="M20 22 C 18 16, 21 11, 27 11 C 32 11, 34 15, 33 20 C 31 24, 25 25, 20 22 Z" fill="#fff" stroke="${r}" stroke-width="2"/>`;
-    s += `<path d="M22 12 C 20 7, 23 4, 27 5 M25 11 C 25 6, 29 4, 32 6 M28 11 C 30 8, 33 8, 35 10" stroke="${r}" stroke-width="1.8"/>`;
-    s += `<path d="M21 17 L14 19 L21 20.5" fill="#e0a020" stroke="#9a5a00" stroke-width="1"/>`;
-    s += `<circle cx="24.5" cy="16.5" r="1.5" fill="#111" stroke="none"/>`;
-    // 腳抓枝
-    s += `<path d="M27 46 L26 49 M33 46 L33 48.5" stroke="#6b3a12" stroke-width="1.6"/>`;
+  function bird() { // 一條：線描鳳鳥──紅冠紅頭、綠色雙翼圈、紅色長尾往下、藍色橫枝兩端捲曲（原創繪製）
+    const g = '#13802a', r = '#c41a1f', b = '#1d2a9a';
+    let s = '<g fill="none" stroke-linecap="round" stroke-linejoin="round">';
+    // 紅色長尾（由身體往下，略偏右）
+    s += `<path d="M24 42 C 25 54, 28 64, 35 74 M28 42 C 30 53, 33 62, 39 70 M32 42 C 33 50, 36 57, 41 63 M26 44 L31 47 M27 49 L33 51 M29 55 L35 56 M31 61 L36 61" stroke="${r}" stroke-width="2"/>`;
+    // 藍色橫枝（左下→右上，兩端捲曲）
+    s += `<path d="M9 50 C 20 47, 36 43, 52 39" stroke="${b}" stroke-width="2.4"/><path d="M9 50 C 5 50, 5 46, 8 45.5 C 10 45.3, 11 47, 10 48 M52 39 C 56 38, 57 41.5, 54.5 42.5" stroke="${b}" stroke-width="2"/>`;
+    // 綠色雙翼圈與羽紋
+    s += `<path d="M24 25 C 16 26, 13 36, 18 42 C 21 45, 27 44, 28 40 C 26 36, 25 31, 24 25 Z" stroke="${g}" stroke-width="3.2" fill="#fff"/>`;
+    s += `<path d="M37 24 C 45 25, 48 34, 44 41 C 41 45, 35 44, 34 40 C 36 35, 37 30, 37 24 Z" stroke="${g}" stroke-width="3.2" fill="#fff"/>`;
+    s += `<path d="M26 39 L29 33 L31 38 L33 32 L35 37" stroke="${g}" stroke-width="2"/><path d="M19 33 C 20 37, 22 39, 24 40 M42 31 C 42 35, 40 38, 38 40" stroke="${g}" stroke-width="1.4"/>`;
+    // 頭（白臉紅框）、紅冠往右上飄、眼
+    s += `<path d="M24 25 C 23 19, 27 15, 31 15 C 35 15, 38 19, 37 24 C 34 27, 27 27, 24 25 Z" fill="#fff" stroke="${r}" stroke-width="2.2"/>`;
+    s += `<path d="M22 18 C 22 13, 27 10, 32 11 C 37 12, 42 12, 46 9 M30 11 C 33 8, 36 7, 39 8 M22 18 L 18 20 L 23 21" stroke="${r}" stroke-width="2.2"/>`;
+    s += `<circle cx="29" cy="20" r="1.6" fill="${r}" stroke="none"/>`;
     return s + '</g>';
   }
   // ---- 花牌：角落數字、楷書字與花草 ----
@@ -2287,7 +2277,7 @@ const TileArt = (() => {
     const T = GLYPHT;
     if (t < 9) return gl(NUM[t], 30, t === 0 ? 20 : 19, t === 0 ? 50 : 38, '#101a33', 4, T) + gl('萬', 30, 57, 48, RD, 3.6, T);
     if (t < 18) { const n = t - 9 + 1; if (n === 1) return bigDot(); const [r, l] = DOTS[n]; return l.map(([x, y, c]) => dot(x, y, r, c)).join(''); }
-    if (t < 27) { const n = t - 18 + 1; if (n === 1) return bird(); return STICKS[n].map(([x, y, c, h, rot]) => stick(x, y, c, h, rot || 0, n === 8 ? 10 : n >= 6 ? 11 : 11.5)).join(''); }
+    if (t < 27) { const n = t - 18 + 1; if (n === 1) return bird(); return STICKS[n].map(([x, y, c, h, rot, w]) => stick(x, y, c, h, rot || 0, w)).join(''); }
     if (t < 31) return gl('東南西北'[t - 27], 30, 40, 64, '#101a33', 4.4, T);
     if (t === 31) return gl('中', 30, 40, 68, RD, 4.6, T);
     if (t === 32) return gl('發', 30, 40, 66, GR, 3.8, T);
@@ -2665,7 +2655,7 @@ function renderHome() {
       ${walletHTML()}
       <div class="ticons">${[['signin', 'cal', '簽到'], ['event', 'gift', '活動'], ['mail', 'mail', '郵件'], ['notice', 'horn', '公告']].map(([k, ic, l]) => `<button class="ti" data-open="${k}">${ICON[ic]}<span>${l}</span>${d[k] ? '<em></em>' : ''}</button>`).join('')}</div>
     </div>
-    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v4.5</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
+    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v4.6</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
     <div class="games">${Object.entries(GAMES).map(([k, g]) => `<button class="gcard c-${g.color}" data-go="gamehub" data-arg="${k}"><div class="gart">${GART[k]()}</div><div class="gglyph">${g.glyph}</div><h2>${g.name}</h2><p>${g.tag}</p><span class="gn">${g.n} 人${k === 'mj' ? '／2 人' : ''}</span><span class="gplay">▶</span></button>`).join('')}</div>
     <div class="hrow2">
       <button class="hbtn c-lemon" data-go="friendroom"><b><i class="emo">🏠</i> 好友開房</b><small>房卡開房・自訂規則</small></button>
@@ -3494,7 +3484,7 @@ function renderGame() {
   const wseat = pos => { const p = g.players.findIndex((_, i) => vpos(i) === pos); return p < 0 ? '' : `<div class="w w${pos} ${wcls(p)}">${WINDS[g.players[p].seatWind]}</div>`; };
   h.push(`<div class="g-abs plate"><div class="core"><div class="left num">${left}</div></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
   h.push(`<div class="g-abs rinfo"><b>${WINDS[roundWind() || 0]}風圈</b><span class="rd">${handLabel().replace(/^.風圈・/, '')}</span>
-    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v4.5</span></div></div>`);
+    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v4.6</span></div></div>`);
   // 自己（或觀戰視角）
   h.push(seatChip(V, g));
   let tiles = me.hand.slice(), drawn = null;
