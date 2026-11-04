@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="theme-color" content="#fff4dc">
+<meta name="theme-color" content="#17191d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>鬧熱牌局｜台灣麻將・十三支・大老二・鬥地主・暗棋</title>
@@ -1142,6 +1142,243 @@ body.noanim .pop{animation:none!important;transform:translate(-50%,-50%)}
 .lfinfo>span.d,.lfinfo>span.f{display:inline-block}
 .wallgrid .wc{width:25px;min-width:0}
 .wallgrid .wc .t{--w:21px!important;width:21px!important}
+/* ================= v5.1「鬥雀感」全站改版（原創 CSS 重繪，無任何外部素材）
+   深炭灰金屬面板＋金邊、紅金緞帶標題、苔綠絨布牌桌、槍鐵色中控台、方形金屬框頭像 ================= */
+:root{--gold:#e2b44a;--gold2:#f6d77e;--gold3:#9a6c1c;--cream:#f3ead6;--line:rgba(226,180,74,.6);--line2:rgba(226,180,74,.28);
+  --dqred1:#d8352a;--dqred2:#9e1a14;--dqred3:#5e0c09;--metal1:#3a3f47;--metal2:#23272d;--metal3:#121418;
+  --woodbg:linear-gradient(180deg,#2b2f36 0%,#1c1f24 60%,#141619 100%)}
+html,body{background:#0e0f12}
+#bg{background:
+  radial-gradient(ellipse 60% 50% at 50% 38%,rgba(255,190,90,.10),transparent 70%),
+  radial-gradient(ellipse 120% 80% at 50% 120%,rgba(160,20,14,.35),transparent 60%),
+  repeating-linear-gradient(135deg,rgba(255,255,255,.018) 0 2px,transparent 2px 7px),
+  linear-gradient(180deg,#24272d 0%,#17191d 55%,#0d0e11 100%)!important}
+/* 面板：深炭金屬＋雙層金邊 */
+.glass{background:linear-gradient(180deg,rgba(48,52,60,.97),rgba(24,26,31,.98))!important;border:1px solid var(--line)!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 0 rgba(0,0,0,.4)!important}
+.panel{background:linear-gradient(180deg,#2c3037,#1a1c21)!important;border:2px solid var(--gold)!important;
+  box-shadow:0 0 0 3px #0c0d10,0 0 0 4px rgba(226,180,74,.45),0 20px 44px rgba(0,0,0,.7)!important;border-radius:10px!important}
+.panel h2{background:linear-gradient(180deg,var(--dqred1),var(--dqred2));color:#fff3cf!important;margin:-4px -4px 10px!important;padding:6px 14px;border-radius:6px;
+  border:1px solid #f0c45c;box-shadow:inset 0 1px 0 rgba(255,220,160,.5),0 3px 0 var(--dqred3);text-shadow:0 2px 0 rgba(80,0,0,.7);font-weight:900}
+.modal{background:rgba(4,4,6,.72)}
+.modal .panel .foot{background:linear-gradient(180deg,rgba(26,28,33,0),rgba(26,28,33,.97) 30%)}
+.toast{background:linear-gradient(180deg,#34383f,#1b1d22)!important;border:1px solid var(--gold)!important}
+/* 按鈕：紅金主按鈕、金屬次按鈕、翠綠確認 */
+.btn{border-radius:8px;font-weight:900}
+.btn.primary{background:linear-gradient(180deg,#ff6a4d 0%,var(--dqred1) 45%,var(--dqred2) 100%)!important;color:#fff6dc!important;border:1px solid #f3c55a!important;
+  box-shadow:0 3px 0 var(--dqred3),0 6px 12px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,220,180,.6)!important;text-shadow:0 1px 0 rgba(90,0,0,.8)!important}
+.btn.ghost{background:linear-gradient(180deg,var(--metal1),var(--metal2))!important;border:1px solid rgba(226,180,74,.45)!important;color:var(--cream)!important;
+  box-shadow:0 3px 0 #08090b,0 5px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.14)!important}
+.btn.mint{background:linear-gradient(180deg,#6cc04a 0%,#3f8f2a 50%,#2a6a1a 100%)!important;border:1px solid #b9ec8a!important;color:#fff!important;
+  box-shadow:0 3px 0 #173f0e,0 6px 12px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.35)!important;text-shadow:0 1px 0 rgba(0,50,0,.6)}
+.icon,.ti svg{background:linear-gradient(180deg,#454b55,#1d2025)!important;border:1px solid rgba(226,180,74,.55)!important;color:var(--gold2)!important}
+.ti em{box-shadow:0 0 0 2px #1d2025}
+.chip{background:rgba(10,11,14,.6)!important;border-color:rgba(226,180,74,.3)!important}
+.chip.on{background:linear-gradient(180deg,#ffdc7a,#d39a2a)!important;color:#3a1a00!important;border-color:#8a5a10!important}
+.tabs{background:rgba(10,11,14,.6)!important}
+.inp{background:rgba(8,9,12,.75)!important}
+.pillnote,.seatchip,.cmsg,.sszp{background:linear-gradient(180deg,rgba(46,50,58,.95),rgba(22,24,29,.96))!important}
+/* 頂欄：頭像方框＋金幣/鑽石膠囊 */
+.topbar .coins,.topbar .glass{border-radius:6px!important;background:linear-gradient(180deg,rgba(14,15,18,.9),rgba(34,37,43,.9))!important;border:1px solid rgba(226,180,74,.5)!important;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.6)!important}
+.profile .av,.topbar .av{border-radius:8px!important;box-shadow:0 0 0 2px #0c0d10,0 0 0 3px var(--gold)!important}
+.hdr h1{color:#fff0c2!important;text-shadow:0 2px 0 #6a0e08,0 0 12px rgba(255,140,60,.45)}
+/* 首頁模式卡：金框立牌＋底部紅緞帶 */
+.gcard{border:2px solid #e8b94e!important;border-radius:10px!important;
+  box-shadow:0 0 0 2px #0b0c0f,0 0 0 3px rgba(226,180,74,.5),0 10px 22px rgba(0,0,0,.65),inset 0 0 40px rgba(0,0,0,.45)!important}
+.gcard .gglyph{z-index:0}
+.gcard[data-arg="mj"]{background:radial-gradient(ellipse at 50% 30%,#6f8a43,#4b6530 60%,#2b3c1b)!important}
+.gcard[data-arg="mj2"]{background:radial-gradient(ellipse at 50% 30%,#8a6a3a,#5e4524 60%,#33240f)!important}
+.gcard[data-arg="lf"]{background:radial-gradient(ellipse at 50% 30%,#a8342a,#6e1a14 60%,#360806)!important}
+.gcard[data-arg="he"]{background:radial-gradient(ellipse at 50% 30%,#2f7a46,#1d5530 60%,#0e2c18)!important}
+.gcard[data-arg="sl"]{background:radial-gradient(ellipse at 50% 30%,#4a4d55,#2a2c32 60%,#111216)!important}
+.gcard[data-arg="ssz"]{background:radial-gradient(ellipse at 50% 30%,#5a6e3a,#3c4c24 60%,#1e2610)!important}
+.gcard[data-arg="b2"]{background:radial-gradient(ellipse at 50% 30%,#7a3a8a,#4c2058 60%,#240c2c)!important}
+.gcard[data-arg="ddz"]{background:radial-gradient(ellipse at 50% 30%,#c0582a,#82341a 60%,#3e1408)!important}
+.gcard[data-arg="aq"]{background:radial-gradient(ellipse at 50% 30%,#8a7448,#5a4a2a 60%,#2a2212)!important}
+.gcard .gn{background:linear-gradient(180deg,#e8b94e,#a8761e)!important;color:#2a1400!important;border-color:#6a4410!important}
+.gcard h3,.gcard b{text-shadow:0 2px 0 rgba(0,0,0,.7),0 0 10px rgba(0,0,0,.5)}
+/* 首頁功能列與底部導覽：金屬方鈕 */
+.hbtn,.hubb{background:linear-gradient(180deg,#3c4149,#1f2227)!important;border:1px solid rgba(226,180,74,.55)!important;border-radius:8px!important;
+  box-shadow:0 3px 0 #08090b,0 8px 14px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.14)!important}
+.hrow2 .hbtn[data-go="ranked"]{background:linear-gradient(180deg,#d8352a,#8e1712)!important;border-color:#f3c55a!important}
+.hrow2 .hbtn[data-go="events"]{background:linear-gradient(180deg,#e8902a,#a4520e)!important;border-color:#ffd77a!important}
+.bnav{background:linear-gradient(180deg,#2e3239,#15171b)!important;border:1px solid var(--gold)!important;border-radius:8px!important;box-shadow:0 -2px 0 rgba(255,255,255,.05) inset,0 8px 20px rgba(0,0,0,.6)}
+.bnav button.on{background:linear-gradient(180deg,#ff6a4d,var(--dqred2))!important;color:#fff6dc!important;box-shadow:inset 0 1px 0 rgba(255,220,180,.5)}
+/* 牌桌：苔綠絨布、深色金屬桌框、槍鐵色中控台＋彩色方位燈 */
+.felt,.ctable{border-color:#1b1d21!important;box-shadow:0 0 0 3px #4a4f58,0 0 0 5px #0b0c0e,inset 0 0 60px rgba(0,0,0,.55)!important}
+#game .felt::before{border:1px solid rgba(0,0,0,.25)!important}
+#game .plate{background:linear-gradient(145deg,#5a606a,#2a2e34 45%,#15171a)!important;border:2px solid #7c838e!important;border-radius:10px!important;
+  box-shadow:0 0 0 2px #0b0c0e,0 6px 14px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.25)!important}
+#game .plate .core{background:radial-gradient(circle at 50% 40%,#2b3a3c,#0b1112)!important;border:1px solid #4fd2ff!important;box-shadow:inset 0 2px 6px rgba(0,0,0,.7),0 0 8px rgba(79,210,255,.45)!important}
+#game .plate .left{color:#7fe6ff!important;-webkit-text-fill-color:#7fe6ff!important;text-shadow:0 0 6px rgba(79,210,255,.8)}
+#game .plate .w{color:rgba(220,225,232,.55)!important}
+#game .plate .w0.on{color:#ffd23a!important;text-shadow:0 0 8px #ffb000!important}#game .plate .w1.on{color:#ff5a5a!important;text-shadow:0 0 8px #ff2020!important}
+#game .plate .w2.on{color:#5aff8a!important;text-shadow:0 0 8px #20ff60!important}#game .plate .w3.on{color:#b07aff!important;text-shadow:0 0 8px #8a40ff!important}
+.mjseat .av{border-radius:8px!important;padding:3px!important;background:linear-gradient(160deg,#9aa1ab,#454a52 45%,#1a1c20)!important;box-shadow:0 0 0 1px #0b0c0e,0 4px 10px rgba(0,0,0,.6)!important}
+.mjseat .av img,.mjseat .av svg,.mjseat .av>*{border-radius:5px}
+.mjseat.active .av{box-shadow:0 0 0 2px #ffd23a,0 0 16px 4px rgba(255,190,40,.8)!important}
+.mjseat .wd{background:#16181c!important;border-color:#ffd23a!important}
+.mjseat .scp{background:rgba(10,11,13,.75)!important;border-color:rgba(226,180,74,.45)!important;border-radius:5px!important}
+#game .rinfo b{color:#fff0c2!important;text-shadow:0 2px 0 #5a0a06}
+#game .rinfo .tags span{background:rgba(10,11,13,.55)!important}
+#cgame[data-game=he] .ctable{--f1:#3d7a3a;--f2:#2f6530;--f3:#224c23;--f4:#143016;border-color:#5a1410!important}
+#cgame[data-game=sl] .ctable{--f1:#2c2e33;--f2:#212328;--f3:#17191c;--f4:#0c0d0f}
+#cgame[data-game=ssz] .ctable{--f1:#5a6e3a;--f2:#4b5d30;--f3:#3a4a24;--f4:#252f16}
+/* 結算：紅金橫幅 */
+.result h2,.final h2,.panel .rhead{color:#fff3cf!important}
+/* ================= v5.1 中國風（朱漆＋金、玉綠點綴、祥雲、窗櫺、匾額、印章、燈籠）疊加於鬥雀感之上 ================= */
+:root{--kai:'Kaiti TC','BiauKai','DFKai-SB','STKaiti','KaiTi','AR PL UKai TW','Noto Serif TC','Songti TC',serif;--lac1:#8e1a12;--lac2:#5c0d08;--lac3:#2a0604;--jade:#2f9a6e;--jade2:#1b6b4a;--ink:#1c1410;
+  --woodbg:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28226%2C180%2C74%2C0.09%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M0%2020h10v-10h20v10h10M20%200v10M20%2030v10M0%2020v20M40%2020v20M10%2020v10h20v-10%22/%3E%3C/g%3E%3C/svg%3E") 0 0/40px 40px,linear-gradient(180deg,#3a0f0b 0%,#240806 60%,#160403 100%)}
+#bg{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28226%2C180%2C74%2C0.09%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M0%2020h10v-10h20v10h10M20%200v10M20%2030v10M0%2020v20M40%2020v20M10%2020v10h20v-10%22/%3E%3C/g%3E%3C/svg%3E") 0 0/40px 40px,
+  radial-gradient(ellipse 60% 50% at 50% 34%,rgba(255,170,70,.20),transparent 70%),
+  radial-gradient(ellipse 120% 70% at 50% 120%,rgba(20,90,60,.35),transparent 60%),
+  linear-gradient(180deg,#4a110b 0%,#2a0806 55%,#140302 100%)!important}
+h1,h2,h3,.hdr h1,.panel h2,.gcard h3,.bigfx span{font-family:var(--kai)!important}
+/* 面板＝漆盒：朱漆底、金框、四角雲紋 */
+.glass{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28226%2C180%2C74%2C0.09%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M0%2020h10v-10h20v10h10M20%200v10M20%2030v10M0%2020v20M40%2020v20M10%2020v10h20v-10%22/%3E%3C/g%3E%3C/svg%3E") 0 0/40px 40px,linear-gradient(180deg,rgba(88,20,14,.96),rgba(42,8,5,.97))!important;border:1px solid rgba(240,196,92,.7)!important}
+.panel{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28226%2C180%2C74%2C0.09%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M0%2020h10v-10h20v10h10M20%200v10M20%2030v10M0%2020v20M40%2020v20M10%2020v10h20v-10%22/%3E%3C/g%3E%3C/svg%3E") 0 0/40px 40px,linear-gradient(180deg,#5a130d,#2c0705)!important;border:2px solid #e9bd56!important;
+  box-shadow:0 0 0 3px #1a0302,0 0 0 5px #b8862a,0 0 0 6px #1a0302,0 22px 46px rgba(0,0,0,.7)!important}
+.panel::before,.panel::after{content:"";position:absolute;width:26px;height:26px;border:3px solid #f0c45c;pointer-events:none;opacity:.85}
+.panel::before{left:5px;top:5px;border-right:0;border-bottom:0;border-radius:8px 0 0 0}.panel::after{right:5px;bottom:5px;border-left:0;border-top:0;border-radius:0 0 8px 0}
+/* 匾額標題 */
+.panel h2{background:linear-gradient(180deg,#2b1a10,#140b06)!important;color:#f6d77e!important;border:2px solid #e9bd56!important;border-radius:4px!important;
+  box-shadow:0 0 0 2px #140b06,0 0 0 3px rgba(233,189,86,.5),inset 0 0 12px rgba(233,189,86,.25)!important;text-shadow:0 2px 0 #000,0 0 10px rgba(255,180,60,.4)!important;text-align:center;letter-spacing:6px!important}
+.hdr h1{font-size:28px!important;color:#ffe6a0!important;text-shadow:0 2px 0 #4a0602,0 0 14px rgba(255,150,50,.55)!important}
+/* 印章徽章：版本、人數、牌桌標籤 */
+.hver{background:#c8261b!important;color:#fff3d6!important;border-radius:4px!important;font-family:var(--kai);font-weight:900;padding:1px 6px!important;transform:rotate(-6deg);
+  box-shadow:inset 0 0 0 1.5px rgba(255,240,200,.8),0 2px 4px rgba(0,0,0,.5)}
+.gcard .gn{background:#c8261b!important;color:#fff3d6!important;border:0!important;box-shadow:inset 0 0 0 1.5px rgba(255,240,200,.8);font-family:var(--kai);transform:rotate(-4deg)}
+/* 按鈕：朱漆主鈕、玉石確認鈕、烏木次鈕 */
+.btn.primary{background:linear-gradient(180deg,#ff7a4a 0%,#d8301e 40%,#8e1a12 100%)!important;border:1.5px solid #f6cf6a!important}
+.btn.mint{background:linear-gradient(180deg,#6fd6a4 0%,#2f9a6e 45%,#1b6b4a 100%)!important;border:1.5px solid #c8f5dc!important;box-shadow:0 3px 0 #0c3a26,0 6px 12px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.4)!important}
+.btn.ghost,.hbtn,.hubb{background:linear-gradient(180deg,#3a2418,#1c100a)!important;border:1px solid rgba(233,189,86,.6)!important}
+.btn.primary{position:relative;overflow:hidden}
+.gcard .gplay{background:radial-gradient(circle at 40% 35%,#ff7a4a,#c8261b 60%,#7a0c06)!important;color:#fff3d6!important;border:1.5px solid #f6cf6a!important;animation:playpulse 2.2s ease-in-out infinite}
+@keyframes playpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,190,80,.6)}50%{box-shadow:0 0 0 7px rgba(255,190,80,0)}}
+.btn.primary::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,240,200,.45),transparent);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%,60%{left:-60%}100%{left:130%}}
+.bnav{background:linear-gradient(180deg,#3a0f0b,#1a0503)!important;border:2px solid #e9bd56!important}
+.bnav button.on{background:linear-gradient(180deg,#ff7a4a,#8e1a12)!important}
+.topbar .coins,.topbar .glass{background:linear-gradient(180deg,rgba(26,6,4,.92),rgba(60,14,10,.92))!important}
+/* 首頁模式卡：卷軸／牌匾 */
+.gcard{border:2px solid #f0c45c!important;box-shadow:0 0 0 2px #1a0302,0 0 0 4px #9a6c1c,0 12px 24px rgba(0,0,0,.7),inset 0 0 40px rgba(0,0,0,.45)!important;animation:cardglow 4s ease-in-out infinite}
+.gcard:nth-child(2n){animation-delay:-2s}
+@keyframes cardglow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08) drop-shadow(0 0 8px rgba(255,190,80,.35))}}
+.gcard::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:linear-gradient(180deg,#f6d77e,#9a6c1c);z-index:2;box-shadow:0 2px 0 #1a0302}
+.gcard[data-arg="mj"]{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28226%2C180%2C74%2C0.09%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M0%2020h10v-10h20v10h10M20%200v10M20%2030v10M0%2020v20M40%2020v20M10%2020v10h20v-10%22/%3E%3C/g%3E%3C/svg%3E") 0 0/40px 40px,radial-gradient(ellipse at 50% 30%,#2f9a6e,#1b6b4a 60%,#0c3a26)!important}
+.gcard[data-arg="lf"]{background:radial-gradient(ellipse at 50% 30%,#d8301e,#8e1a12 60%,#3a0604)!important}
+/* 大廳動態：祥雲飄動、燈籠擺動 */
+.gfdeco{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.gfdeco .cl{position:absolute;width:180px;opacity:.9;animation:drift 38s linear infinite}
+.gfdeco .c1{top:12%;left:-200px}.gfdeco .c2{top:46%;left:-200px;width:240px;animation-duration:52s;animation-delay:-20s}.gfdeco .c3{top:74%;left:-200px;width:140px;animation-duration:30s;animation-delay:-9s}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 400px))}}
+.gfdeco .lan{position:absolute;top:-8px;width:34px;transform-origin:50% 0;animation:sway 3.6s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,90,40,.6))}
+.gfdeco .l1{right:96px}.gfdeco .l2{right:30px;width:28px;animation-delay:-1.4s}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+/* 牌桌：中式漆木框、玉綠絨布、窗櫺中控 */
+.felt,.ctable{border-color:#4a110b!important;box-shadow:0 0 0 3px #c9963a,0 0 0 6px #1a0302,inset 0 0 70px rgba(0,0,0,.55)!important}
+#game .felt::after{content:"";display:block!important;position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28226%2C180%2C74%2C0.09%29%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M0%2020h10v-10h20v10h10M20%200v10M20%2030v10M0%2020v20M40%2020v20M10%2020v10h20v-10%22/%3E%3C/g%3E%3C/svg%3E") 0 0/40px 40px;opacity:.5}
+#game .plate{background:linear-gradient(145deg,#6a1a12,#3a0a06 50%,#1a0302)!important;border:2px solid #e9bd56!important}
+#game .plate .core{border-color:#f6d77e!important;box-shadow:inset 0 2px 6px rgba(0,0,0,.7),0 0 8px rgba(255,200,90,.5)!important}
+#game .plate .left{color:#ffe6a0!important;-webkit-text-fill-color:#ffe6a0!important;text-shadow:0 0 6px rgba(255,190,60,.8)}
+.mjseat .av{background:linear-gradient(160deg,#f6d77e,#b8862a 45%,#5a3a0a)!important}
+.mjseat .wd{background:#c8261b!important;color:#fff3d6!important;border-color:#fff3d6!important;border-radius:3px!important;font-family:var(--kai)!important}
+.mjseat .scp,.mjseat .nm{font-family:var(--ui)}
+#game .rinfo b{font-family:var(--kai)!important;font-size:21px!important}
+#game .cbtn{border:2px solid #f6d77e!important;font-family:var(--kai)!important;box-shadow:0 0 0 2px #1a0302,0 4px 10px rgba(0,0,0,.5)!important}
+/* 國風牌身：暖象牙面、金線、厚玉綠牌背＋祥雲 */
+body.ts-gf .t:not(.back){background:linear-gradient(180deg,#fffaf0 0%,#f6edd7 50%,#e8dbbb 100%)}
+body.ts-gf .t:not(.back)::before{content:"";position:absolute;inset:3%;border-radius:calc(var(--w)*.07);box-shadow:inset 0 0 0 1px rgba(184,134,42,.35);pointer-events:none}
+body.ts-gf{--bk1:#2fa070;--bk2:#1d7a52;--bk3:#13603f;--bk4:#0a3a26}
+body.ts-gf .t.back{background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2060%2080%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C226%2C150%2C0.55%29%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%3E%3Crect%20x%3D%227%22%20y%3D%229%22%20width%3D%2246%22%20height%3D%2262%22%20rx%3D%226%22/%3E%3Cpath%20d%3D%22M16%2046%20C10%2046%2010%2036%2018%2036%20C18%2028%2030%2027%2032%2034%20C35%2026%2048%2028%2045%2038%20C53%2038%2053%2048%2044%2048%20Z%22/%3E%3Cpath%20d%3D%22M24%2042%20C24%2038%2030%2038%2030%2042%20C30%2044%2027%2045%2026%2043%22/%3E%3C/g%3E%3C/svg%3E") center/86% 86% no-repeat,linear-gradient(170deg,#3cb07e 0%,#1d7a52 55%,#13603f 100%)}
+body.ts-gf .t.back::after{border:0}
+/* 喊牌：印章蓋印＋墨濺 */
+.pop.burst span{font-family:var(--kai)!important;font-weight:900;color:#fff6dc!important;background:radial-gradient(circle at 40% 35%,#ff5a3a,#c8261b 60%,#7a0c06)!important;
+  -webkit-text-fill-color:#fff6dc!important;padding:4px 14px 8px;border-radius:12px;box-shadow:inset 0 0 0 4px rgba(255,236,190,.85),0 0 0 3px #7a0c06,0 10px 24px rgba(0,0,0,.6);
+  -webkit-text-stroke:0!important;text-shadow:0 3px 0 #5a0602!important;animation:stampin .55s cubic-bezier(.2,1.5,.4,1) both}
+.pop.burst.k-hu span,.pop.burst.k-zm span{background:radial-gradient(circle at 40% 35%,#fff2b0,#f3b52a 55%,#b86a00)!important;color:#5a0602!important;-webkit-text-fill-color:#5a0602!important;text-shadow:0 2px 0 rgba(255,250,220,.7)!important}
+.pop.burst::after{content:"";position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;z-index:-2;border-radius:50%;
+  background:radial-gradient(circle,rgba(120,10,0,.0) 40%,rgba(160,20,10,.55) 42%,rgba(160,20,10,0) 60%);animation:inkring .7s ease-out forwards}
+@keyframes stampin{0%{transform:scale(3) rotate(-14deg);opacity:0}55%{transform:scale(.88) rotate(-6deg);opacity:1}75%{transform:scale(1.06) rotate(-8deg)}100%{transform:scale(1) rotate(-7deg)}}
+@keyframes inkring{from{transform:scale(.3);opacity:1}to{transform:scale(1.5);opacity:0}}
+/* 大字：書法金字＋印章底 */
+.bigfx.cal span,.bigfx.gold span{font-family:var(--kai)!important}
+.bighand{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden}
+.bighand .bhglow{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,200,80,.45),rgba(120,10,0,.35) 45%,rgba(0,0,0,.55) 80%);animation:bhfade 3.1s ease forwards}
+.bighand .bhd{position:absolute;left:0;top:8%;width:70vw;animation:dragonfly 2.6s cubic-bezier(.3,.6,.3,1) forwards;filter:drop-shadow(0 0 16px rgba(255,190,40,.8))}
+.bighand .bhp{position:absolute;right:0;bottom:6%;width:46vw;animation:phoenixfly 2.6s cubic-bezier(.3,.6,.3,1) forwards;filter:drop-shadow(0 0 16px rgba(255,90,60,.8))}
+.bighand .bhseal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);animation:sealin 2.9s cubic-bezier(.2,1.4,.4,1) forwards}
+.bighand .bhseal span{display:block;font:900 min(14vw,22vh)/1.1 var(--kai);padding:10px 26px 16px;color:#fff6dc;background:radial-gradient(circle at 40% 35%,#ff5a3a,#c8261b 60%,#7a0c06);
+  border-radius:16px;box-shadow:inset 0 0 0 6px rgba(255,236,190,.9),0 0 0 4px #5a0602,0 0 60px rgba(255,160,40,.8);text-shadow:0 4px 0 #4a0402;white-space:nowrap}
+@keyframes dragonfly{0%{transform:translateX(-80vw) rotate(-6deg)}45%{transform:translateX(10vw) rotate(2deg)}100%{transform:translateX(120vw) rotate(-4deg)}}
+@keyframes phoenixfly{0%{transform:translateX(70vw) scale(.8)}50%{transform:translateX(-14vw) scale(1)}100%{transform:translateX(-120vw) scale(1.1)}}
+@keyframes sealin{0%{transform:translate(-50%,-50%) scale(3.2) rotate(-18deg);opacity:0}22%{transform:translate(-50%,-50%) scale(.9) rotate(-6deg);opacity:1}32%{transform:translate(-50%,-50%) scale(1.04) rotate(-8deg)}85%{opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(-8deg);opacity:0}}
+@keyframes bhfade{0%{opacity:0}12%{opacity:1}80%{opacity:1}100%{opacity:0}}
+.fxcoin.rain{z-index:10001;animation:crain 1.8s cubic-bezier(.4,0,.8,1) both}
+@keyframes crain{from{transform:translateY(0) rotateY(0)}to{transform:translateY(110vh) rotateY(720deg)}}
+/* 結算：台數逐行＋合計 */
+.taigrid .tin{animation:tin .35s ease-out both}
+@keyframes tin{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.taitotal{margin-top:8px;padding:6px 12px;border-radius:6px;text-align:center;font-family:var(--kai);font-size:18px;color:#ffe6a0;background:linear-gradient(90deg,transparent,rgba(200,38,27,.55),transparent);border-top:1px solid rgba(233,189,86,.5);border-bottom:1px solid rgba(233,189,86,.5)}
+.taitotal b{font-size:30px;color:#fff3c0;text-shadow:0 0 12px rgba(255,190,60,.9);font-family:Georgia,var(--ui);margin:0 4px}
+.taitotal.done b{animation:taipop .4s cubic-bezier(.2,1.6,.4,1)}
+@keyframes taipop{0%{transform:scale(1.6)}100%{transform:scale(1)}}
+/* 彈窗縮放進場、按鈕回彈 */
+.modal.on .panel{animation:popin .32s cubic-bezier(.2,1.4,.4,1)}
+@keyframes popin{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.bnc{animation:bnc .38s cubic-bezier(.2,1.6,.4,1)}
+@keyframes bnc{0%{transform:scale(.9)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+/* 減少動畫 */
+body.lite .gfdeco,body.lite .btn.primary::after{display:none!important}
+body.lite .gcard,body.lite .modal.on .panel,body.lite .bnc{animation:none!important}
+/* ================= v5.1 新大廳 ================= */
+#home .hhead{display:none}
+#home .lobby{position:absolute;left:12px;right:12px;top:78px;bottom:76px;display:grid;grid-template-columns:78px 270px 1fr 74px;gap:12px}
+#home .lside{display:flex!important;flex-direction:column;gap:6px;justify-content:center;position:static!important;grid-template-columns:none!important}
+#home .lside-b{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:0;background:none;border:0;color:#ffe6a0;font:700 12px/1.1 var(--kai);text-shadow:0 1px 2px #000;cursor:pointer}
+#home .lside-b i{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:22px;
+  background:radial-gradient(circle at 40% 30%,#7a2a1a,#3a0a06 70%);border:2px solid #e9bd56;box-shadow:0 0 0 2px #1a0302,0 4px 10px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,220,160,.25)}
+#home .lside-b:hover i{filter:brightness(1.2)}
+#home .lside-b .hot{position:absolute;right:8px;top:-2px;background:#c8261b;color:#fff;font:900 10px/16px var(--kai);width:16px;height:16px;border-radius:3px;font-style:normal;box-shadow:inset 0 0 0 1px #ffe6a0;animation:sway 1.6s ease-in-out infinite}
+#home .lstage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+#home .lplaque{position:absolute;top:0;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:4px 14px;background:linear-gradient(180deg,#2b1a10,#140b06);border:2px solid #e9bd56;border-radius:4px;box-shadow:0 0 0 2px #140b06,0 6px 14px rgba(0,0,0,.6);z-index:3;white-space:nowrap}
+#home .lring{position:absolute;left:50%;bottom:52px;width:230px;height:230px;margin-left:-115px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,200,90,.16) 0 10deg,transparent 10deg 24deg);-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);animation:ringspin 24s linear infinite}
+@keyframes ringspin{to{transform:rotate(360deg)}}
+#home .lped{position:absolute;bottom:40px;left:50%;width:210px;height:44px;margin-left:-105px;border-radius:50%;background:radial-gradient(ellipse,#e9bd56 0,#9a6c1c 40%,#4a1a08 70%,transparent 72%);box-shadow:0 0 30px rgba(255,190,70,.45)}
+#home .lchar{position:absolute;bottom:56px;left:50%;width:190px;height:190px;margin-left:-95px;background:none;border:0;padding:0;animation:breathe 3.4s ease-in-out infinite;transform-origin:50% 100%;cursor:pointer}
+#home .lchar svg,#home .lchar .av{width:190px!important;height:190px!important;border-radius:50%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.6))}
+@keyframes breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.015)}}
+#home .lbubble{position:absolute;top:48px;right:-6px;max-width:130px;padding:6px 10px;border-radius:12px;background:#fff6dc;color:#4a1206;font:700 12px/1.3 var(--kai);box-shadow:0 4px 10px rgba(0,0,0,.5);animation:bob 2.8s ease-in-out infinite;z-index:3}
+#home .lbubble::after{content:"";position:absolute;left:18px;bottom:-7px;border:7px solid transparent;border-top-color:#fff6dc;border-bottom:0}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+#home .lname{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:3px 22px;background:linear-gradient(90deg,transparent,#8e1a12 20%,#8e1a12 80%,transparent);border-top:1px solid #e9bd56;border-bottom:1px solid #e9bd56}
+#home .lname b{font:900 17px/1.1 var(--kai);color:#ffe6a0}#home .lname small{font-size:11px;color:#f6d7a0}
+#home .lstage .gift{position:absolute;left:0;top:44px;z-index:3}
+#home .lgames{position:static!important;display:grid!important;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr 66px;gap:10px;overflow:visible!important;padding:0!important;margin:0!important;transform:none!important}
+#home .lgames .gcard{width:auto!important;height:auto!important;min-width:0;margin:0!important;padding:10px!important}
+#home .lb-feat{grid-column:1/3;grid-row:1/3}
+#home .lb-feat h2{font-size:38px!important}#home .lb-feat .gart{transform:scale(1.25);transform-origin:20% 20%}
+#home .lb-feat .gn::after{content:" ・推薦";color:#ffe6a0}
+#home .lb-mid h2{font-size:21px!important}#home .lb-mid p{display:none}#home .lb-mid .gart{transform:scale(.62);transform-origin:0 0}#home .lb-mid .gglyph{font-size:60px}
+#home .lb-mid .gn{bottom:6px}#home .lb-mid .gplay{width:28px;height:28px;bottom:6px;right:8px}
+#home .lb-sm{display:flex!important;align-items:center;justify-content:center;padding:4px!important}
+#home .lb-sm .gart,#home .lb-sm p,#home .lb-sm .gn,#home .lb-sm .gplay,#home .lb-sm .gglyph{display:none}
+#home .lb-sm h2{font-size:18px!important;margin:0!important;position:static!important}
+#home .lb-sm::before{height:6px}
+#home .lside2 .lside-b i{width:40px;height:40px;font-size:19px;background:radial-gradient(circle at 40% 30%,#2a5a46,#0c2a1e 70%)}
+body.lite #home .lring,body.lite #home .lchar,body.lite #home .lbubble,body.lite #home .lside-b .hot{animation:none!important}
+#home .lgames{height:100%!important;align-self:stretch;flex:none!important;scroll-snap-type:none!important}
+#home .lgames .gcard{flex:none!important;scroll-snap-align:none}
+#home .lb-feat .gart{transform:scale(1.15);transform-origin:10% 10%}
+#home .lb-feat h2{bottom:62px!important;left:18px!important}
+#home .lb-mid h2{bottom:34px!important;left:10px!important}
+#home .lside{gap:2px}#home .lside-b i{width:38px;height:38px;font-size:19px}#home .lside-b{font-size:11px}
+#home .lchar{bottom:64px;width:170px;height:170px;margin-left:-85px}
+#home .lchar svg,#home .lchar .av{width:170px!important;height:170px!important}
+#home .lbubble{top:auto;bottom:226px;right:0}
+#home .lname{margin-bottom:0}
 
 </style>
 </head>
@@ -2608,7 +2845,9 @@ const GLYPHT = {"一":["M27.7 -6.9Q29.9 -6.9 34.5 -4.2Q39.1 -1.4 39.1 0.6Q39.1 1
 
 // ===== 牌面 SVG（原創繪製・仿實體台灣麻將牌：象牙白牌面、楷書字、傳統筒條花色） =====
 const TileArt = (() => {
-  const BL = '#173f8a', GR = '#0b6b3a', RD = '#c2141f', BK = '#141414', IV = '#fbf7ea';
+  let BL = '#173f8a', GR = '#0b6b3a', RD = '#c2141f', BK = '#141414', IV = '#fbf7ea', INK = '#101a33';
+  const MAPC = c => { const k = PAL.classic.indexOf(c); return k < 0 ? c : [BL, GR, RD, IV, INK][k]; };
+  const PAL = { classic: ['#173f8a', '#0b6b3a', '#c2141f', '#fbf7ea', '#101a33'], gf: ['#1b2f7a', '#0a6a45', '#c8261b', '#fbf3df', '#1c1410'] };
   const NUM = '一二三四五六七八九';
   // 楷書字形（GLYPH 為以 bbox 中心為原點、字身 100 單位的路徑）
   const gl = (ch, x, y, size, c, sw = 2.2, T = GLYPH) => {
@@ -2702,18 +2941,19 @@ const TileArt = (() => {
   const FCH = '春夏秋冬梅蘭竹菊';
   function face(t) {
     const T = GLYPHT;
-    if (t < 9) return gl(NUM[t], 30, t === 0 ? 20 : 19, t === 0 ? 50 : 38, '#101a33', 4, T) + gl('萬', 30, 57, 48, RD, 3.6, T);
-    if (t < 18) { const n = t - 9 + 1; if (n === 1) return bigDot(); const [r, l] = DOTS[n]; return l.map(([x, y, c]) => dot(x, y, r, c)).join(''); }
+    if (t < 9) return gl(NUM[t], 30, t === 0 ? 20 : 19, t === 0 ? 50 : 38, INK, 4, T) + gl('萬', 30, 57, 48, RD, 3.6, T);
+    if (t < 18) { const n = t - 9 + 1; if (n === 1) return bigDot(); const [r, l] = DOTS[n]; return l.map(([x, y, c]) => dot(x, y, r, MAPC(c))).join(''); }
     if (t < 27) { const n = t - 18 + 1; if (n === 1) return bird(); return BAM[n](); }
-    if (t < 31) return gl('東南西北'[t - 27], 30, 40, 64, '#101a33', 4.4, T);
+    if (t < 31) return gl('東南西北'[t - 27], 30, 40, 64, INK, 4.4, T);
     if (t === 31) return gl('中', 30, 40, 68, RD, 4.6, T);
     if (t === 32) return gl('發', 30, 40, 66, GR, 3.8, T);
     if (t === 33) return `<rect x="7" y="9" width="46" height="62" rx="2" fill="none" stroke="${BL}" stroke-width="4"/><rect x="12.5" y="14.5" width="35" height="51" rx="1" fill="none" stroke="${BL}" stroke-width="1.5"/>`;
     const n = (t - 34) % 4 + 1;
-    return `<text x="10" y="18" font-size="17" fill="${t < 38 ? RD : BL}" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700">${n}</text>` + gl(FCH[t - 34], 44, 15, 26, FCOL[t], 2.6, T) + MOTIF[t];
+    return `<text x="10" y="18" font-size="17" fill="${t < 38 ? RD : BL}" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700">${n}</text>` + gl(FCH[t - 34], 44, 15, 26, MAPC(FCOL[t]), 2.6, T) + MOTIF[t];
   }
-  function defs() {
-    let s = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>';
+  function defs(style = 'gf') {
+    [BL, GR, RD, IV, INK] = PAL[style] || PAL.gf;
+    let s = '<svg id="tiledefs" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>';
     for (let t = 0; t < 42; t++) s += `<symbol id="T${t}" viewBox="0 0 60 80">${face(t)}</symbol>`;
     // 撲克花色（♣♦♥♠）向量圖，不依賴系統字型／emoji
     const SU = ['<circle cx="5" cy="2.7" r="2.45"/><circle cx="2.45" cy="6.1" r="2.45"/><circle cx="7.55" cy="6.1" r="2.45"/><path d="M4.4 5.6 L3.4 10 H6.6 L5.6 5.6Z"/>',
@@ -2806,7 +3046,8 @@ let MAIL = LS.get('mail', null);
 const MISS = LS.get('miss', {});
 let FRIENDS = LS.get('friends', ['b2', 'b1', 'b3', 'b4', 'b5', 'b6']);
 let CLUB = LS.get('club', null);
-const SHOP = Object.assign({ owned: ['felt-royal', 'felt-emerald', 'back-blue', 'back-green'], felt: 'royal', back: 'blue', tw: 1 }, LS.get('shop', {}));
+const SHOP = Object.assign({ owned: ['felt-moss', 'felt-royal', 'felt-emerald', 'back-blue', 'back-green'], felt: 'moss', back: 'blue', tw: 1 }, LS.get('shop', {}));
+if (!SHOP.v51) { SHOP.v51 = 1; if (SHOP.felt === 'royal') SHOP.felt = 'moss'; if (SHOP.back === 'blue') SHOP.back = 'green'; if (!SHOP.owned.includes('felt-moss')) SHOP.owned.unshift('felt-moss'); try { LS.set('shop', SHOP); } catch (e) {} }
 // v4.3：改為台灣寶藍桌布＋藍色牌背（舊存檔一次性轉換，原有造型仍保留可切換）
 if (!SHOP.tw) { SHOP.tw = 1; ['felt-royal', 'back-blue'].forEach(k => { if (!SHOP.owned.includes(k)) SHOP.owned.push(k); }); if (SHOP.felt === 'emerald') SHOP.felt = 'royal'; if (SHOP.back === 'green') SHOP.back = 'blue'; }
 const CHAT = LS.get('chat', {});
@@ -3221,7 +3462,7 @@ function renderHome() {
       ${walletHTML()}
       <div class="ticons">${[['signin', 'cal', '簽到'], ['event', 'gift', '活動'], ['mail', 'mail', '郵件'], ['notice', 'horn', '公告']].map(([k, ic, l]) => `<button class="ti" data-open="${k}">${ICON[ic]}<span>${l}</span>${d[k] ? '<em></em>' : ''}</button>`).join('')}</div>
     </div>
-    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v5.0</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
+    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v5.1</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
     <div class="games">${Object.entries(GAMES).map(([k, g]) => `<button class="gcard c-${g.color}" data-go="gamehub" data-arg="${k}"><div class="gart">${GART[k]()}</div><div class="gglyph">${g.glyph}</div><h2>${g.name}</h2><p>${g.tag}</p><span class="gn">${g.n} 人${k === 'mj' ? '／2 人' : ''}</span><span class="gplay">▶</span></button>`).join('')}</div>
     <div class="hrow2">
       <button class="hbtn c-lemon" data-go="friendroom"><b><i class="emo">🏠</i> 好友開房</b><small>房卡開房・自訂規則</small></button>
@@ -3426,7 +3667,7 @@ PAGES.ranking = { title: '排行榜', sub: '高手雲集（其他玩家為模擬
 } };
 
 // ---------- 商城 ----------
-const FELTS = { royal: ['台灣寶藍', '#2f72c6', '#2865b5', '#21579f', '#1a4685', 0], emerald: ['經典墨綠', '#2f7d55', '#246a47', '#1a5236', '#0f3824', 0], ocean: ['深海藍絨', '#2c5f7c', '#224f69', '#183c52', '#0e2738', 3000], wine: ['酒紅絨布', '#7c2f3a', '#69252f', '#511b24', '#361117', 3000], night: ['墨黑皮革', '#3b3f42', '#2f3336', '#232628', '#151719', 5], sakura: ['駝色絨', '#7d6a48', '#6a5a3c', '#54472f', '#382f1f', 8] };
+const FELTS = { moss: ['鬥雀風苔綠', '#6b8542', '#5a7236', '#475c2a', '#2f3e1b', 0], royal: ['台灣寶藍', '#2f72c6', '#2865b5', '#21579f', '#1a4685', 0], emerald: ['經典墨綠', '#2f7d55', '#246a47', '#1a5236', '#0f3824', 0], ocean: ['深海藍絨', '#2c5f7c', '#224f69', '#183c52', '#0e2738', 3000], wine: ['酒紅絨布', '#7c2f3a', '#69252f', '#511b24', '#361117', 3000], night: ['墨黑皮革', '#3b3f42', '#2f3336', '#232628', '#151719', 5], sakura: ['駝色絨', '#7d6a48', '#6a5a3c', '#54472f', '#382f1f', 8] };
 const BACKS = { green: ['翡翠綠背', '#3f8a5e', '#2a6b48', '#1d5236', '#123a25', 0], blue: ['寶藍背', '#3d78c8', '#2c60aa', '#214c8c', '#173a6c', 0], red: ['朱紅背', '#a8392f', '#8c2a22', '#6e1f19', '#4a1410', 2000], gold: ['古銅金背', '#b08a3e', '#957230', '#775a24', '#523d17', 6] };
 function applyTheme() {
   const r = document.documentElement.style, f = FELTS[SHOP.felt] || FELTS.royal, b = BACKS[SHOP.back] || BACKS.blue;
@@ -3475,8 +3716,8 @@ PAGES.settings = { title: '設定', sub: '個人化設定', render(el, tab = 'so
   const sw = (k, l, d) => `<div class="srow"><div><b>${l}</b>${d ? `<small>${d}</small>` : ''}</div><button class="sw ${CFG[k] ? 'on' : ''}" data-sw="${k}"><i></i></button></div>`;
   const sl = (k, l) => `<div class="srow"><div><b>${l}</b></div><input type="range" min="0" max="10" value="${CFG[k]}" data-sl="${k}"><span class="num">${CFG[k]}</span></div>`;
   let b = '';
-  if (tab === 'sound') b = sw('sound', '音效', '摸牌、打牌、吃碰槓、胡牌、洗牌') + sw('voice', '語音（喚牌）', '碰！吃！槓！胡啦！與打出的牌名') + sl('sfxVol', '音量（音效＋語音）') + sw('anim', '動畫', '飛牌、吃碰特效、胡牌煙火（系統「減少動態」時自動關閉）') + sw('bgm', '背景音樂', '原創輕音樂') + sl('bgmVol', '音樂音量') + sw('vibrate', '震動', '輪到你與胡牌時（支援的手機）');
-  if (tab === 'game') b = sw('td3', '3D 牌桌', '立體傾斜牌桌＋開局電動桌升降（關閉則為平面 2D）') + sw('ting', '聽牌提示', '標出打哪張可以聽牌') + `<div class="srow"><div><b>遊戲速度</b><small>電腦出牌速度</small></div><div class="chips">${[[1.6, '慢'], [1, '標準'], [.55, '快']].map(([v, l]) => `<button class="chip ${CFG.speed === v ? 'on' : ''}" data-sp="${v}">${l}</button>`).join('')}</div></div>` + `<div class="srow"><div><b>規則說明</b><small>台數與玩法</small></div><button class="btn sm ghost" data-open="rules">查看</button></div>`;
+  if (tab === 'sound') b = sw('sound', '音效', '摸牌、打牌、吃碰槓、胡牌、洗牌') + sw('voice', '語音（喚牌）', '碰！吃！槓！胡啦！與打出的牌名') + sl('sfxVol', '音量（音效＋語音）') + sw('anim', '動畫', '飛牌、吃碰特效、胡牌煙火（系統「減少動態」時自動關閉）') + sw('lite', '減少動畫', '關閉大廳飄雲燈籠、全螢幕龍鳳與金幣雨，只保留必要提示') + sw('bgm', '背景音樂', '原創輕音樂') + sl('bgmVol', '音樂音量') + sw('vibrate', '震動', '輪到你與胡牌時（支援的手機）');
+  if (tab === 'game') b = sw('tileClassic', '牌面樣式：經典實體牌', '開啟＝v4.7 實體照片風牌面；關閉＝v5.1 國風牌面（預設）') + sw('td3', '3D 牌桌', '立體傾斜牌桌＋開局電動桌升降（關閉則為平面 2D）') + sw('ting', '聽牌提示', '標出打哪張可以聽牌') + `<div class="srow"><div><b>遊戲速度</b><small>電腦出牌速度</small></div><div class="chips">${[[1.6, '慢'], [1, '標準'], [.55, '快']].map(([v, l]) => `<button class="chip ${CFG.speed === v ? 'on' : ''}" data-sp="${v}">${l}</button>`).join('')}</div></div>` + `<div class="srow"><div><b>規則說明</b><small>台數與玩法</small></div><button class="btn sm ghost" data-open="rules">查看</button></div>`;
   if (tab === 'notify') b = sw('nStart', '牌局開始通知') + sw('nClub', '俱樂部通知') + sw('nFriend', '好友通知');
   if (tab === 'account') b = `<div class="srow"><div><b>${esc(ACC.nick)}</b><small>ID：${ACC.uid}</small></div><button class="btn sm ghost" data-go="character" data-arg="edit">編輯角色</button></div>
     <div class="srow"><div><b>服務條款與隱私權政策</b></div><button class="btn sm ghost" data-open="terms">查看</button></div>
@@ -4002,7 +4243,7 @@ function winFx(res) {
     const names = (res.tai || []).map(x => x[0]), big = names.find(n => BIG_NAMES.includes(n)) || (res.special && BIG_NAMES.includes(res.special) ? res.special : null);
     if (res.total >= 8 || big) {
       const top = big || ((res.tai || []).slice().sort((a, b) => b[1] - a[1])[0] || [res.total + ' 台'])[0];
-      setTimeout(() => { particles({ fireworks: true, n: 80, speed: 6, dur: 2600, colors: fxColors() }); bigText(top, 'cal', 2600); beep('coins'); }, 900);
+      setTimeout(() => { bigHandFx(top); beep('coins'); }, 900);
     }
   } catch (e) {}
 }
@@ -4100,7 +4341,7 @@ function renderGame() {
   h.push(`<div class="g-abs plate">${G.cfg && G.cfg.lf && G.n === 4 ? '' : ''}<div class="core"><div class="left num">${left}</div></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
   { const t3 = h.splice(0); G.liftOnce0 = G.liftOnce; G.liftOnce = false; h.push(`<div class="tilt3d ${G.liftOnce0 && ANIM() && CFG.td3 ? 'lift' : ''}">${t3.join('')}</div>`, ...chips, lfInfo()); }
   h.push(`<div class="g-abs rinfo"><b>${WINDS[roundWind() || 0]}風圈</b><span class="rd">${handLabel().replace(/^.風圈・/, '')}</span>
-    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v5.0</span></div></div>`);
+    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v5.1</span></div></div>`);
   // 自己（或觀戰視角）
   h.push(seatChip(V, g));
   let tiles = me.hand.slice(), drawn = null;
@@ -5329,9 +5570,106 @@ Object.assign(BACKS, EX_BACKS);
 ['ssz', 'b2', 'ddz', 'aq'].forEach(k => { const v = GAMES[k]; delete GAMES[k]; GAMES[k] = v; });
 window.__OPEN = OPEN; window.__V5 = V5;
 
+// ================= v5.1 中國風×鬥雀感：牌面樣式切換、減少動畫、大廳動態、印章喊牌、台數滾動、大牌龍鳳特效（皆原創 SVG/CSS） =================
+const CLOUD_SVG = c => `<svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round"><path d="M10 38 C2 38 2 24 14 24 C14 12 30 10 36 20 C40 8 60 8 62 22 C70 14 86 18 82 30 C96 28 100 42 88 42 Z"/><path d="M30 30 C30 24 40 24 40 30 C40 34 34 35 33 32"/><path d="M58 30 C58 23 70 23 70 30 C70 35 63 36 62 32"/></g></svg>`;
+const LANTERN_SVG = `<svg viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg"><line x1="30" y1="0" x2="30" y2="16" stroke="#c9a14a" stroke-width="2"/><rect x="20" y="14" width="20" height="7" rx="2" fill="#d9a632"/>
+<ellipse cx="30" cy="52" rx="26" ry="32" fill="url(#lgr)"/><g stroke="rgba(120,10,0,.55)" stroke-width="1.4" fill="none"><ellipse cx="30" cy="52" rx="14" ry="32"/><ellipse cx="30" cy="52" rx="4" ry="32"/></g>
+<rect x="20" y="82" width="20" height="7" rx="2" fill="#d9a632"/><g stroke="#e8b84a" stroke-width="1.6"><line x1="24" y1="89" x2="22" y2="108"/><line x1="30" y1="89" x2="30" y2="110"/><line x1="36" y1="89" x2="38" y2="108"/></g>
+<text x="30" y="60" text-anchor="middle" font-size="22" font-weight="900" fill="#ffe6a0" font-family="'Kaiti TC','BiauKai','DFKai-SB','Noto Serif TC',serif">福</text>
+<defs><radialGradient id="lgr" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#ff8a5a"/><stop offset=".55" stop-color="#d8261a"/><stop offset="1" stop-color="#7a0c06"/></radialGradient></defs></svg>`;
+// 原創龍鳳剪影（簡化線條，非任何遊戲素材）
+const DRAGON_SVG = `<svg viewBox="0 0 400 140" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dg" x1="0" x2="1"><stop offset="0" stop-color="#fff2b0"/><stop offset=".5" stop-color="#f3b52a"/><stop offset="1" stop-color="#b86a00"/></linearGradient></defs>
+<path d="M20 90 C60 40 100 120 150 70 S240 30 270 80 S340 110 370 60 L392 52 L378 70 L396 76 L372 80 C350 120 290 120 262 92 C238 60 200 70 168 98 C120 140 70 80 36 104 Z" fill="url(#dg)" stroke="#7a3a00" stroke-width="2"/>
+<g fill="#fff6c8">${Array.from({ length: 14 }, (_, i) => `<circle cx="${40 + i * 24}" cy="${86 - Math.sin(i * .9) * 22}" r="3"/>`).join('')}</g>
+<path d="M372 56 l10 -24 M380 60 l16 -16" stroke="#f3b52a" stroke-width="3" stroke-linecap="round"/><circle cx="374" cy="64" r="3" fill="#7a0c06"/></svg>`;
+const PHOENIX_SVG = `<svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="pg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ffd0a0"/><stop offset=".5" stop-color="#ff5a3a"/><stop offset="1" stop-color="#a80c3a"/></linearGradient></defs>
+<path d="M150 70 C120 20 60 10 10 30 C60 40 90 60 110 84 C80 80 40 100 20 140 C70 110 110 110 140 100 C150 130 190 150 240 150 C210 130 190 110 182 92 C220 90 260 70 290 30 C240 40 200 50 176 70 C180 50 170 34 156 30 Z" fill="url(#pg)" stroke="#6a0820" stroke-width="2"/>
+<circle cx="160" cy="44" r="3" fill="#2a0008"/><path d="M156 30 l-6 -16 M162 30 l2 -18 M168 32 l10 -14" stroke="#ffcf5a" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+function gfDeco() {
+  const bg = $('#bg'); if (!bg || bg.querySelector('.gfdeco')) return;
+  bg.insertAdjacentHTML('beforeend', `<div class="gfdeco"><i class="cl c1">${CLOUD_SVG('rgba(240,200,110,.22)')}</i><i class="cl c2">${CLOUD_SVG('rgba(240,200,110,.16)')}</i><i class="cl c3">${CLOUD_SVG('rgba(255,120,90,.14)')}</i>
+    <i class="lan l1">${LANTERN_SVG}</i><i class="lan l2">${LANTERN_SVG.replace(/lgr/g, 'lgr2')}</i></div>`);
+}
+function setTileStyle() {
+  try { const old = document.getElementById('tiledefs'), nu = TileArt.defs(CFG.tileClassic ? 'classic' : 'gf'); if (old) old.outerHTML = nu; document.body.classList.toggle('ts-gf', !CFG.tileClassic); document.body.classList.toggle('ts-classic', !!CFG.tileClassic); } catch (e) {}
+}
+const _applyAnim0 = applyAnim;
+applyAnim = function () { _applyAnim0(); try { document.body.classList.toggle('lite', !!CFG.lite || !ANIM()); } catch (e) {} if (CFG._ts !== !!CFG.tileClassic) { CFG._ts = !!CFG.tileClassic; setTileStyle(); } };
+// 大牌：全螢幕龍鳳＋金幣雨＋印章牌型名
+function bigHandFx(name) {
+  if (!ANIM()) return;
+  if (CFG.lite) { bigText(name, 'cal', 2200); return; }
+  const d = document.createElement('div'); d.className = 'bighand';
+  d.innerHTML = `<div class="bhglow"></div><i class="bhd">${DRAGON_SVG}</i><i class="bhp">${PHOENIX_SVG}</i><div class="bhseal"><span>${esc(name)}</span></div>`;
+  document.body.appendChild(d); setTimeout(() => d.remove(), 3200);
+  coinRain(46); particles({ fireworks: true, n: 80, speed: 6, dur: 2600, colors: ['#ffd23a', '#ff5a3a', '#fff2b0', '#3ad08a'] });
+}
+function coinRain(n = 40) {
+  if (!ANIM() || CFG.lite) return;
+  for (let i = 0; i < n; i++) { const c = document.createElement('i'); c.className = 'fxcoin rain'; c.style.left = (Math.random() * 100) + 'vw'; c.style.top = '-20px';
+    c.style.animationDelay = (Math.random() * 1.2) + 's'; c.style.animationDuration = (1.4 + Math.random() * 1.1) + 's'; document.body.appendChild(c); setTimeout(() => c.remove(), 4200); }
+}
+// 結算：台數逐行亮起＋合計滾動
+function taiTally(root) {
+  const grid = root.querySelector('.taigrid'); if (!grid || grid.dataset.tally) return; grid.dataset.tally = 1;
+  const rows = [...grid.children], tot = rows.reduce((s, r) => s + (parseInt((r.querySelector('b') || {}).textContent) || 0), 0);
+  rows.forEach((r, i) => { r.style.animationDelay = (i * .12) + 's'; r.classList.add('tin'); });
+  const t = document.createElement('div'); t.className = 'taitotal'; t.innerHTML = `合計 <b>0</b> 台`; grid.after(t);
+  const b = t.querySelector('b'); if (!ANIM() || CFG.lite) { b.textContent = tot; return; }
+  const t0 = performance.now(), dur = 400 + rows.length * 120;
+  const step = now => { const k = Math.min(1, (now - t0) / dur); b.textContent = Math.round(tot * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); else { t.classList.add('done'); try { beep('coin'); } catch (e) {} } };
+  requestAnimationFrame(step);
+}
+try { new MutationObserver(() => { const m = $('#modal'); if (m && m.classList.contains('on')) taiTally(m); }).observe(document.getElementById('modal') || document.body, { childList: true, subtree: true, attributes: true }); } catch (e) {}
+// 按鈕按下回彈（委派）
+document.addEventListener('pointerdown', e => { const b = e.target.closest && e.target.closest('.btn,.hbtn,.gcard,.cbtn,.chip'); if (!b || !ANIM() || CFG.lite) return; b.classList.remove('bnc'); void b.offsetWidth; b.classList.add('bnc'); setTimeout(() => b.classList.remove('bnc'), 420); }, true);
+window.__bigHandFx = bigHandFx; window.__taiTally = taiTally;
+// ================= v5.1 新大廳（仿手遊大廳結構：頂欄＋左側入口＋角色台＋大型麻將橫幅＋小遊戲磚＋右側入口＋底部導覽；原創中國風） =================
+const LOBBY_TIPS = ['今天手氣旺，來一圈？', '聽牌別急，穩穩胡！', '連莊拉莊，紅包滾滾來', '排位賽本季開打囉', '新造型上架，去衣櫃看看'];
+renderHome = function () {
+  if (!ACC) return;
+  setTimeout(() => { if (!$('#modal').classList.contains('on') && $('#home').classList.contains('on')) dailyRefill(); }, 900);
+  const d = dots(), st = seasonTheme(), R = rankState(), tier = TIERS[tierOf(R.pts)][0];
+  const gc = (k, cls) => { const g = GAMES[k]; return `<button class="gcard lb-${cls} c-${g.color}" data-go="gamehub" data-arg="${k}"><div class="gart">${GART[k]()}</div><div class="gglyph">${g.glyph}</div><h2>${g.name}</h2><p>${g.tag}</p><span class="gn">${g.n} 人${k === 'mj' ? '／2 人' : ''}</span><span class="gplay">▶</span></button>`; };
+  const sb = (attr, ic, l, extra = '') => `<button class="lside-b" ${attr}><i>${ic}</i><span>${l}</span>${extra}</button>`;
+  const sk = V5.skin;
+  $('#home').innerHTML = `<div class="topbar">
+      <button class="profile glass" data-go="profile">${avatar(myAv(), 44)}<div style="text-align:left"><div class="nm">${esc(ACC.nick)}</div><div class="sub">Lv.${level()}・<span class="ttl">${title()}</span></div></div></button>
+      ${walletHTML()}
+      <div class="ticons">${[['signin', 'cal', '簽到'], ['event', 'gift', '福利'], ['mail', 'mail', '郵件'], ['notice', 'horn', '公告']].map(([k, ic, l]) => `<button class="ti" data-open="${k}">${ICON[ic]}<span>${l}</span>${d[k] ? '<em></em>' : ''}</button>`).join('')}<button class="ti" data-go="settings">${ICON.gear || '⚙'}<span>設定</span></button></div>
+    </div>
+    <div class="lobby">
+      <div class="hrow2 lside">
+        ${sb('data-go="events" data-arg="ev"', st.deco, '活動', '<em class="hot">熱</em>')}
+        ${sb('data-go="events" data-arg="pass"', '📜', '任務')}
+        ${sb('data-go="shop" data-arg="cards"', '🏮', '商城')}
+        ${sb('data-go="wardrobe"', '👘', '衣櫃')}
+        ${sb('data-go="ranked"', '⚔️', '排位')}
+        ${sb('data-go="friendroom"', '🏠', '好友房')}
+        ${sb('data-go="replays"', '🎞️', '回放')}
+      </div>
+      <div class="lstage">
+        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.1</span></div>
+        <div class="lring"></div><div class="lped"></div>
+        <button class="lchar" data-go="wardrobe">${sk ? skinSVG(sk) : avatar(myAv(), 150)}</button>
+        <div class="lbubble">${LOBBY_TIPS[new Date().getMinutes() % LOBBY_TIPS.length]}</div>
+        <div class="lname"><b>${esc(ACC.nick)}</b><small>${tier}・${R.pts} 分</small></div>
+        ${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}
+      </div>
+      <div class="games lgames">${gc('mj', 'feat')}${gc('mj2', 'mid')}${gc('lf', 'mid')}${gc('he', 'mid')}${gc('sl', 'mid')}${gc('ssz', 'sm')}${gc('b2', 'sm')}${gc('ddz', 'sm')}${gc('aq', 'sm')}</div>
+      <div class="lside lside2">
+        ${sb('data-go="lobby"', '🀄', '牌局大廳')}
+        ${sb('data-go="ranking"', '🏆', '排行')}
+        ${sb('data-open="fair"', '🛡️', '公平')}
+        ${sb('data-go="settings"', '⚙️', '設定')}
+      </div>
+    </div>
+    <nav class="bnav glass">${[['home', 'home', '首頁'], ['friends', 'friends', '好友'], ['stats', 'chart', '戰績'], ['replays', 'play', '牌譜'], ['club', 'club', '俱樂部'], ['chat', 'chat', '聊天']].map(([k, ic, l]) => `<button class="${k === 'home' ? 'on' : ''}" ${k === 'home' ? '' : `data-go="${k}"`}>${ICON[ic]}<span>${l}</span></button>`).join('')}</nav>`;
+};
 
-document.body.insertAdjacentHTML('afterbegin', TileArt.defs());
-applyTheme(); fit();
+
+document.body.insertAdjacentHTML('afterbegin', TileArt.defs(CFG.tileClassic ? 'classic' : 'gf'));
+applyTheme(); fit(); try { gfDeco(); CFG._ts = !!CFG.tileClassic; document.body.classList.add(CFG.tileClassic ? 'ts-classic' : 'ts-gf'); applyAnim(); } catch (e) {}
 if (ACC && ACC.loggedIn && ACC.nick) { afterLogin(); } else { renderLogin(); show('login'); }
 window.__go = go; window.__OPEN = OPEN; window.__show = show; window.__matching = matching; window.__spectate = spectate;
 
