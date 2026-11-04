@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#fff4dc">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -914,6 +917,62 @@ html,body{background:#0b1a33}
 #game .pop.k-pon span{background:radial-gradient(circle at 50% 35%,#ffa4a0,#e64a4a 55%,#a81f2a)!important}
 #game .pop.k-chi span{background:radial-gradient(circle at 50% 35%,#b6f08a,#55b62c 55%,#2e7c14)!important}
 #game .pop.k-kan span{background:radial-gradient(circle at 50% 35%,#d8b4ff,#9b5ce6 55%,#6630b0)!important}
+/* ===== v4.4：更貼近參考畫面（大手牌、厚底邊、較大牌河、較大頭像、精簡雜訊） ===== */
+.hver{margin-left:8px;font-size:11px;padding:1px 7px;border-radius:6px;background:rgba(0,0,0,.3);border:1px solid var(--line2);color:var(--gold2);align-self:center}
+#game{--cy:230px;--rin:62px}
+#game #gEmo{display:none}
+#game .rinfo b{font-size:20px}
+#game .rinfo .rd{font-size:10px;opacity:.7}
+#game .rinfo .tags span{font-size:9px;opacity:.75;background:none;border-color:rgba(255,255,255,.15)}
+#game .rinfo .tags .ver{opacity:.9;color:#ffe48a}
+/* 頭像較大 */
+.mjseat{width:90px}
+.mjseat .ava,.mjseat .av{width:62px!important;height:62px!important}
+.mjseat .scp{font-size:12px;min-width:70px;color:#ffe48a}
+#game .mjseat.s2{left:calc(50% + 230px)!important}
+#game .mjseat.s0{top:378px!important}
+/* 羅盤：小、綠松色，剩餘張數低調 */
+#game .plate{left:calc(50% - 33px);top:calc(var(--cy) - 33px);width:66px;height:66px;border-radius:10px}
+#game .plate .core{width:30px;height:30px;border-radius:5px;background:rgba(0,40,40,.45);border:1px solid rgba(160,255,240,.5)}
+#game .plate .left{font-size:12px;-webkit-text-fill-color:rgba(255,240,180,.85);color:rgba(255,240,180,.85)}
+#game .plate .w{font-size:13px;color:rgba(255,255,255,.9)}
+#game .w-t,#game .w-b{left:calc(50% - 56px);width:112px;height:10px}
+#game .w-t{top:calc(var(--cy) - 56px)}#game .w-b{top:calc(var(--cy) + 46px)}
+#game .w-l,#game .w-r{top:calc(var(--cy) - 45px);height:90px;width:10px}
+#game .w-l{left:calc(50% - 56px)}#game .w-r{left:calc(50% + 46px)}
+/* 牌河：較大白牌，上下每排 7 張、左右每排 4 張 */
+#game .river .t{margin-bottom:4px}
+#game .r0,#game .r2{left:calc(50% - 115px);width:231px;height:141px}
+#game .r0{top:calc(var(--cy) + var(--rin))}
+#game .r2{top:calc(var(--cy) - var(--rin) - 141px)}
+#game .r3,#game .r1{width:132px;height:188px;top:calc(var(--cy) - 94px)}
+#game .r3{left:calc(50% - var(--rin) - 94px - 66px)}
+#game .r1{left:calc(50% + var(--rin) + 94px - 66px)}
+#game.two .r0,#game.two .r2{left:calc(50% - 181px);width:363px}
+/* 對手：上方小牌一排、左右靠邊直列 */
+#game .backs-top{top:2px;left:calc(50% - 40px)}
+#game .m-top{top:2px;right:calc(50% + 150px)}
+#game .m-l{left:98px}#game .m-r{right:98px}
+#game .m-l,#game .m-r{width:34px;top:60px}
+#game .b-l{left:136px}#game .b-r{right:136px}
+#game .backs-side{top:60px}
+#game .sideb{width:20px;height:16px;border-radius:2px;margin-bottom:1px;background:linear-gradient(180deg,#5d95e0,var(--bk1) 45%,var(--bk2))!important;box-shadow:0 2px 0 #e9e1c8,0 3px 2px rgba(0,0,0,.4)}
+/* 自己手牌：大、白、厚底邊（立牌） */
+#game .hand{left:100px;right:6px;top:420px;height:118px;gap:1px}
+#game .hand .t.h{background:linear-gradient(180deg,#ffffff 0%,#fbfaf4 70%,#efece0 100%);border-radius:calc(var(--w)*.09);
+  box-shadow:inset 0 2px 0 #fff,inset 0 -2px 0 rgba(170,160,130,.35),0 calc(var(--w)*-.09) 0 var(--bk1),0 calc(var(--w)*-.11) 0 var(--bk3),
+  0 2px 0 #e4dfcf,0 4px 0 #d3ccb6,0 6px 0 #c2baa1,0 7px 0 #a99f84,0 9px 7px rgba(0,0,0,.45);margin-bottom:10px}
+#game .hand .meld{align-self:flex-end;margin-right:6px}
+#game .hand .meld .t{box-shadow:0 1px 0 #ddd6c0,0 3px 0 #c8c0a6,0 4px 3px rgba(0,0,0,.35);margin-bottom:6px}
+#game .hand .gap{width:16px}
+#game .hand .t.sel::before,#game .hand .t.win::before{bottom:-9px!important}
+/* 按鈕：手牌上方右側 */
+#game .cbtn{width:66px;height:66px;font-size:34px}
+#game .claimbar{right:150px;bottom:132px}
+#game .claimbar .btn.primary{padding:6px 16px;font-size:14px;border-radius:999px;background:linear-gradient(180deg,#38c9b4,#14897b);color:#fff;border:1.5px solid #c8fff4;box-shadow:0 2px 5px rgba(0,0,0,.4);text-shadow:none}
+#game .autotog{top:396px;right:12px}
+#game .ting{bottom:132px}
+#game .backs-top{left:calc(50% + 30px)}
 
 </style>
 </head>
@@ -2604,7 +2663,7 @@ function renderHome() {
       ${walletHTML()}
       <div class="ticons">${[['signin', 'cal', '簽到'], ['event', 'gift', '活動'], ['mail', 'mail', '郵件'], ['notice', 'horn', '公告']].map(([k, ic, l]) => `<button class="ti" data-open="${k}">${ICON[ic]}<span>${l}</span>${d[k] ? '<em></em>' : ''}</button>`).join('')}</div>
     </div>
-    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
+    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v4.4</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
     <div class="games">${Object.entries(GAMES).map(([k, g]) => `<button class="gcard c-${g.color}" data-go="gamehub" data-arg="${k}"><div class="gart">${GART[k]()}</div><div class="gglyph">${g.glyph}</div><h2>${g.name}</h2><p>${g.tag}</p><span class="gn">${g.n} 人${k === 'mj' ? '／2 人' : ''}</span><span class="gplay">▶</span></button>`).join('')}</div>
     <div class="hrow2">
       <button class="hbtn c-lemon" data-go="friendroom"><b><i class="emo">🏠</i> 好友開房</b><small>房卡開房・自訂規則</small></button>
@@ -3417,17 +3476,17 @@ function renderGame() {
     h.push(seatChip(p, g));
     if (pos === 2) h.push(`<div class="g-abs backs-top">${G.reveal ? pl.hand.map(t => tile(t, 19)).join('') : pl.hand.map(() => tile(-1, 21)).join('')}</div>`);
     else h.push(`<div class="g-abs backs-side ${pos === 3 ? 'b-l' : 'b-r'} ${G.reveal ? 'reveal' : ''}">${G.reveal ? pl.hand.map(t => tile(t, 17)).join('') : pl.hand.map(() => '<div class="sideb"></div>').join('')}</div>`);
-    h.push(`<div class="g-abs melds ${['', 'm-r', 'm-top', 'm-l'][pos]}">${pl.melds.map(m => meldHTML(m, 21, G.reveal)).join('')}</div>`);
+    h.push(`<div class="g-abs melds ${['', 'm-r', 'm-top', 'm-l'][pos]}">${pl.melds.map(m => meldHTML(m, 24, G.reveal)).join('')}</div>`);
   }
-  for (let p = 0; p < G.n; p++) h.push(riverHTML(p, g, 28));
+  for (let p = 0; p < G.n; p++) h.push(riverHTML(p, g, 32));
   G.newRiver = -1;
   // 中央
   const left = Math.max(0, g.wall.length - MJ.RESERVE);
   const wcls = p => (g.turn === p && !g.result ? 'on' : '');
   const wseat = pos => { const p = g.players.findIndex((_, i) => vpos(i) === pos); return p < 0 ? '' : `<div class="w w${pos} ${wcls(p)}">${WINDS[g.players[p].seatWind]}</div>`; };
-  h.push(`<div class="g-abs plate"><div class="core"><div class="left num">${left}</div><small>剩餘</small></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
+  h.push(`<div class="g-abs plate"><div class="core"><div class="left num">${left}</div></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
   h.push(`<div class="g-abs rinfo"><b>${WINDS[roundWind() || 0]}風圈</b><span class="rd">${handLabel().replace(/^.風圈・/, '')}</span>
-    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}</div></div>`);
+    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v4.4</span></div></div>`);
   // 自己（或觀戰視角）
   h.push(seatChip(V, g));
   let tiles = me.hand.slice(), drawn = null;
@@ -3435,8 +3494,8 @@ function renderGame() {
   tiles.sort((a, b) => a - b);
   const disp = drawn != null ? [...tiles, drawn] : tiles; G.disp = disp;
   const meldTiles = me.melds.reduce((s, m) => s + m.tiles.length, 0);
-  const meldW = meldTiles * 33 + me.melds.length * 8;
-  const tw = Math.min(52, Math.floor((STW - 124 - meldW) / (disp.length + .4)) - 2);
+  const meldW = meldTiles * 31 + me.melds.length * 6;
+  const tw = Math.min(56, Math.floor((STW - 118 - meldW) / (disp.length + .6)) - 2);
   const myTurn = G.pending && G.pending.kind === 'turn';
   let tingSet = new Set();
   if (myTurn && (CFG.ting || G.tingPick || !G.ting)) {
@@ -3445,7 +3504,7 @@ function renderGame() {
   G.tingSet = tingSet;
   const winT = g.result && g.result.type === 'win' && g.result.winner === V ? g.result.winTile : null;
   let winMarked = false;
-  const handHtml = me.melds.map(m => meldHTML(m, 32, true)).join('') + (me.melds.length ? '<span class="gap"></span>' : '') +
+  const handHtml = me.melds.map(m => meldHTML(m, 30, true)).join('') + (me.melds.length ? '<span class="gap"></span>' : '') +
     disp.map((t, i) => {
       let cls = 'h' + (i === G.sel ? ' sel' : '') + (G.tingPick && !tingSet.has(t) ? ' dim' : '');
       if (winT != null && t === winT && !winMarked && i === disp.length - 1) { cls += ' win'; winMarked = true; }
@@ -3472,7 +3531,7 @@ function renderGame() {
     pd.o.kakan.forEach(t => cb += `<button class="cbtn kan wide" data-act="kakan" data-t="${t}">${tile(t, 24)}<span>加槓</span></button>`);
     if (!G.ting && tingSet.size && g.canDraw()) cb += `<button class="cbtn ting2 ${G.tingPick ? 'on' : ''}" data-act="baoting">${G.tingPick ? '取消' : '聽'}</button>`;
     if (G.sel >= 0) cb += `<button class="btn primary" data-act="discard">${G.tingPick ? '報聽打出' : '打出'}</button>`;
-    else if (!cb || G.tingPick) cb += `<span class="glass pillnote">${G.tingPick ? '選一張標「聽」的牌打出並報聽' : '輪到你：點一張牌，再點一次打出'}</span>`;
+    else if (G.tingPick) cb += `<span class="glass pillnote">${G.tingPick ? '選一張標「聽」的牌打出並報聽' : '輪到你：點一張牌，再點一次打出'}</span>`;
   } else if (pd && pd.kind === 'claim') {
     const o = pd.o;
     cb += `<span class="glass pillnote">${roleOf(pd.from)}${o.rob ? '加槓（可搶槓胡）' : '打出'}${tile(pd.t, 26)}</span>`;
@@ -3533,10 +3592,11 @@ function leaveGame(force) {
 }
 $('#gMenu').onclick = () => { beep('tap');
   modal(`<h2>選單</h2><div class="menu">
-    <button data-m="rules">📖<b>規則</b></button><button data-m="set">⚙️<b>設定</b></button><button data-m="voice">🎙️<b>語音</b></button>
+    <button data-m="rules">📖<b>規則</b></button><button data-m="set">⚙️<b>設定</b></button><button data-m="voice">🎙️<b>語音</b></button><button data-m="emo">😊<b>表情</b></button>
     ${G.kind === 'play' ? `<button data-m="auto">🤖<b>${G.auto ? '取消託管' : '託管'}</b></button>` : ''}<button data-m="leave">🚪<b>離開</b></button></div>`, pn => {
       pn.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { const m = b.dataset.m; beep('tap');
         if (m === 'rules') OPEN.rules();
+        if (m === 'emo') { closeModal(); setTimeout(() => $('#gEmo').onclick(), 50); }
         if (m === 'set') gameSettings();
         if (m === 'voice') { closeModal(); toast('🎙️ 語音聊天需連線，離線版僅模擬：電腦玩家聽不到你 😅'); }
         if (m === 'auto') { closeModal(); toggleAuto(); }
