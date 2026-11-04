@@ -1009,6 +1009,139 @@ html,body{background:#0b1a33}
 @keyframes cfly{from{transform:translate(var(--fx),var(--fy)) scale(.6) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
 body.noanim .pop,body.noanim .pop.burst,body.noanim .pop.burst::before,body.noanim #myhand > .t,body.noanim .t.flipin,body.noanim .pile .cards,body.noanim #myhand.tingglow > .t.h{animation-duration:.01s!important;animation-iteration-count:1!important}
 body.noanim .pop{animation:none!important;transform:translate(-50%,-50%)}
+/* ===== v5.0 ===== */
+/* 首頁：9 種玩法橫向捲動 */
+.games{display:flex!important;overflow-x:auto;overflow-y:hidden;gap:12px!important;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:thin}
+.games .gcard{flex:0 0 172px;scroll-snap-align:start}
+.games .gcard[data-arg="mj"]{flex-basis:210px}
+.hrow2{grid-template-columns:1.2fr 1.1fr 1fr .9fr .9fr .8fr .8fr .8fr .8fr!important;gap:8px!important}
+.hrow2 .hbtn{padding:0 10px}.hrow2 .hbtn small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.hbtn.c-rank{background:linear-gradient(180deg,#5a3aa0,#2e1d60)!important}.hbtn.c-ward{background:linear-gradient(180deg,#2a8a7a,#145448)!important}.hbtn.c-ev{background:linear-gradient(180deg,#b0402a,#6a1e14)!important}
+.lfart{position:absolute;inset:0;display:flex;gap:4px;align-items:center;justify-content:center}
+.lfart span{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:900 28px/1 "Kaiti TC","BiauKai","Noto Serif TC",serif;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.lfart .d{background:radial-gradient(circle at 35% 30%,#ff7a6a,#b0202a)}.lfart .f{background:radial-gradient(circle at 35% 30%,#ffe08a,#c88a10);margin-top:18px}
+.c-lemon .gglyph,.c-coral .gglyph{opacity:.9}
+/* 第三方登入（模擬） */
+.sso{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.sso .btn{height:38px;font-weight:800;border-radius:10px;color:#fff;border:0}
+.sso-l{background:#2fb35a}.sso-f{background:#3b62b0}.sso-g{background:#fff;color:#333!important;box-shadow:inset 0 0 0 1px #ccc}.sso-a{background:#111}
+.ssonote{font-size:10.5px;opacity:.75;text-align:center;margin:2px 0 4px}
+/* 3D 牌桌 */
+.tilt3d{position:absolute;left:0;top:0;width:var(--W);height:540px;transform-origin:50% 58%;transition:transform .4s}
+#game.td3 .tilt3d{transform:perspective(1300px) rotateX(24deg) scale(.97)}
+#game.td3 .felt{background-image:radial-gradient(ellipse 62% 54% at 50% 46%,rgba(255,255,255,.10),transparent 70%),radial-gradient(ellipse 80% 70% at 50% 50%,transparent 60%,rgba(0,10,40,.45) 100%),radial-gradient(ellipse 75% 70% at 50% 45%,var(--f1) 0%,var(--f2) 55%,var(--f3) 85%,var(--f4) 100%)!important}
+#game.td3 .felt::before{border:3px solid rgba(255,255,255,.10)!important;box-shadow:inset 0 0 0 6px rgba(0,0,0,.12),inset 0 18px 30px rgba(0,0,0,.25);border-radius:22px!important}
+#game.td3 .tilt3d .t{box-shadow:0 3px 0 #9aa3ae,0 5px 6px rgba(0,0,0,.35)}
+#game.td3 .tilt3d .river .t{box-shadow:0 2px 0 #9aa3ae,0 3px 4px rgba(0,0,0,.3)}
+.tilt3d.lift .wall{animation:wrise 1.1s cubic-bezier(.2,.8,.3,1) backwards}
+.tilt3d.lift .wall.w-r{animation-delay:.1s}.tilt3d.lift .wall.w-t{animation-delay:.2s}.tilt3d.lift .wall.w-l{animation-delay:.3s}
+@keyframes wrise{0%{opacity:0;filter:brightness(.3);scale:.85}60%{opacity:1}100%{filter:none;scale:1}}
+.tilt3d.lift .plate{animation:plup 1s ease-out}
+@keyframes plup{0%{scale:.4;opacity:0}70%{scale:1.1;opacity:1}100%{scale:1}}
+.mtable{position:absolute;left:50%;top:var(--cy,230px);width:260px;height:260px;margin:-130px 0 0 -130px;pointer-events:none;z-index:30;border-radius:50%;
+  background:radial-gradient(circle,#0b1e3c 0 38%,transparent 39%);animation:mtfade 1.5s ease forwards}
+.mtable i{position:absolute;top:0;width:50%;height:100%;background:radial-gradient(circle at 100% 50%,#2a5fae 0 60%,#163c72 61% 100%);box-shadow:inset 0 0 0 3px rgba(255,255,255,.15)}
+.mtable i.l{left:0;border-radius:130px 0 0 130px;animation:mtl 1.1s .15s cubic-bezier(.5,0,.3,1) forwards}
+.mtable i.r{right:0;border-radius:0 130px 130px 0;transform:scaleX(-1);animation:mtr 1.1s .15s cubic-bezier(.5,0,.3,1) forwards}
+.mtable b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#ffe9a8;font-size:15px;letter-spacing:2px;white-space:nowrap;text-shadow:0 2px 4px #000;animation:mtb 1.4s forwards}
+@keyframes mtl{to{transform:translateX(-70%) rotate(-12deg);opacity:0}}@keyframes mtr{to{transform:scaleX(-1) translateX(-70%) rotate(-12deg);opacity:0}}
+@keyframes mtfade{0%,70%{opacity:1}100%{opacity:0}}@keyframes mtb{0%,60%{opacity:1}100%{opacity:0}}
+/* 龍鳳對決 */
+.lfinfo{left:150px;top:6px;display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:12px;font-size:12px;z-index:6;color:#fff}
+.lfinfo .d{color:#ff8a7a;font-weight:900}.lfinfo .f{color:#ffd970;font-weight:900}.lfinfo .ts{display:flex;flex-direction:column;margin-left:6px;line-height:1.25}
+/* 牌山 */
+.wallm{max-width:96vw!important}
+.wallgrid{display:grid;grid-template-columns:repeat(18,max-content);justify-content:center;gap:2px;max-height:300px;overflow:auto;padding:4px}
+.wc{display:flex;flex-direction:column;align-items:center;border-radius:5px;padding:1px 0 2px}.wc small{font-size:8px;opacity:.6;line-height:1}
+.wc.dl{background:rgba(120,170,255,.22)}.wc.fr{background:rgba(120,255,170,.18)}.wc.bk{background:rgba(255,180,90,.25)}.wc.rm{opacity:.55}
+.wlegend{display:flex;gap:10px;font-size:12px;margin:4px 0}.wlegend span{padding:2px 8px;border-radius:6px}
+.wlegend .dl{background:rgba(120,170,255,.3)}.wlegend .fr{background:rgba(120,255,170,.25)}.wlegend .bk{background:rgba(255,180,90,.3)}.wlegend .rm{background:rgba(255,255,255,.1)}
+/* 牌譜逐步 */
+.rvw{display:flex;flex-direction:column;gap:6px;height:100%}
+.rvtop{display:flex;gap:12px;align-items:center;padding:6px 12px;border-radius:10px;font-size:13px;flex-wrap:wrap}.rvstep{margin-left:auto;color:#ffe08a}
+.rvplayers{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rvp{padding:5px 8px;border-radius:10px;min-height:60px}.rvp.cur{box-shadow:0 0 0 2px #ffd54a}.rvp.fold{opacity:.5}
+.rvp .who{display:flex;align-items:center;gap:6px;font-size:12px}.rvp .who small{margin-left:auto;display:flex;gap:1px}
+.rvh{display:flex;flex-wrap:wrap;align-items:flex-end;gap:1px;margin-top:3px}.rvh .meld{display:flex;margin-right:5px}.rvh .gap{width:6px}
+.rvd{display:flex;flex-wrap:wrap;gap:1px;margin-top:3px;opacity:.9}.rvd .t.last{outline:2px solid #ff6a5a}
+.rvbar{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;position:sticky;bottom:0}.rvbar input{flex:1}
+.rvboard{display:flex;align-items:center;gap:6px;padding:8px;border-radius:10px;justify-content:center}.rvboard b{margin-left:12px}
+.aqmini{display:grid;grid-template-columns:repeat(8,34px);gap:2px}.aqmini i{width:34px;height:34px;display:grid;place-items:center;background:rgba(0,0,0,.2);border-radius:4px}
+/* 造型 */
+.wardw{display:flex;gap:12px;height:100%}
+.wprev{flex:0 0 190px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px;border-radius:14px;text-align:center}
+.wmain{flex:1;min-width:0;overflow:auto}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.witem{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:12px;cursor:pointer;text-align:center;position:relative}
+.witem b{font-size:12px}.witem small{font-size:10.5px;opacity:.8}.witem.on{box-shadow:0 0 0 2px #ffd54a}
+.witem .perk{font-size:9.5px;color:#ffd970;font-style:normal}
+.fxprev{display:flex;gap:3px;height:40px;align-items:center}.fxprev i{width:12px;height:12px;border-radius:50%;box-shadow:0 0 8px currentColor}
+.wh{margin:10px 0 6px}
+.av.skin i svg{width:100%;height:100%}
+/* 活動 */
+.evban{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:14px;background:linear-gradient(90deg,var(--ec,#2a7a5a),rgba(0,0,0,.25));margin-bottom:8px;color:#fff}
+.evban.pass{background:linear-gradient(90deg,#5a3aa0,#1d2a5a)}
+.evban .deco{font-size:34px}.evban small{display:block;opacity:.85;font-size:12px}.evban .evpt{margin-left:auto;text-align:center}.evban .evpt b{font-size:26px;display:block}
+.evcols{display:grid;grid-template-columns:1fr 1.25fr;gap:8px}
+.evm,.evt{padding:8px 12px;border-radius:12px}.evm h4,.evt h4{margin:0 0 6px}
+.mrow{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.08)}.mrow>div{flex:1}.mrow small{display:block;font-size:11px;opacity:.8}
+.bar{height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-top:3px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffd54a,#ff8a3d)}
+.track{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tnode,.pnode{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;border-radius:10px;background:rgba(255,255,255,.06);text-align:center}
+.tnode small,.pnode small{font-size:10.5px}.tnode.ok,.pnode.ok{box-shadow:0 0 0 1.5px #ffd54a}.tnode.cl,.pnode.cl{opacity:.55}
+.tn{font-size:11px;font-weight:900;color:#ffd970}.tic{font-size:22px}
+.ptrack{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+/* 排位 */
+.rkw{display:grid;grid-template-columns:300px 1fr;gap:10px}
+.rkme{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px;border-radius:14px}.rkme .big{font-size:24px}.rkme .bar{width:90%}
+.rkhist{padding:10px 14px;border-radius:14px}.hrow2b{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.rbadge{display:inline-block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}.rbadge svg{width:100%;height:100%}
+.rkboard{padding:6px 10px;border-radius:14px;max-height:100%;overflow:auto}
+.rkr{display:grid;grid-template-columns:30px 34px 1fr 30px 50px 60px 60px;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.rkr.me{background:rgba(255,213,74,.15);border-radius:8px}.rkr .no{font-weight:900;text-align:center;color:#ffd970}
+.rkrule{padding:10px 16px;border-radius:14px}
+.pos{color:#7fe0a0}.neg{color:#ff8a8a}
+/* 德州撲克 */
+#cgame[data-game=he] .ctable{--f1:#1f6a4a;--f2:#185a3e;--f3:#124630;--f4:#0b2e20}
+#cgame[data-game=sl] .ctable{--f1:#7a2a3a;--f2:#62202e;--f3:#4a1822;--f4:#300e16}
+.heoval{left:200px;right:200px;top:70px;height:290px;border-radius:150px;border:10px solid #3a2414;box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),0 10px 26px rgba(0,0,0,.5);background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.08),transparent 70%);pointer-events:none}
+.hepot{left:50%;top:146px;transform:translateX(-50%);text-align:center;color:#ffe9a8;z-index:3}.hepot b{font-size:18px}.hepot small{display:block;font-size:11px}
+.heboard{left:50%;top:180px;transform:translateX(-50%);display:flex;gap:6px;z-index:3}
+.pc.slot{background:rgba(255,255,255,.07)!important;border:1.5px dashed rgba(255,255,255,.25)!important;box-shadow:none!important}
+.pc.slot.q span{position:absolute;inset:0;display:grid;place-items:center;font-size:40px;color:rgba(255,255,255,.4);font-weight:900}
+.hehole{display:flex;gap:2px;z-index:3}
+.hebet{display:flex;align-items:center;gap:4px;color:#fff;font-weight:800;font-size:13px;z-index:4;text-shadow:0 1px 2px #000}.hebet em{font-style:normal;font-size:11px;background:rgba(0,0,0,.45);padding:1px 6px;border-radius:8px;color:#ffe08a}
+.chip3{display:inline-block;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#fff 0 28%,#d8323a 30% 62%,#fff 64% 72%,#d8323a 74%);box-shadow:0 2px 0 #7a1418}
+.chip3.big{width:28px;height:28px}
+.hemine{left:50%;top:318px;transform:translateX(-50%);display:flex;gap:6px;align-items:flex-end;z-index:4}.hemine small{color:#ffe08a;font-weight:800;margin-left:6px;text-shadow:0 1px 2px #000}.hemine.fold{opacity:.45}
+.hebar{top:auto!important;bottom:12px;left:auto!important;right:14px;transform:none!important;gap:8px!important}
+.hebar .btn small{display:block;font-size:9.5px;opacity:.8}
+.btn.coral{background:linear-gradient(180deg,#ff7a5a,#c8402a);color:#fff}
+.seatchip.folded{opacity:.5}.dbtn{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:#fff;color:#222;font-size:10px;font-weight:900;margin-left:4px}
+.hst{font-size:10px;opacity:.75;margin-left:4px}
+.flipc{animation:flipin .35s ease-out}
+/* 射龍門 */
+.slpot{left:50%;top:60px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;color:#ffe9a8;z-index:3}.slpot b{font-size:20px}.slpot small{font-size:11px;opacity:.85}
+.slgate{left:50%;top:128px;transform:translateX(-50%);display:flex;gap:26px;align-items:center;z-index:3}
+.slgate .post{box-shadow:0 0 0 3px #e8c04a,0 8px 18px rgba(0,0,0,.5)}
+.slmid{padding:8px;border-radius:12px;background:rgba(0,0,0,.2)}
+.pc.third.win{box-shadow:0 0 0 3px #7fe0a0,0 0 22px #7fe0a0}.pc.third.post{box-shadow:0 0 0 3px #ff5a5a,0 0 22px #ff5a5a}.pc.third.lose{opacity:.8;box-shadow:0 0 0 3px #888}
+.pc.third{animation:flipin .4s ease-out}
+.slkind{left:50%;top:268px;transform:translateX(-50%);color:#fff;font-size:13px;background:rgba(0,0,0,.35);padding:3px 12px;border-radius:10px;white-space:nowrap;z-index:3}
+.slbar{top:auto!important;bottom:12px;left:auto!important;right:14px;transform:none!important;gap:8px!important}
+.slrow{display:flex;align-items:center;gap:4px;font-size:12px;padding:2px 0}.slrow b{width:64px}.slrow span{margin-left:8px}
+.cardsr{display:flex;gap:2px}.cardsr.board{justify-content:center;margin-top:6px}
+.mseats.n6{grid-template-columns:repeat(6,1fr)!important}
+.pop.sm span{font-size:40px!important}
+.hemine .pc{--w:66px!important}
+#cgame[data-game=sl] .pile.p0{top:318px}
+#cgame[data-game=sl] .pile.p2{top:60px;left:calc(50% + 250px)}
+#cgame[data-game=sl] .slkind{top:278px}
+.lfinfo{left:10px!important;top:196px!important;flex-direction:column;align-items:flex-start!important;gap:3px!important;width:118px}
+.lfinfo .ts{margin:2px 0 0!important}
+.lfinfo>span.d,.lfinfo>span.f{display:inline-block}
+.wallgrid .wc{width:25px;min-width:0}
+.wallgrid .wc .t{--w:21px!important;width:21px!important}
 
 </style>
 </head>
@@ -1195,7 +1328,7 @@ const MJ = (() => {
       this.result = null;
     }
     deal() {
-      this.wall = buildWall(this.rng, this.rules.flowers); this.backN = 0; this.anyMeld = false; this.totalDiscards = 0; this.flowerWin = null;
+      this.wall = buildWall(this.rng, this.rules.flowers); this.wallOrder = this.wall.slice(); this.backN = 0; this.anyMeld = false; this.totalDiscards = 0; this.flowerWin = null;
       const n = this.n;
       this.players = Array.from({ length: n }, (_, i) => ({ id: i, hand: [], melds: [], flowers: [], discards: [], seatWind: n === 2 ? [0, 2][(i - this.dealer + 2) % 2] : (i - this.dealer + 4) % 4 }));
       for (let r = 0; r < 16; r++) for (let k = 0; k < n; k++) this.players[(this.dealer + k) % n].hand.push(this.wall.shift());
@@ -2212,6 +2345,261 @@ if (typeof module !== 'undefined') module.exports = CG;
 // ==CARDS END==
 </script>
 <script>
+// ==POKER START==
+// 德州撲克（無限注）與射龍門引擎＋龍鳳對決計分（純邏輯，可在 Node 測試）
+// 撲克牌編號沿用 CG：id = r*4 + s，r：0=3 … 11=A 12=2
+const PK = (() => {
+  const val = c => { const r = c >> 2; return r === 12 ? 2 : r + 3; };
+  const suit = c => c & 3;
+  const mulberry32 = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const shuffled = rng => { const d = Array.from({ length: 52 }, (_, i) => i); for (let i = 51; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; };
+  const CAT = ['高牌', '一對', '兩對', '三條', '順子', '同花', '葫蘆', '鐵支', '同花順'];
+  // ---------- 牌力評估 ----------
+  function eval5(cs) {
+    const vs = cs.map(val).sort((a, b) => b - a), fl = cs.every(c => suit(c) === suit(cs[0]));
+    const cnt = {}; vs.forEach(v => cnt[v] = (cnt[v] || 0) + 1);
+    const groups = Object.entries(cnt).map(([v, n]) => [+v, n]).sort((a, b) => b[1] - a[1] || b[0] - a[0]);
+    const uniq = groups.length === 5;
+    let st = 0;
+    if (uniq && vs[0] - vs[4] === 4) st = vs[0];
+    if (uniq && vs[0] === 14 && vs[1] === 5) st = 5; // A-2-3-4-5
+    let cat, kick;
+    if (st && fl) { cat = 8; kick = [st]; }
+    else if (groups[0][1] === 4) { cat = 7; kick = [groups[0][0], groups[1][0]]; }
+    else if (groups[0][1] === 3 && groups[1][1] === 2) { cat = 6; kick = [groups[0][0], groups[1][0]]; }
+    else if (fl) { cat = 5; kick = vs; }
+    else if (st) { cat = 4; kick = [st]; }
+    else if (groups[0][1] === 3) { cat = 3; kick = groups.map(g => g[0]); }
+    else if (groups[0][1] === 2 && groups[1][1] === 2) { cat = 2; kick = groups.map(g => g[0]); }
+    else if (groups[0][1] === 2) { cat = 1; kick = groups.map(g => g[0]); }
+    else { cat = 0; kick = vs; }
+    let s = cat; for (let i = 0; i < 5; i++) s = s * 15 + (kick[i] || 0);
+    return s;
+  }
+  const catOf = score => Math.floor(score / 759375);
+  function best(cards) {
+    let bs = -1, bc = null; const n = cards.length;
+    if (n < 5) return { score: -1, cat: -1, cards: [] };
+    for (let a = 0; a < n; a++) for (let b = a + 1; b < n; b++) for (let c = b + 1; c < n; c++) for (let d = c + 1; d < n; d++) for (let e = d + 1; e < n; e++) {
+      const h = [cards[a], cards[b], cards[c], cards[d], cards[e]], s = eval5(h); if (s > bs) { bs = s; bc = h; } }
+    const cat = catOf(bs);
+    return { score: bs, cat, cards: bc, name: cat === 8 && Math.floor(bs / 50625) % 15 === 14 ? '皇家同花順' : CAT[cat] };
+  }
+  // ---------- 德州撲克 ----------
+  const HE = {};
+  const inHand = (S, p) => S.seated[p] && !S.folded[p];
+  const canAct = (S, p) => inHand(S, p) && !S.allin[p];
+  const nextFrom = (S, p, pred) => { for (let k = 1; k <= S.n; k++) { const q = (p + k) % S.n; if (pred(q)) return q; } return -1; };
+  HE.newHand = (o) => {
+    const n = o.stacks.length, rng = o.rng || Math.random;
+    const S = { n, sb: o.sb || 1, bb: o.bb || 2, stacks: o.stacks.slice(), start: o.stacks.slice(), dealer: o.dealer || 0, deck: shuffled(rng), hole: Array.from({ length: n }, () => []), board: [],
+      committed: Array(n).fill(0), bet: Array(n).fill(0), folded: Array(n).fill(false), allin: Array(n).fill(false), seated: o.stacks.map(s => s > 0), acted: Array(n).fill(false),
+      street: 0, curBet: 0, minRaise: o.bb || 2, toAct: -1, log: [], result: null };
+    const act = q => S.seated[q];
+    if (S.seated.filter(Boolean).length < 2) throw new Error('not enough players');
+    if (!S.seated[S.dealer]) S.dealer = nextFrom(S, S.dealer, act);
+    for (let r = 0; r < 2; r++) for (let k = 1; k <= n; k++) { const q = (S.dealer + k) % n; if (act(q)) S.hole[q].push(S.deck.pop()); }
+    const heads = S.seated.filter(Boolean).length === 2;
+    S.sbP = heads ? S.dealer : nextFrom(S, S.dealer, act); S.bbP = nextFrom(S, S.sbP, act);
+    post(S, S.sbP, S.sb); post(S, S.bbP, S.bb);
+    S.curBet = S.bb; S.minRaise = S.bb;
+    S.toAct = nextFrom(S, S.bbP, q => canAct(S, q));
+    S.log.push({ t: 'blinds', sb: S.sbP, bb: S.bbP });
+    checkRound(S);
+    return S;
+  };
+  function post(S, p, amt) { const a = Math.min(amt, S.stacks[p]); S.stacks[p] -= a; S.bet[p] += a; S.committed[p] += a; if (!S.stacks[p]) S.allin[p] = true; return a; }
+  HE.toCall = (S, p) => Math.min(S.curBet - S.bet[p], S.stacks[p]);
+  HE.pot = S => S.committed.reduce((a, b) => a + b, 0);
+  HE.legal = (S, p) => {
+    const toCall = HE.toCall(S, p), maxTo = S.bet[p] + S.stacks[p];
+    const minTo = Math.min(maxTo, S.curBet + S.minRaise);
+    const canRaise = maxTo > S.curBet && !S.acted[p] && S.n > 0 && S.seated.some((s, q) => q !== p && canAct(S, q));
+    return { toCall, check: toCall === 0, minTo, maxTo, canRaise };
+  };
+  HE.act = (S, p, a) => {
+    if (S.result || p !== S.toAct) throw new Error('not your turn');
+    const L = HE.legal(S, p);
+    if (a.t === 'fold' && L.check) a = { t: 'check' };
+    if (a.t === 'fold') { S.folded[p] = true; S.log.push({ t: 'fold', p }); }
+    else if (a.t === 'check' || a.t === 'call' || (a.t === 'raise' && !L.canRaise)) { const c = post(S, p, L.toCall); S.log.push({ t: c ? 'call' : 'check', p, amt: c }); }
+    else if (a.t === 'raise' || a.t === 'allin') {
+      let to = a.t === 'allin' ? L.maxTo : Math.max(L.minTo, Math.min(L.maxTo, Math.round(a.to)));
+      const inc = to - S.curBet; post(S, p, to - S.bet[p]);
+      if (inc >= S.minRaise) { S.minRaise = inc; S.acted = S.acted.map(() => false); }
+      if (to > S.curBet) S.curBet = to;
+      S.log.push({ t: S.allin[p] ? 'allin' : 'raise', p, to });
+    } else throw new Error('bad action ' + a.t);
+    S.acted[p] = true;
+    advance(S);
+    return S;
+  };
+  function liveCount(S) { return S.seated.filter((s, q) => inHand(S, q)).length; }
+  function checkRound(S) {
+    if (liveCount(S) <= 1) return finish(S);
+    const actors = S.seated.map((s, q) => q).filter(q => canAct(S, q));
+    const pending = actors.filter(q => !S.acted[q] || S.bet[q] < S.curBet);
+    if (actors.length === 0 || (actors.length === 1 && S.bet[actors[0]] >= S.curBet) || pending.length === 0) return nextStreet(S);
+    if (!canAct(S, S.toAct) || (S.acted[S.toAct] && S.bet[S.toAct] >= S.curBet)) S.toAct = nextFrom(S, S.toAct, q => pending.includes(q));
+  }
+  function advance(S) {
+    if (liveCount(S) <= 1) return finish(S);
+    const actors = S.seated.map((s, q) => q).filter(q => canAct(S, q));
+    const pending = actors.filter(q => !S.acted[q] || S.bet[q] < S.curBet);
+    if (pending.length === 0 || (actors.length === 1 && S.bet[actors[0]] >= S.curBet)) return nextStreet(S);
+    S.toAct = nextFrom(S, S.toAct, q => pending.includes(q));
+  }
+  function nextStreet(S) {
+    S.bet = S.bet.map(() => 0); S.curBet = 0; S.minRaise = S.bb; S.acted = S.acted.map(() => false);
+    if (S.street >= 3) return finish(S);
+    S.street++; S.deck.pop(); // 燒牌
+    if (S.street === 1) S.board.push(S.deck.pop(), S.deck.pop(), S.deck.pop()); else S.board.push(S.deck.pop());
+    S.log.push({ t: 'street', s: S.street, board: S.board.slice() });
+    const actors = S.seated.map((s, q) => q).filter(q => canAct(S, q));
+    if (actors.length <= 1) { S.runout = true; return nextStreet(S); } // 全下：自動發完公牌
+    S.toAct = nextFrom(S, S.dealer, q => canAct(S, q));
+  }
+  // 主池與邊池
+  HE.pots = (S) => {
+    const lv = [...new Set(S.committed.filter(x => x > 0))].sort((a, b) => a - b);
+    const pots = []; let prev = 0;
+    for (const L of lv) {
+      let amt = 0; S.committed.forEach(c => amt += Math.min(c, L) - Math.min(c, prev));
+      const elig = S.committed.map((c, q) => q).filter(q => !S.folded[q] && S.seated[q] && S.committed[q] >= L);
+      if (!elig.length && pots.length) pots[pots.length - 1].amt += amt;
+      else if (pots.length && pots[pots.length - 1].elig.join() === elig.join()) pots[pots.length - 1].amt += amt;
+      else pots.push({ amt, elig });
+      prev = L;
+    }
+    return pots.filter(p => p.amt > 0 && p.elig.length);
+  };
+  function finish(S) {
+    if (S.result) return;
+    S.toAct = -1;
+    const live = S.seated.map((s, q) => q).filter(q => inHand(S, q));
+    // 沒人跟的多餘下注先退回
+    const cs = S.committed.slice().sort((x, y) => y - x), top = S.committed.indexOf(cs[0]);
+    if (cs[0] > cs[1]) { const ex = cs[0] - cs[1]; S.committed[top] -= ex; S.stacks[top] += ex; S.refund = { p: top, amt: ex }; }
+    const won = Array(S.n).fill(0), shown = {};
+    const pots = HE.pots(S);
+    if (live.length === 1) { won[live[0]] = HE.pot(S); }
+    else {
+      live.forEach(q => shown[q] = best(S.hole[q].concat(S.board)));
+      for (const pt of pots) {
+        const bs = Math.max(...pt.elig.map(q => shown[q].score)), ws = pt.elig.filter(q => shown[q].score === bs);
+        const share = Math.floor(pt.amt / ws.length); let rem = pt.amt - share * ws.length;
+        ws.forEach(q => won[q] += share);
+        for (let k = 1; rem > 0 && k <= S.n; k++) { const q = (S.dealer + k) % S.n; if (ws.includes(q)) { won[q]++; rem--; } }
+        pt.winners = ws;
+      }
+    }
+    won.forEach((w, q) => S.stacks[q] += w);
+    S.result = { won, pots, shown, showdown: live.length > 1, delta: S.stacks.map((s, q) => s - S.start[q]) };
+    S.log.push({ t: 'end' });
+  }
+  // 電腦：不同風格（緊／鬆／凶／跟注站）
+  HE.STYLES = { tight: { name: '穩健', loose: -.08, aggr: .45, bluff: .02 }, loose: { name: '愛玩', loose: .1, aggr: .35, bluff: .05 }, aggro: { name: '激進', loose: .02, aggr: .8, bluff: .1 }, calling: { name: '跟注站', loose: .16, aggr: .12, bluff: .01 } };
+  HE.strength = (hole, board) => {
+    const [a, b] = hole.map(val).sort((x, y) => y - x), suited = suit(hole[0]) === suit(hole[1]);
+    if (!board.length) return Math.min(1, (a === b ? .5 + a / 30 : (a + b) / 44 + (a >= 13 ? .08 : 0)) + (suited ? .05 : 0) + (Math.abs(a - b) === 1 ? .03 : 0));
+    const me = best(hole.concat(board)), bd = board.length >= 5 ? best(board) : null;
+    let s = [.18, .46, .64, .76, .83, .87, .94, .98, .995][me.cat];
+    if (bd && bd.cat >= me.cat) s -= .25;
+    if (me.cat === 1) { const pv = Math.floor(me.score / 50625) % 15, top = Math.max(...board.map(val)); if (pv >= top) s += .1; else if (board.map(val).includes(pv) === false && pv < 8) s -= .08; }
+    if (board.length < 5) { const all = hole.concat(board), sc = [0, 0, 0, 0]; all.forEach(c => sc[suit(c)]++); if (Math.max(...sc) === 4) s += .1; }
+    return Math.max(0, Math.min(1, s));
+  };
+  HE.ai = (S, p, style = 'tight', rng = Math.random) => {
+    const st = HE.STYLES[style] || HE.STYLES.tight, L = HE.legal(S, p), pot = HE.pot(S);
+    const s = HE.strength(S.hole[p], S.board) + st.loose + (rng() - .5) * .1;
+    const odds = L.toCall / (pot + L.toCall || 1);
+    const raiseTo = f => ({ t: 'raise', to: S.curBet + Math.max(S.minRaise, Math.round((pot + L.toCall) * f)) });
+    if (L.canRaise && (s > .78 && rng() < st.aggr + .2 || rng() < st.bluff)) return s > .96 && rng() < .5 ? { t: 'allin' } : raiseTo(.5 + rng() * .6);
+    if (L.check) return L.canRaise && s > .6 && rng() < st.aggr * .6 ? raiseTo(.5) : { t: 'check' };
+    const big = L.toCall > S.stacks[p] * .5;
+    if (s > odds + .18 + (big ? .15 : 0) || (s > .45 && L.toCall <= S.bb * 2)) return { t: 'call' };
+    return { t: 'fold' };
+  };
+  // ---------- 射龍門 ----------
+  const SL = {};
+  // 規則：每局每人先下底注 1 注到彩池；輪流發兩張「門柱」，押注（1 注～整個彩池）第三張落在兩柱之間。
+  // 中間：從彩池贏回押注；外面：輸押注進彩池；撞柱（等於任一柱）：賠 2 倍；
+  // 兩柱同點：先猜「大／小」，猜中贏、猜錯輸，撞柱賠 3 倍；兩柱相鄰（中間無牌）自動不打。
+  // A 最大、2 最小。彩池空了或每人輪兩圈後結束本局，剩餘彩池平均退回（零和）。
+  SL.newRound = (n, rng = Math.random, ante = 1, orbits = 2, first = 0) => {
+    const S = { n, rng, pot: n * ante, net: Array(n).fill(-ante), turn: first, turnsLeft: n * orbits, shoe: shuffled(rng), seen: [], posts: null, log: [], done: false, first };
+    return S;
+  };
+  const draw = S => { if (S.shoe.length < 3) { S.shoe = shuffled(S.rng); S.seen = []; } const c = S.shoe.pop(); S.seen.push(c); return c; };
+  SL.deal = S => { S.posts = [draw(S), draw(S)]; return S.posts; };
+  SL.kind = posts => { const [a, b] = posts.map(val); return a === b ? 'pair' : Math.abs(a - b) === 1 ? 'adjacent' : 'normal'; };
+  // 剩餘牌堆的機率（只看還沒出現的牌）
+  SL.odds = (S, choice) => {
+    const [a, b] = S.posts.map(val), lo = Math.min(a, b), hi = Math.max(a, b), rest = S.shoe.map(val), N = rest.length || 1;
+    if (a === b) { const win = rest.filter(v => choice === 'hi' ? v > a : v < a).length, post = rest.filter(v => v === a).length; return { win: win / N, post: post / N, lose: (N - win - post) / N, mult: 3 }; }
+    const win = rest.filter(v => v > lo && v < hi).length, post = rest.filter(v => v === lo || v === hi).length;
+    return { win: win / N, post: post / N, lose: (N - win - post) / N, mult: 2 };
+  };
+  SL.maxBet = S => S.pot;
+  SL.resolve = (S, p, bet, choice) => {
+    const posts = S.posts, kind = SL.kind(posts); let out, third = null, amt = 0;
+    bet = Math.max(0, Math.min(Math.floor(bet || 0), S.pot));
+    if (kind === 'adjacent' || bet <= 0) out = 'pass';
+    else {
+      third = draw(S); const [a, b] = posts.map(val), v = val(third), lo = Math.min(a, b), hi = Math.max(a, b);
+      if (kind === 'pair') { if (v === a) { out = 'post'; amt = -3 * bet; } else if ((choice === 'hi' && v > a) || (choice !== 'hi' && v < a)) { out = 'win'; amt = bet; } else { out = 'lose'; amt = -bet; } }
+      else if (v === lo || v === hi) { out = 'post'; amt = -2 * bet; }
+      else if (v > lo && v < hi) { out = 'win'; amt = bet; } else { out = 'lose'; amt = -bet; }
+    }
+    S.net[p] += amt; S.pot -= amt;
+    const rec = { p, posts: posts.slice(), third, bet, choice: kind === 'pair' ? choice : null, out, amt, pot: S.pot };
+    S.log.push(rec); S.posts = null; S.turnsLeft--; S.turn = (S.turn + 1) % S.n;
+    if (S.pot <= 0 || S.turnsLeft <= 0) SL.close(S);
+    return rec;
+  };
+  SL.close = S => {
+    if (S.done) return; S.done = true;
+    const share = Math.floor(S.pot / S.n); let rem = S.pot - share * S.n;
+    for (let k = 0; k < S.n; k++) { const q = (S.first + k) % S.n; S.net[q] += share + (rem > 0 ? 1 : 0); if (rem > 0) rem--; }
+    S.refund = S.pot; S.pot = 0;
+  };
+  SL.ai = (S, p, style = 'tight') => {
+    const kind = SL.kind(S.posts); if (kind === 'adjacent') return { bet: 0 };
+    let choice = null;
+    if (kind === 'pair') { const h = SL.odds(S, 'hi'), l = SL.odds(S, 'lo'); choice = h.win >= l.win ? 'hi' : 'lo'; }
+    const o = SL.odds(S, choice), ev = o.win - o.lose - o.mult * o.post;
+    const k = { tight: 1, loose: 1.6, aggro: 2.4, calling: 1.2 }[style] || 1;
+    if (ev <= (style === 'loose' ? -.05 : 0.02)) return { bet: 0, choice };
+    const bet = Math.max(1, Math.min(S.pot, Math.round(S.pot * Math.min(1, ev * k))));
+    return { bet, choice };
+  };
+  // ---------- 龍鳳對決（本作原創模式）計分 ----------
+  // 2 對 2：座位 0、2 為「龍隊」，1、3 為「鳳隊」。每局翻出一張「龍珠」（數牌）與一張「鳳羽」（字牌）：
+  // 胡牌者手牌＋明牌中每張龍珠／鳳羽 +1 台；兩種都有再加「龍鳳呈祥」+2 台。隊友放槍不算錢（自家人），自摸時隊友不用付。
+  const LF = {};
+  LF.team = p => p % 2;
+  LF.pickTiles = seed => [((seed >>> 4) % 27 + 27) % 27, 27 + ((seed >>> 9) % 7 + 7) % 7];
+  LF.bonus = (tiles, dragon, phoenix) => { const d = tiles.filter(t => t === dragon).length, f = tiles.filter(t => t === phoenix).length; return { d, f, tai: d + f + (d && f ? 2 : 0) }; };
+  // res：引擎的胡牌結果（payments 已計入 scores）；回傳調整後的 res（零和）
+  LF.adjust = (res, winnerTiles, dragon, phoenix, perTai, scores) => {
+    if (!res || res.type !== 'win') return res;
+    const w = res.winner, b = LF.bonus(winnerTiles, dragon, phoenix); res.lf = { ...b, team: [] };
+    for (const k of Object.keys(res.payments)) {
+      const p = +k; let amt = res.payments[p];
+      if (b.tai) { const ex = b.tai * perTai; amt += ex; scores[p] -= ex; scores[w] += ex; }
+      if (LF.team(p) === LF.team(w)) { scores[p] += amt; scores[w] -= amt; res.lf.team.push(p); amt = 0; }
+      res.payments[p] = amt;
+    }
+    if (b.tai) res.tai = res.tai.concat([[`龍鳳加台（龍珠×${b.d}・鳳羽×${b.f}${b.d && b.f ? '・龍鳳呈祥' : ''}）`, b.tai]]), res.total += b.tai;
+    return res;
+  };
+  return { val, suit, CAT, eval5, best, catOf, shuffled, mulberry32, HE, SL, LF };
+})();
+if (typeof module !== 'undefined') module.exports = PK;
+// ==POKER END==
+
+</script>
+<script>
 // 字形路徑（子集，轉為 SVG path，離線也能正確顯示）
 // GLYPH：LXGW WenKai TC（霞鶩文楷，SIL OFL 1.1）— 標誌、暗棋、撲克
 // GLYPHT：cwTeX Q KaiZH Medium（cwTeX Q 楷體，Copyright (c) 1999-2014 Tsong-Min Wu, Tsong-Huey Wu, Edward G.J. Lee, Chen-Pan Liao；SIL OFL 1.1）— 麻將牌面（台灣標準楷書字形）
@@ -2400,6 +2788,7 @@ function avatarSVG(i) {
     `<ellipse cx="32" cy="31" rx="11.5" ry="13.5" fill="${a.fg}"/>${hair}<path d="M24 52l8 6 8-6" stroke="${a.sh}" stroke-width="1.4" fill="none" opacity=".8"/></svg>`;
 }
 function avatar(av, size = 44, ring = true) {
+  if (typeof av === 'string' && av.startsWith('sk:')) return `<span class="av ${ring ? 'ring' : ''} skin" style="width:${size}px;height:${size}px"><i style="background:${skinBg(av.slice(3))}">${skinSVG(av.slice(3))}</i></span>`;
   const inner = typeof av === 'string' && av.startsWith('data:') ? `<img src="${av}" alt="">` : avatarSVG(+av || 0);
   const bg = typeof av === 'string' && av.startsWith('data:') ? '#2b2520' : AVS[(+av || 0) % AVS.length].bg;
   return `<span class="av ${ring ? 'ring' : ''}" style="width:${size}px;height:${size}px"><i style="background:${bg}">${inner}</i></span>`;
@@ -2408,7 +2797,7 @@ function avatar(av, size = 44, ring = true) {
 // ---------- 存檔 ----------
 let ACC = LS.get('acc', null);
 const WAL = Object.assign({ coins: 10000, jade: 0, cards: 10 }, LS.get('wallet', {}));
-const CFG = Object.assign({ sound: true, sfxVol: 8, voice: true, anim: true, bgm: true, bgmVol: 5, vibrate: true, ting: true, speed: 1, nStart: true, nClub: true, nFriend: true, tutorial: false }, LS.get('cfg', {}));
+const CFG = Object.assign({ sound: true, sfxVol: 8, voice: true, anim: true, td3: true, bgm: true, bgmVol: 5, vibrate: true, ting: true, speed: 1, nStart: true, nClub: true, nFriend: true, tutorial: false }, LS.get('cfg', {}));
 const ST = Object.assign({ matches: 0, hands: 0, wins: 0, tsumo: 0, best: 0, deal: 0, draws: 0, firsts: 0, todayDate: '', todayHands: 0, todayWins: 0 }, LS.get('stats', {}));
 let HIST = LS.get('hist', []);
 let REPLAYS = LS.get('replays', []);
@@ -2704,7 +3093,7 @@ setTimeout(applyAnim, 0);
 window.__fx = { sfx, say, sayTile, particles, bigText, coinFlow, flyTile };
 
 // ================= 各頁面 =================
-const me = () => ({ name: ACC.nick, av: ACC.avatar, lv: level(), me: true });
+const me = () => ({ name: ACC.nick, av: myAv(), lv: level(), me: true });
 const botP = b => ({ name: b.name, av: b.av, lv: b.lv, bot: b.id });
 const friendOnline = id => (id.charCodeAt(id.length - 1) + new Date().getHours()) % 3 !== 0;
 
@@ -2713,7 +3102,8 @@ function renderLogin() {
   $('#login').innerHTML = `${logoHTML()}
     <div class="fan">${tile(31, 62, '', '', 'left:0;top:40px;rotate:-14deg') + cardHTML(47, 62, '', 'style="--w:62px;position:absolute;left:70px;top:8px;rotate:-4deg"') + pieceHTML({ side: 0, r: 7, up: true }, 64, '', 'style="--w:64px;position:absolute;left:146px;top:30px"') + cardHTML(53, 62, '', 'style="--w:62px;position:absolute;left:222px;top:12px;rotate:12deg"')}</div>
     <div class="loginp glass"><h2>玩家登入</h2><div class="sub">選擇登入方式</div>
-      <button class="btn line" id="lgLine"><b>LINE</b> 登入</button>
+      <div class="sso"><button class="btn sso-l" id="lgLine">LINE</button><button class="btn sso-f" data-sso="facebook">Facebook</button><button class="btn sso-g" data-sso="google">Google</button><button class="btn sso-a" data-sso="apple">Apple</button></div>
+      <div class="ssonote">第三方登入皆為<b>本機模擬</b>，不會連線到 LINE／Facebook／Google／Apple</div>
       <button class="btn ghost" id="lgPhone">📱 手機號碼登入</button>
       <button class="btn ghost" id="lgPwd">🔑 帳號密碼登入</button>
       <label class="agree"><input type="checkbox" id="lgAgree" ${LS.get('agree', false) ? 'checked' : ''}><span>我已閱讀並同意 <a data-open="terms">服務條款</a>、<a data-open="terms">隱私權政策</a></span></label>
@@ -2721,6 +3111,8 @@ function renderLogin() {
       <div class="ver">v4.0・離線單機版・不涉及真錢</div></div>`;
   const need = () => { if (!$('#lgAgree').checked) { toast('請先勾選同意服務條款與隱私權政策'); return false; } LS.set('agree', true); return true; };
   $('#lgGuest').onclick = () => { if (need()) loginAs('guest'); };
+  $$('#login [data-sso]').forEach(b => b.onclick = () => { if (!need()) return; const nm = { facebook: 'Facebook', google: 'Google', apple: 'Apple' }[b.dataset.sso];
+    modal(`<h2>${nm} 登入（模擬）</h2><div class="sub">離線版不會連線 ${nm}，也不會讀取你的任何帳號資料；按下確認後以本機訪客身分登入，並標記為「${nm}（模擬）」。</div><div class="foot"><button class="btn ghost" data-close>取消</button><button class="btn primary" id="ok">確認（模擬）</button></div>`, pn => { pn.querySelector('#ok').onclick = () => { closeModal(); loginAs(b.dataset.sso); }; }); });
   $('#lgLine').onclick = () => { if (!need()) return; toast('離線版無法連線 LINE，已用本機模擬登入'); setTimeout(() => loginAs('line'), 600); };
   $('#lgPhone').onclick = () => { if (!need()) return;
     modal(`<h2>手機號碼登入</h2><div class="sub">輸入手機號碼與驗證碼（離線模擬，不會發送簡訊）</div>
@@ -2811,7 +3203,7 @@ function logoSVG(h = 80) {
     chs.split('').map((ch, i) => `<g transform="translate(${55 + i * 103} 55)"><g transform="translate(2.5 3.5)">${TileArt.gl(ch, 0, 0, 96, 'rgba(0,0,0,.55)', 4)}</g>${TileArt.gl(ch, 0, 0, 96, `url(#${gid})`, 2.6).replace('stroke="url', 'stroke-opacity=".9" stroke="url')}</g>`).join('') + '</svg>';
 }
 function logoHTML(sm) {
-  return `<div class="logo ${sm ? 'sm' : ''}"><div class="wm">${logoSVG(sm ? 44 : 92)}</div><div class="tag">台灣麻將・十三支・大老二・鬥地主・暗棋</div></div>`;
+  return `<div class="logo ${sm ? 'sm' : ''}"><div class="wm">${logoSVG(sm ? 44 : 92)}</div><div class="tag">台灣麻將・二人麻將・龍鳳對決・德州撲克・射龍門・十三支・大老二・鬥地主・暗棋</div></div>`;
 }
 const GART = {
   mj: () => tile(31, 44, '', '', 'position:absolute;left:8px;top:4px;rotate:-10deg') + tile(32, 44, '', '', 'position:absolute;left:52px;top:0;rotate:8deg'),
@@ -2822,19 +3214,24 @@ const GART = {
 };
 function renderHome() {
   if (!ACC) return;
+  setTimeout(() => { if (!$('#modal').classList.contains('on') && $('#home').classList.contains('on')) dailyRefill(); }, 900);
   const d = dots();
   $('#home').innerHTML = `<div class="topbar">
-      <button class="profile glass" data-go="profile">${avatar(ACC.avatar, 44)}<div style="text-align:left"><div class="nm">${esc(ACC.nick)}</div><div class="sub">Lv.${level()}・<span class="ttl">${title()}</span></div></div></button>
+      <button class="profile glass" data-go="profile">${avatar(myAv(), 44)}<div style="text-align:left"><div class="nm">${esc(ACC.nick)}</div><div class="sub">Lv.${level()}・<span class="ttl">${title()}</span></div></div></button>
       ${walletHTML()}
       <div class="ticons">${[['signin', 'cal', '簽到'], ['event', 'gift', '活動'], ['mail', 'mail', '郵件'], ['notice', 'horn', '公告']].map(([k, ic, l]) => `<button class="ti" data-open="${k}">${ICON[ic]}<span>${l}</span>${d[k] ? '<em></em>' : ''}</button>`).join('')}</div>
     </div>
-    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v4.8</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
+    <div class="hhead"><div class="hwm">${logoSVG(34)}</div><span class="hpill">選擇遊戲</span><span class="hver">v5.0</span>${LS.get('giftDone', false) ? '' : `<button class="hpill gift" data-open="gift">🎁 新手好禮</button>`}</div>
     <div class="games">${Object.entries(GAMES).map(([k, g]) => `<button class="gcard c-${g.color}" data-go="gamehub" data-arg="${k}"><div class="gart">${GART[k]()}</div><div class="gglyph">${g.glyph}</div><h2>${g.name}</h2><p>${g.tag}</p><span class="gn">${g.n} 人${k === 'mj' ? '／2 人' : ''}</span><span class="gplay">▶</span></button>`).join('')}</div>
     <div class="hrow2">
       <button class="hbtn c-lemon" data-go="friendroom"><b><i class="emo">🏠</i> 好友開房</b><small>房卡開房・自訂規則</small></button>
       <button class="hbtn c-lilac" data-go="lobby"><b><i class="emo">🀄</i> 牌局大廳</b><small>找桌・觀戰</small></button>
+      <button class="hbtn c-rank" data-go="ranked"><b><i class="emo">⚔️</i> 排位賽</b><small>${TIERS[tierOf(rankState().pts)][0]}・第 ${seasonNo()} 季</small></button>
+      <button class="hbtn c-ward" data-go="wardrobe"><b><i class="emo">👕</i> 造型</b><small>${V5.owned.length} 款</small></button>
+      <button class="hbtn c-ev" data-go="events"><b><i class="emo">${seasonTheme().deco}</i> 活動</b><small>${seasonTheme().name}</small></button>
+      <button class="hbtn" data-go="shop" data-arg="cards"><b><i class="emo">🛒</i> 商城</b></button>
       <button class="hbtn" data-go="ranking"><b><i class="emo">🏆</i> 排行</b></button>
-      <button class="hbtn" data-go="shop" data-arg="cards"><b><i class="emo">🎫</i> 房卡</b><small>${fmt(WAL.cards)} 張</small></button>
+      <button class="hbtn" data-open="fair"><b><i class="emo">🛡️</i> 公平</b></button>
       <button class="hbtn" data-go="settings"><b><i class="emo">⚙️</i> 設定</b></button>
     </div>
     <nav class="bnav glass">${[['home', 'home', '首頁'], ['friends', 'friends', '好友'], ['stats', 'chart', '戰績'], ['replays', 'play', '牌譜'], ['club', 'club', '俱樂部'], ['chat', 'chat', '聊天']].map(([k, ic, l]) => `<button class="${k === 'home' ? 'on' : ''}" ${k === 'home' ? '' : `data-go="${k}"`}>${ICON[ic]}<span>${l}</span></button>`).join('')}</nav>`;
@@ -2853,7 +3250,7 @@ PAGES.gamehub = { title: '遊戲', sub: '', render(el, g) {
       ${g === 'mj' ? '<button class="hubb" data-go="lobby"><span class="emo">🪑</span><b>牌局大廳</b><small>找桌加入或觀戰</small></button>' : ''}
       <button class="hubb" data-go="club"><span class="emo">⭐</span><b>俱樂部</b><small>${CLUB ? esc(CLUB.name) : '加入或建立俱樂部'}</small></button>
     </div></div>`;
-  el.querySelector('#hq').onclick = () => go(g === 'mj' ? 'quick' : 'cquick', g);
+  el.querySelector('#hq').onclick = () => go(g === 'mj' ? 'quick' : G0.mjv ? 'mjvar' : 'cquick', g);
   el.querySelector('#hr').onclick = () => createRoomModal(g);
 } };
 PAGES.cquick = { title: '快速開始', sub: '選擇設定，電腦玩家自動配桌', render(el, g) {
@@ -2964,9 +3361,9 @@ function histRow(h) {
 }
 PAGES.profile = { title: '個人資料', sub: '我的帳號', render(el) {
   const rate = ST.hands ? Math.round(ST.wins / ST.hands * 100) : 0;
-  el.innerHTML = `<div class="prof"><div class="glass pcard">${avatar(ACC.avatar, 96)}<h2>${esc(ACC.nick)}</h2><div class="sub">Lv.${level()}・${title()}</div>
+  el.innerHTML = `<div class="prof"><div class="glass pcard">${avatar(myAv(), 96)}<h2>${esc(ACC.nick)}</h2><div class="sub">Lv.${level()}・${title()}</div>
       <div class="xpbar"><i style="width:${(Math.sqrt(xp() / 40) % 1) * 100}%"></i></div><small class="sub">ID：${ACC.uid} <a id="cp">複製</a></small>
-      <div class="sub" style="font-size:12px">登入方式：${{ guest: '訪客', line: 'LINE（模擬）', phone: '手機（模擬）', password: '帳號密碼（本機）' }[ACC.method] || '訪客'}</div>
+      <div class="sub" style="font-size:12px">登入方式：${{ guest: '訪客', line: 'LINE（模擬）', facebook: 'Facebook（模擬）', google: 'Google（模擬）', apple: 'Apple（模擬）', phone: '手機（模擬）', password: '帳號密碼（本機）' }[ACC.method] || '訪客'}</div>
       <button class="btn ghost sm" data-go="character" data-arg="edit">編輯角色</button></div>
     <div class="pright"><div class="kpis">${[['總場數', ST.matches], ['總局數', ST.hands], ['胡牌率', rate + '%'], ['自摸', ST.tsumo], ['最高台數', ST.best], ['第一名', ST.firsts]].map(([k, v]) => `<div class="glass kpi"><small>${k}</small><b>${v}</b></div>`).join('')}</div>
       <h4>最近對局</h4><div class="hlist">${HIST.slice(0, 3).map(histRow).join('') || '<div class="empty">還沒有對局紀錄，去打一場吧！</div>'}</div></div></div>`;
@@ -3008,7 +3405,8 @@ PAGES.matchdetail = { title: '對局詳情', sub: '本場結算', render(el, id)
 
 // ---------- 牌譜 ----------
 PAGES.replays = { title: '牌譜', sub: '回放精彩對局', render(el) {
-  el.innerHTML = `<div class="sub" style="margin-bottom:10px">每局自動保存最近 ${15} 局的牌譜，可逐步回放（含所有人的手牌）。</div><div class="hlist">${REPLAYS.map(r => `<div class="hrow glass"><div><b>${esc(r.text)}</b><small>${r.date}・${r.n} 人・底 ${r.base}/${r.perTai}</small></div><button class="btn sm primary" data-open="replay" data-arg="${r.id}">▶ 回放</button></div>`).join('') || '<div class="empty">還沒有牌譜，完成一局後就會出現在這裡。</div>'}</div>`;
+  el.innerHTML = `<div class="sub" style="margin-bottom:10px">每局自動保存最近 ${15} 局的牌譜，可逐步回放（含所有人的手牌）。</div><div class="hlist">${REPLAYS.map(r => `<div class="hrow glass"><div><b>${esc(r.text)}</b><small>${r.date}・${r.n} 人・底 ${r.base}/${r.perTai}</small></div><span style="display:flex;gap:6px"><button class="btn sm mint" data-go="rview" data-arg="${r.id}">⏯ 逐步</button><button class="btn sm primary" data-open="replay" data-arg="${r.id}">▶ 回放</button></span></div>`).join('') || '<div class="empty">還沒有牌譜，完成一局後就會出現在這裡。</div>'}</div>
+    <h4 class="wh">撲克・暗棋牌譜（最近 12 局，可逐步檢視）</h4><div class="hlist">${LS.get('creplays', []).map(r => `<div class="hrow glass"><div><b>${esc(r.text || '')}</b><small>${r.date}・${r.steps.length} 步・種子 ${r.seed}</small></div><button class="btn sm mint" data-go="rview" data-arg="${r.id}">⏯ 逐步</button></div>`).join('') || '<div class="empty">還沒有撲克類牌譜</div>'}</div>`;
 } };
 
 // ---------- 排行 ----------
@@ -3035,26 +3433,29 @@ function applyTheme() {
   ['--f1', '--f2', '--f3', '--f4'].forEach((k, i) => r.setProperty(k, f[i + 1]));
   ['--bk1', '--bk2', '--bk3', '--bk4'].forEach((k, i) => r.setProperty(k, b[i + 1]));
 }
-PAGES.shop = { title: '商城', sub: '房卡・金幣・造型　全部為模擬購買，不會扣款', render(el, tab = 'cards') {
-  const tabs = [['cards', '房卡'], ['coins', '金幣'], ['jade', '玉幣兌換'], ['felt', '牌桌'], ['back', '牌背']];
+PAGES.shop = { title: '商城', sub: '只用遊戲幣兌換・沒有任何付費', render(el, tab = 'cards') {
+  const tabs = [['cards', '房卡'], ['coins', '免費金幣'], ['jade', '玉幣兌換'], ['felt', '牌桌'], ['back', '牌背'], ['skin', '👕 造型']];
+  if (tab === 'skin') { go('wardrobe'); pageStack.splice(pageStack.length - 2, 1); return; }
   let body = '';
-  if (tab === 'cards') body = `<div class="sgrid">${[[20, 100, ''], [38, 190, '人氣'], [210, 1050, '超值']].map(([n, p, tag]) => `<div class="glass sitem">${tag ? `<span class="stag">${tag}</span>` : ''}<div class="sic">${cardSVG}</div><b>${n} 張房卡</b><small>標示價 NT$ ${fmt(p)}・模擬</small><button class="btn sm primary" data-card="${n}:${p}">模擬購買</button></div>`).join('')}
+  if (tab === 'cards') body = `<div class="sgrid">${[[2, 3000, ''], [5, 7000, '人氣'], [12, 15000, '超值']].map(([n, c, tag]) => `<div class="glass sitem">${tag ? `<span class="stag">${tag}</span>` : ''}<div class="sic">${cardSVG}</div><b>${n} 張房卡</b><small>${fmt(c)} 金幣</small><button class="btn sm primary" data-card="${n}:${c}">${coinSVG} ${fmt(c)}</button></div>`).join('')}
       <div class="glass sitem"><div class="sic">${jadeSVG}</div><b>2 張房卡</b><small>用 5 玉幣兌換</small><button class="btn sm mint" data-cex="5:2">${jadeSVG} 5</button></div></div>
-      <div class="sub nocharge">🛡️ <b>不會收費</b>：這是離線示範，「模擬購買」不會連接任何金流、不會扣款，直接發放虛擬房卡。房卡只用來開好友房（房主扣卡，未開打解散會退回），沒有現金價值。</div>`;
-  if (tab === 'coins') body = `<div class="sgrid">${[[30, 3000], [90, 10000], [300, 35000], [990, 120000]].map(([p, c], i) => `<div class="glass sitem"><div class="sic">${coinSVG}</div><b>${fmt(c)}</b><small>金幣${i ? `・加贈 ${[0, 11, 17, 21][i]}%` : ''}</small><button class="btn sm primary" data-buy="${p}:${c}">NT$ ${p}</button></div>`).join('')}</div><div class="sub" style="margin-top:8px">⚠️ 這是離線示範：按下購買不會連接任何金流、不會收費，直接發放虛擬金幣。</div>`;
+      <div class="sub nocharge">🛡️ <b>沒有真錢交易</b>：商城只用遊戲內的金幣、玉幣兌換，沒有任何付費或儲值。房卡只用來開好友房，沒有現金價值。</div>`;
+  if (tab === 'coins') { const FP = LS.get('freePacks', {}), td = today();
+    body = `<div class="sgrid">${[['a', 1000, '每日免費'], ['b', 2000, '完成 1 局後'], ['c', 3000, '胡牌 1 次後']].map(([k, c, cond]) => { const got = FP[k] === td, ok = k === 'a' || (k === 'b' ? ST.todayHands >= 1 : ST.todayWins >= 1);
+      return `<div class="glass sitem"><div class="sic">${coinSVG}</div><b>${fmt(c)}</b><small>${cond}</small><button class="btn sm ${got ? 'ghost' : 'primary'}" data-free="${k}:${c}" ${got || !ok ? 'disabled' : ''}>${got ? '今日已領' : ok ? '免費領取' : '未達成'}</button></div>`; }).join('')}</div>
+      <div class="sub" style="margin-top:8px">💡 金幣全部免費取得：每日免費包、簽到、任務、活動、通行證；金幣低於 ${fmt(REFILL_BELOW)} 時每天自動補到 ${fmt(REFILL_TO)}。本遊戲沒有任何付費儲值。</div>`; }
   if (tab === 'jade') body = `<div class="sgrid">${[[5, 3000], [10, 6500], [30, 21000], [60, 45000]].map(([j, c]) => `<div class="glass sitem"><div class="sic">${coinSVG}</div><b>${fmt(c)}</b><small>金幣</small><button class="btn sm mint" data-ex="${j}:${c}">${jadeSVG} ${j}</button></div>`).join('')}</div>`;
   if (tab === 'felt' || tab === 'back') {
     const D = tab === 'felt' ? FELTS : BACKS;
-    body = `<div class="sgrid">${Object.entries(D).map(([k, v]) => { const own = SHOP.owned.includes(tab + '-' + k), on = SHOP[tab] === k;
+    body = `<div class="sgrid">${Object.entries(D).filter(([k, v]) => !v[6] || SHOP.owned.includes(tab + '-' + k)).map(([k, v]) => { const own = SHOP.owned.includes(tab + '-' + k), on = SHOP[tab] === k;
       const prev = tab === 'felt' ? `<div class="fprev" style="background:radial-gradient(circle at 50% 40%,${v[1]},${v[3]} 70%,${v[4]})"></div>` : `<div class="bprev"><div class="t back" style="--w:40px;background:linear-gradient(160deg,${v[1]},${v[2]} 55%,${v[3]})"></div></div>`;
       return `<div class="glass sitem">${prev}<b>${v[0]}</b><small>${own ? '已擁有' : v[5] >= 100 ? fmt(v[5]) + ' 金幣' : v[5] + ' 玉幣'}</small><button class="btn sm ${on ? 'ghost' : own ? 'mint' : 'primary'}" data-it="${k}" ${on ? 'disabled' : ''}>${on ? '使用中' : own ? '使用' : '購買'}</button></div>`; }).join('')}</div>`;
   }
   el.innerHTML = `<div class="tabs">${tabs.map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" data-t="${k}">${l}</button>`).join('')}</div>${body}`;
   el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { pageStack[pageStack.length - 1][1] = b.dataset.t; rerender(); });
-  el.querySelectorAll('[data-buy]').forEach(b => b.onclick = () => { const [p, c] = b.dataset.buy.split(':').map(Number);
-    confirmBox('模擬儲值', `NT$ ${p} → ${fmt(c)} 金幣<br><small>離線示範，不會收取任何費用。</small>`, '確認（模擬）', () => { addCoins(c); beep('coin'); toast('模擬儲值成功，已發放 ' + fmt(c) + ' 金幣'); rerender(); }); });
-  el.querySelectorAll('[data-card]').forEach(b => b.onclick = () => { const [n, p] = b.dataset.card.split(':').map(Number);
-    confirmBox('模擬購買房卡', `${n} 張房卡（標示價 NT$ ${fmt(p)}）<br><small>離線示範：不會連接金流、不會收取任何費用。</small>`, '確認（模擬・不扣款）', () => { WAL.cards += n; save(); refreshWallet(); beep('coin'); toast(`已發放 ${n} 張房卡（模擬，未扣款）`); rerender(); }); });
+  el.querySelectorAll('[data-free]').forEach(b => b.onclick = () => { const [k, c] = b.dataset.free.split(':'); const FP = LS.get('freePacks', {}); FP[k] = today(); LS.set('freePacks', FP); addCoins(+c); beep('coin'); toast('已領取 ' + fmt(+c) + ' 金幣'); rerender(); });
+  el.querySelectorAll('[data-card]').forEach(b => b.onclick = () => { const [n, c] = b.dataset.card.split(':').map(Number); if (WAL.coins < c) return toast('金幣不足');
+    addCoins(-c); WAL.cards += n; save(); refreshWallet(); beep('coin'); toast(`已兌換 ${n} 張房卡`); rerender(); });
   el.querySelectorAll('[data-cex]').forEach(b => b.onclick = () => { const [j, n] = b.dataset.cex.split(':').map(Number); if (WAL.jade < j) return toast('玉幣不足（可透過簽到、任務、郵件取得）'); WAL.jade -= j; WAL.cards += n; save(); refreshWallet(); beep('coin'); toast('兌換成功：+' + n + ' 張房卡'); rerender(); });
   el.querySelectorAll('[data-ex]').forEach(b => b.onclick = () => { const [j, c] = b.dataset.ex.split(':').map(Number);
     if (WAL.jade < j) return toast('玉幣不足（可透過簽到、任務、郵件取得）'); addCoins(c, -j); beep('coin'); toast('兌換成功'); rerender(); });
@@ -3075,7 +3476,7 @@ PAGES.settings = { title: '設定', sub: '個人化設定', render(el, tab = 'so
   const sl = (k, l) => `<div class="srow"><div><b>${l}</b></div><input type="range" min="0" max="10" value="${CFG[k]}" data-sl="${k}"><span class="num">${CFG[k]}</span></div>`;
   let b = '';
   if (tab === 'sound') b = sw('sound', '音效', '摸牌、打牌、吃碰槓、胡牌、洗牌') + sw('voice', '語音（喚牌）', '碰！吃！槓！胡啦！與打出的牌名') + sl('sfxVol', '音量（音效＋語音）') + sw('anim', '動畫', '飛牌、吃碰特效、胡牌煙火（系統「減少動態」時自動關閉）') + sw('bgm', '背景音樂', '原創輕音樂') + sl('bgmVol', '音樂音量') + sw('vibrate', '震動', '輪到你與胡牌時（支援的手機）');
-  if (tab === 'game') b = sw('ting', '聽牌提示', '標出打哪張可以聽牌') + `<div class="srow"><div><b>遊戲速度</b><small>電腦出牌速度</small></div><div class="chips">${[[1.6, '慢'], [1, '標準'], [.55, '快']].map(([v, l]) => `<button class="chip ${CFG.speed === v ? 'on' : ''}" data-sp="${v}">${l}</button>`).join('')}</div></div>` + `<div class="srow"><div><b>規則說明</b><small>台數與玩法</small></div><button class="btn sm ghost" data-open="rules">查看</button></div>`;
+  if (tab === 'game') b = sw('td3', '3D 牌桌', '立體傾斜牌桌＋開局電動桌升降（關閉則為平面 2D）') + sw('ting', '聽牌提示', '標出打哪張可以聽牌') + `<div class="srow"><div><b>遊戲速度</b><small>電腦出牌速度</small></div><div class="chips">${[[1.6, '慢'], [1, '標準'], [.55, '快']].map(([v, l]) => `<button class="chip ${CFG.speed === v ? 'on' : ''}" data-sp="${v}">${l}</button>`).join('')}</div></div>` + `<div class="srow"><div><b>規則說明</b><small>台數與玩法</small></div><button class="btn sm ghost" data-open="rules">查看</button></div>`;
   if (tab === 'notify') b = sw('nStart', '牌局開始通知') + sw('nClub', '俱樂部通知') + sw('nFriend', '好友通知');
   if (tab === 'account') b = `<div class="srow"><div><b>${esc(ACC.nick)}</b><small>ID：${ACC.uid}</small></div><button class="btn sm ghost" data-go="character" data-arg="edit">編輯角色</button></div>
     <div class="srow"><div><b>服務條款與隱私權政策</b></div><button class="btn sm ghost" data-open="terms">查看</button></div>
@@ -3168,7 +3569,7 @@ function roomNew(o) {
   const game = o.game || 'mj', G0 = GAMES[game], n = game === 'mj' ? (o.n || 4) : G0.n;
   return { game, code: o.code || code6(), host: o.host || 'me', hostName: o.hostName || ACC.nick, n, hands: o.hands || 4, rounds: o.rounds || (G0.rounds ? G0.rounds[0][0] : 0),
     base: o.base || (game === 'mj' ? 100 : G0.bases[0]), perTai: o.perTai || 20, preset: o.preset || 'std', cap: o.cap || 0, gps: o.gps !== false,
-    rules: Object.assign({ chi: true, pon: true, kan: true, tsumo: true }, o.rules || {}), seats: [me()].concat(Array(n - 1).fill(null)), msgs: [], invited: [], paid: 0 };
+    rules: Object.assign({ chi: true, pon: true, kan: true, tsumo: true }, o.rules || {}), lf: !!o.lf, seats: [me()].concat(Array(n - 1).fill(null)), msgs: [], invited: [], paid: 0 };
 }
 function rememberRoom(R) { const L = ROOMS_MINE().filter(x => x.code !== R.code); L.unshift({ game: R.game, code: R.code, host: R.host, hostName: R.hostName, n: R.n, hands: R.hands, rounds: R.rounds, base: R.base, perTai: R.perTai, preset: R.preset, cap: R.cap, rules: R.rules, gps: R.gps }); LS.set('myrooms', L.slice(0, 6)); }
 function roomSettingsForm(R) {
@@ -3176,13 +3577,14 @@ function roomSettingsForm(R) {
   const gps = R.gps != null ? `<div class="opt"><div class="lb">防作弊</div><div class="chips"><button class="chip ${R.gps ? 'on' : ''}" data-rgps>📍 定位檢查（模擬）</button></div></div>` : '';
   if (R.game && R.game !== 'mj') { const G0 = GAMES[R.game];
     return `<div class="opt"><div class="lb">局數</div>${ch('rounds', G0.rounds.map(([v, l], i) => [v, `${l}（${i + 1} 張房卡）`]))}</div><div class="opt"><div class="lb">底分</div>${ch('base', G0.bases.map(b => [b, `每${G0.unit} ${b}`]))}</div>${gps}`; }
-  return `<div class="opt"><div class="lb">人數</div>${ch('n', [[4, '四人'], [2, '兩人']])}</div><div class="opt"><div class="lb">場次</div>${ch('hands', QUANS.map(([v, l]) => [v, `${l}（${Math.max(1, v / 4)} 張）`]))}</div>
+  return `<div class="opt"><div class="lb">人數</div>${ch('n', [[4, '四人'], [2, '兩人']])}<div class="chips"><button class="chip ${R.lf ? 'on' : ''}" data-rlf>🐉 龍鳳對決（2v2）</button></div></div><div class="opt"><div class="lb">場次</div>${ch('hands', QUANS.map(([v, l]) => [v, `${l}（${Math.max(1, v / 4)} 張）`]))}</div>
     <div class="opt"><div class="lb">規則預設</div>${ch('preset', Object.entries(MJ.PRESETS).map(([k, v]) => [k, v.name]))}</div><div class="opt"><div class="lb">台數上限</div>${ch('cap', CAPS)}</div>
     <div class="opt"><div class="lb">底分</div>${ch('base', [[100, '100'], [300, '300'], [500, '500']])}</div><div class="opt"><div class="lb">每台</div>${ch('perTai', [[20, '20'], [50, '50'], [100, '100']])}</div>
     <div class="opt"><div class="lb">吃碰槓</div><div class="chips">${['chi', 'pon', 'kan', 'tsumo'].map(k => `<button class="chip ${R.rules[k] ? 'on' : ''}" data-rr="${k}">${{ chi: '吃', pon: '碰', kan: '槓', tsumo: '自摸' }[k]}</button>`).join('')}</div></div>${gps}`;
 }
 function bindRoomForm(pn, R, redraw) {
   pn.querySelectorAll('[data-rk]').forEach(b => b.onclick = () => { const v = b.dataset.v; R[b.dataset.rk] = isNaN(+v) ? v : +v; if (b.dataset.rk === 'preset') R.cap = v === 'south' ? 4 : 0; beep('tap'); redraw(); });
+  pn.querySelectorAll('[data-rlf]').forEach(b => b.onclick = () => { R.lf = !R.lf; if (R.lf) R.n = 4; beep('tap'); redraw(); });
   pn.querySelectorAll('[data-rr]').forEach(b => b.onclick = () => { R.rules[b.dataset.rr] = !R.rules[b.dataset.rr]; beep('tap'); redraw(); });
   pn.querySelectorAll('[data-rgps]').forEach(b => b.onclick = () => { R.gps = !R.gps; beep('tap'); redraw(); });
 }
@@ -3194,6 +3596,7 @@ function noCards(cost) {
   modal(`<h2>房卡不足</h2><div class="sub">開這個房間需要 <b>${cost}</b> 張房卡，你目前有 ${WAL.cards} 張。可以到商城「房卡」分頁模擬購買（不會扣款），或用玉幣兌換。</div><div class="foot"><button class="btn ghost" data-close>取消</button><button class="btn primary" id="gs">前往房卡商城</button></div>`, pn => pn.querySelector('#gs').onclick = () => { closeModal(); go('shop', 'cards'); });
 }
 function createRoomModal(g = 'mj', prev) {
+  if (GAMES[g] && GAMES[g].mjv) { const c = MJV_CFG(g); return createRoomModal('mj', Object.assign({}, prev || {}, { n: c.n, rules: c.rules, lf: !!c.lf })); }
   const R = roomNew(Object.assign({}, prev || {}, { game: g, code: undefined, host: 'me', hostName: ACC.nick }));
   const draw = () => modal(`<h2>建立房間・${GAMES[g].name}</h2><div class="sub">房主開房扣 <b>${roomCost(R)}</b> 張房卡（目前 ${WAL.cards} 張）・未開打就解散會退回</div><div class="qs2 inmodal">${roomSettingsForm(R)}</div>
     <div class="foot"><button class="btn ghost" data-close>取消</button><button class="btn primary" id="ok">🎫 ${roomCost(R)} 張・建立房間</button></div>`, pn => {
@@ -3273,7 +3676,7 @@ PAGES.room = { title: '房間', sub: '等待玩家加入', render(el) {
   el.querySelector('#lv').onclick = () => confirmBox('離開房間', isHost && R.paid && !R.started ? `尚未開打，解散房間會退回 ${R.paid} 張房卡。` : '確定要離開房間嗎？', '離開', () => { if (isHost && R.paid && !R.started) { WAL.cards += R.paid; save(); refreshWallet(); toast(`已退回 ${R.paid} 張房卡`); } ROOM = null; pageStack.pop(); if (!pageStack.length) { renderHome(); show('home'); } else rerender(); });
   el.querySelector('#st').onclick = () => {
     if (lowCoins(R.game === 'mj' ? R.base : R.base * 4)) return;
-    const startNow = () => { const cfg = { game: R.game, n: R.n, hands: R.hands, rounds: R.rounds, base: R.base, perTai: R.perTai, preset: R.preset, cap: R.cap, rules: R.rules, mode: '好友房', room: R.code, players: R.seats.slice() };
+    const startNow = () => { const cfg = { game: R.game, n: R.n, hands: R.hands, rounds: R.rounds, base: R.base, perTai: R.perTai, preset: R.preset, cap: R.cap, rules: R.rules, lf: R.lf && R.n === 4, mode: R.lf ? '好友房・龍鳳對決' : '好友房', room: R.code, players: R.seats.slice() };
       const myIdx = cfg.players.findIndex(p => p.me); cfg.players = cfg.players.slice(myIdx).concat(cfg.players.slice(0, myIdx));
       R.started = true; notify('start', '牌局開始！'); startAny(cfg); };
     if (!R.seats.every(Boolean)) {
@@ -3495,7 +3898,7 @@ const BOT_EMO = { win: ['😆', '胡啦！', '運氣好而已～', '🎉'], lose
 const SEATXY = p => { const xy = POPXY()[vpos(p)]; return vpos(p) === 0 ? { x: STW / 2, y: 470 } : { x: xy[0], y: xy[1] }; };
 function onEvent(ev) {
   try {
-    if (ev.type === 'deal') { G.dealAnim = true; beep('shuffle'); }
+    if (ev.type === 'deal') { G.dealAnim = true; G.liftOnce = true; if (CFG.td3 && ANIM()) liftTable(); else beep('shuffle'); }
     else if (ev.type === 'draw') { if (ev.p === G.view) { G.drawAnim = true; beep('draw'); } }
     else if (ev.type === 'claim') {
       const kind = ev.text === '碰' ? 'pon' : ev.text === '吃' ? 'chi' : 'kan';
@@ -3521,7 +3924,8 @@ async function startHand() {
   const token = ++G.token;
   Object.assign(G, { pending: null, sel: -1, reveal: G.kind === 'replay', result: null, ting: false, tingPick: false, rec: [], emo: {}, status: '' });
   G.handNo++;
-  const seed = G.kind === 'replay' ? G.rp.seed : (Math.random() * 2147483647) | 0;
+  const seed = G.kind === 'replay' ? G.rp.seed : newSeed();
+  G.lfTiles = PK.LF.pickTiles(seed);
   G.handStart = { seed, dealer: G.dealer, roundWind: roundWind(), scores: G.scores.slice(), lian: G.lian };
   const g = new MJ.Game({ dealer: G.dealer, roundWind: roundWind(), scores: G.scores, lian: G.lian, base: G.base, perTai: G.perTai, players: G.n, rules: G.rules, preset: G.preset || 'std', rng: MJ.mulberry32(seed) });
   G.game = g; G.wallBreak = (seed >>> 3) % (g.tileTotal / 2);
@@ -3543,6 +3947,7 @@ function handText(res) { if (res.type === 'win' && res.special) return `${nameOf
 
 function handOver(res) {
   const g = G.game; G.result = res; G.reveal = true; G.pending = null;
+  try { lfAdjust(res); } catch (e) { console.error(e); }
   res.handLabel = handLabel(); res.lianBefore = G.lian;
   if (res.type === 'win') { popup(res.winner, res.special || (res.selfDraw ? '自摸' : '胡'), 'hu'); beep('win'); vib([60, 40, 120]); } else { beep('lose'); say('draw', 0, '流局'); }
   G.flipAnim = true; winFx(res);
@@ -3561,6 +3966,7 @@ function handOver(res) {
   }
   res.delta = delta; WAL.coins += delta;
   ST.hands++; ST.todayHands++;
+  if (G.kind === 'play') v5Track(G.n === 2 || (G.cfg && G.cfg.lf) ? 'mj' : 'mj', res);
   if (res.type === 'win' && res.winner === 0) { ST.wins++; ST.todayWins++; if (res.selfDraw) ST.tsumo++; ST.best = Math.max(ST.best, res.total); }
   if (res.type !== 'win') ST.draws++;
   // 本場最大牌型
@@ -3574,7 +3980,7 @@ function handOver(res) {
   // 牌譜
   const rid = 'r' + Date.now().toString(36) + rnd(1000);
   REPLAYS.unshift({ id: rid, date: today(), n: G.n, base: G.base, perTai: G.perTai, rules: G.rules, preset: G.preset, names: G.players.map(p => p.name), avs: G.players.map(p => p.av),
-    text: `${G.cfg.mode}・${res.handLabel}・${handText(res)}`, label: res.handLabel, ...G.handStart, acts: G.rec.slice() });
+    text: `${G.cfg.mode}・${res.handLabel}・${handText(res)}`, label: res.handLabel, ...G.handStart, acts: G.rec.slice(), wall: g.wallOrder ? g.wallOrder.join(',') : '' });
   REPLAYS = REPLAYS.slice(0, 15);
   G.log.push({ text: handText(res), rid });
   // 莊家輪替
@@ -3592,11 +3998,11 @@ function winFx(res) {
     say(res.special ? 'flower' : res.selfDraw ? 'tsumo' : 'hu', res.winner, res.special || (res.selfDraw ? '自摸' : '胡啦'));
     if (!res.selfDraw && !res.special && res.from != null) setTimeout(() => say('fang', res.from, '放槍'), 850);
     bigText(res.special || (res.selfDraw ? '自摸' : '胡'), 'gold');
-    particles({ rays: true, n: 90, speed: 7, dur: 1500 });
+    particles({ rays: true, n: 90, speed: 7, dur: 1500, colors: fxColors() });
     const names = (res.tai || []).map(x => x[0]), big = names.find(n => BIG_NAMES.includes(n)) || (res.special && BIG_NAMES.includes(res.special) ? res.special : null);
     if (res.total >= 8 || big) {
       const top = big || ((res.tai || []).slice().sort((a, b) => b[1] - a[1])[0] || [res.total + ' 台'])[0];
-      setTimeout(() => { particles({ fireworks: true, n: 80, speed: 6, dur: 2600 }); bigText(top, 'cal', 2600); beep('coins'); }, 900);
+      setTimeout(() => { particles({ fireworks: true, n: 80, speed: 6, dur: 2600, colors: fxColors() }); bigText(top, 'cal', 2600); beep('coins'); }, 900);
     }
   } catch (e) {}
 }
@@ -3607,6 +4013,7 @@ function finishMatch() {
   const h = { id: G.matchId, date: today(), mode: G.cfg.mode, n: G.n, hands: G.hands, base: G.base, perTai: G.perTai, scores: G.scores.slice(), names: G.players.map(p => p.name), avs: G.players.map(p => p.av),
     rank, delta: G.scores[0], bestHand: G.best, hands_: G.log.slice() };
   HIST.unshift(h); HIST = HIST.slice(0, 40); G.rank = rank;
+  if (G.cfg.ranked) G.rankDelta = rankedResult(rank);
   if (G.cfg.club && CLUB) {
     const pos = G.scores.filter(s => s > 0).reduce((a, b) => a + b, 0), add = Math.round(pos * .02);
     CLUB.pool += add;
@@ -3668,7 +4075,8 @@ function waitsOf(hand, meldCount, g, p) {
 }
 function renderGame() {
   const g = G.game; if (!g || !g.players) return;
-  const V = G.view, me = g.players[V], h = [], two = G.n === 2;
+  const V = G.view, me = g.players[V], h = [], chips = [], two = G.n === 2;
+  $('#game').classList.toggle('td3', !!CFG.td3);
   $('#game').classList.toggle('two', two);
   $('#game').dataset.kind = G.kind;
   // 牌牆
@@ -3677,7 +4085,7 @@ function renderGame() {
   for (let p = 0; p < G.n; p++) {
     if (p === V) continue;
     const pos = vpos(p), pl = g.players[p];
-    h.push(seatChip(p, g));
+    chips.push(seatChip(p, g));
     if (pos === 2) h.push(`<div class="g-abs backs-top">${G.reveal ? pl.hand.map(t => tile(t, 19)).join('') : pl.hand.map(() => tile(-1, 21)).join('')}</div>`);
     else h.push(`<div class="g-abs backs-side ${pos === 3 ? 'b-l' : 'b-r'} ${G.reveal ? 'reveal' : ''}">${G.reveal ? pl.hand.map(t => tile(t, 17)).join('') : pl.hand.map(() => '<div class="sideb"></div>').join('')}</div>`);
     h.push(`<div class="g-abs melds ${['', 'm-r', 'm-top', 'm-l'][pos]}">${pl.melds.map(m => meldHTML(m, 24, G.reveal)).join('')}</div>`);
@@ -3689,9 +4097,10 @@ function renderGame() {
   const left = Math.max(0, g.wall.length - MJ.RESERVE);
   const wcls = p => (g.turn === p && !g.result ? 'on' : '');
   const wseat = pos => { const p = g.players.findIndex((_, i) => vpos(i) === pos); return p < 0 ? '' : `<div class="w w${pos} ${wcls(p)}">${WINDS[g.players[p].seatWind]}</div>`; };
-  h.push(`<div class="g-abs plate"><div class="core"><div class="left num">${left}</div></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
+  h.push(`<div class="g-abs plate">${G.cfg && G.cfg.lf && G.n === 4 ? '' : ''}<div class="core"><div class="left num">${left}</div></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
+  { const t3 = h.splice(0); G.liftOnce0 = G.liftOnce; G.liftOnce = false; h.push(`<div class="tilt3d ${G.liftOnce0 && ANIM() && CFG.td3 ? 'lift' : ''}">${t3.join('')}</div>`, ...chips, lfInfo()); }
   h.push(`<div class="g-abs rinfo"><b>${WINDS[roundWind() || 0]}風圈</b><span class="rd">${handLabel().replace(/^.風圈・/, '')}</span>
-    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v4.8</span></div></div>`);
+    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">v5.0</span></div></div>`);
   // 自己（或觀戰視角）
   h.push(seatChip(V, g));
   let tiles = me.hand.slice(), drawn = null;
@@ -3729,7 +4138,7 @@ function renderGame() {
   const pd = G.pending;
   if (G.kind === 'spectate') cb = `<span class="glass pillnote">👁 觀戰中・${esc(G.specName)}</span><button class="btn ghost" data-act="leave">離開觀戰</button>`;
   else if (G.kind === 'replay') cb = `<span class="glass pillnote">▶ 牌譜回放</span><button class="btn ghost sm" data-act="rpause">${G.paused ? '▶ 播放' : '⏸ 暫停'}</button><button class="btn ghost sm" data-act="rspeed">${G.rspeed}×</button><button class="btn ghost sm" data-act="rrestart">↺ 重播</button><button class="btn ghost sm" data-act="leave">離開</button>`;
-  else if (g.result) cb = `<button class="btn ghost" data-act="result">查看結果</button><button class="btn primary" data-act="next">${G.over ? '最終結算' : '下一局'}</button>`;
+  else if (g.result) cb = `<button class="btn ghost" data-act="wall">牌山</button><button class="btn ghost" data-act="result">查看結果</button><button class="btn primary" data-act="next">${G.over ? '最終結算' : '下一局'}</button>`;
   else if (G.auto) cb = `<span class="glass pillnote">🤖 託管中，電腦代打</span><button class="btn primary" data-act="unauto">取消託管</button>`;
   else if (pd && pd.kind === 'turn') {
     if (pd.o.tsumo) cb += `<button class="cbtn zm" data-act="tsumo">自摸</button>`;
@@ -3760,6 +4169,7 @@ $('#tbl').addEventListener('click', e => {
     const a = b.dataset.act, pd = G.pending; beep('tap');
     if (a === 'next') { if (G.over) showFinal(); else nextHand(); return; }
     if (a === 'result') { showResult(); return; }
+    if (a === 'wall') { OPEN.wall(); return; }
     if (a === 'leave') { leaveGame(); return; }
     if (a === 'autotog') { toggleAuto(); return; }
     if (a === 'unauto') { G.auto = false; toast('已取消託管'); renderGame(); return; }
@@ -3812,7 +4222,7 @@ $('#gMenu').onclick = () => { beep('tap');
 };
 function gameSettings() {
   const sw = (k, l) => `<div class="srow"><div><b>${l}</b></div><button class="sw ${CFG[k] ? 'on' : ''}" data-sw="${k}"><i></i></button></div>`;
-  modal(`<h2>設定</h2>${sw('sound', '音效')}${sw('voice', '語音（喚牌）')}<div class="srow"><div><b>音量</b></div><input type="range" min="0" max="10" value="${CFG.sfxVol}" data-vol style="width:150px"></div>${sw('anim', '動畫')}${sw('bgm', '背景音樂')}${sw('vibrate', '震動')}${sw('ting', '聽牌提示')}
+  modal(`<h2>設定</h2>${sw('sound', '音效')}${sw('voice', '語音（喚牌）')}<div class="srow"><div><b>音量</b></div><input type="range" min="0" max="10" value="${CFG.sfxVol}" data-vol style="width:150px"></div>${sw('anim', '動畫')}${sw('td3', '3D 牌桌')}${sw('bgm', '背景音樂')}${sw('vibrate', '震動')}${sw('ting', '聽牌提示')}
     <div class="srow"><div><b>電腦出牌速度</b></div><div class="chips">${[[1.6, '慢'], [1, '標準'], [.55, '快']].map(([v, l]) => `<button class="chip ${CFG.speed === v ? 'on' : ''}" data-sp="${v}">${l}</button>`).join('')}</div></div>
     <div class="foot"><button class="btn mint" data-close>完成</button></div>`, pn => {
       pn.querySelectorAll('[data-sw]').forEach(x => x.onclick = () => { CFG[x.dataset.sw] = !CFG[x.dataset.sw]; save(); bgmUpdate(); applyAnim(); gameSettings(); renderGame(); });
@@ -3860,10 +4270,11 @@ function showResult() {
   if (G.kind === 'play' && r.delta) h += `<div class="sub" style="margin-top:10px">金幣 <b class="num ${r.delta > 0 ? 'pos' : 'neg'}">${r.delta > 0 ? '+' : ''}${fmt(r.delta)}</b>・餘額 <b class="num">${fmt(WAL.coins)}</b></div>`;
   h += `</div></div>`;
   if (G.kind === 'replay') h += `<div class="foot"><button class="btn ghost" id="mView">看牌桌</button><button class="btn ghost" id="mRe">↺ 重播</button><button class="btn primary" id="mOut">離開回放</button></div>`;
-  else h += `<div class="foot"><button class="btn ghost" id="mView">看牌桌</button><button class="btn primary" id="mNext">${G.over ? '最終結算' : '下一局'}</button></div>`;
+  else h += `<div class="foot"><button class="btn ghost" id="mWall">牌山</button><button class="btn ghost" id="mView">看牌桌</button><button class="btn primary" id="mNext">${G.over ? '最終結算' : '下一局'}</button></div>`;
   modal(h, pn => {
     if (r.type === 'win') setTimeout(() => coinFlow([...pn.querySelectorAll('.taigrid.one > div')], pn.querySelector('h2'), 5), 300);
     pn.querySelector('#mView').onclick = closeModal;
+    if (pn.querySelector('#mWall')) pn.querySelector('#mWall').onclick = () => OPEN.wall();
     const q = s => pn.querySelector(s);
     if (q('#mNext')) q('#mNext').onclick = () => { beep('tap'); G.over ? showFinal() : nextHand(); };
     if (q('#mRe')) q('#mRe').onclick = () => { closeModal(); replayStart(); };
@@ -4009,7 +4420,8 @@ function startCRound() {
   Object.assign(CS, { pending: null, sel: new Set(), hint: -1, acts: {}, msg: '', result: null, seed: (Math.random() * 2147483647) | 0 });
   CS.roundNo++;
   CS.rng = CG.mulberry32(CS.seed);
-  const run = { ssz: runSSZ, b2: runB2, ddz: runDDZ, aq: runAQ }[CS.game];
+  CS.rec = null;
+  const run = { ssz: runSSZ, b2: runB2, ddz: runDDZ, aq: runAQ, he: runHE, sl: runSL }[CS.game];
   run(tk).catch(e => { if (e && e.message === 'ABORT') return; console.error(e); CS.msg = '錯誤：' + e.message; renderC(); });
 }
 const chk = tk => { if (tk !== CS.token) throw new Error('ABORT'); };
@@ -4026,7 +4438,7 @@ function cpop(p, text, kind = 'chi') {
 // ---------- 十三支 ----------
 async function runSSZ(tk) {
   const SSZ = CG.SSZ, hands = SSZ.deal(CS.rng);
-  CS.st = { hands, rows: [[], [], []], left: hands[0].slice(), done: [false, false, false, false], plays: [], phase: 'arrange', sugg: SSZ.suggest(hands[0], 3), special: SSZ.special(hands[0]) };
+  CS.st = { hands, rows: [[], [], []], left: hands[0].slice(), done: [false, false, false, false], plays: [], phase: 'arrange', sugg: SSZ.suggest(hands[0], 3), special: SSZ.special(hands[0]) }; crecStart();
   beep('riffle'); renderC();
   // 電腦陸續排好
   for (let p = 1; p < 4; p++) setTimeout(() => { if (tk === CS.token && CS.st.phase === 'arrange') { CS.st.done[p] = true; renderC(); } }, 900 + p * 700 + rnd(900));
@@ -4036,7 +4448,7 @@ async function runSSZ(tk) {
     if (p === 0) return mine;
     const sp = SSZ.special(h); return sp ? { arr: sp.arr, special: sp } : { arr: SSZ.best(h) };
   });
-  CS.st.plays = plays; CS.st.done = [true, true, true, true]; CS.st.phase = 'compare';
+  CS.st.plays = plays; CS.st.done = [true, true, true, true]; CS.st.phase = 'compare'; crecStep('比牌');
   const r = SSZ.settle(plays); CS.st.res = r;
   beep('claim'); renderC();
   r.shot.forEach((row, i) => row.forEach((v, j) => { if (v) setTimeout(() => { if (tk === CS.token) cpop(i, '打槍', 'pon'); }, 700 + i * 250); }));
@@ -4059,7 +4471,7 @@ function sszDetail(plays, r) {
 
 // ---------- 大老二 ----------
 async function runB2(tk) {
-  const B2 = CG.B2, S = B2.newRound(CS.rng); CS.st = S; CS.acts = {};
+  const B2 = CG.B2, S = B2.newRound(CS.rng); CS.st = S; CS.acts = {}; crecStart();
   beep('riffle'); renderC();
   CS.msg = `${cname(S.turn)}有梅花 3，先出牌`; renderC(); await cWait(800); chk(tk);
   while (S.winner == null) {
@@ -4072,7 +4484,7 @@ async function runB2(tk) {
     const leadBy = S.lead && S.lead.by;
     B2.act(S, p, cards);
     CS.msg = '';
-    if (cards) { CS.acts[p] = { cards: cards.slice().sort((a, b) => a - b), name: B2.classify(cards).name }; beep('flick'); CS.newPile = p; if (cards.length === 5) cpop(p, B2.classify(cards).name, 'pon'); if (S.hands[p].length === 1 && S.winner == null) cpop(p, '報單！', 'hu'); }
+    if (cards) { CS.acts[p] = { cards: cards.slice().sort((a, b) => a - b), name: B2.classify(cards).name }; beep('flick'); CS.newPile = p; crecStep(`${cname(p)} 出 ${CS.acts[p].name}`); if (cards.length === 5) cpop(p, B2.classify(cards).name, 'pon'); if (S.hands[p].length === 1 && S.winner == null) cpop(p, '報單！', 'hu'); }
     else CS.acts[p] = { pass: true };
     if (wasLead && !S.lead && S.winner == null) { renderC(); await cWait(650); chk(tk); CS.acts = {}; CS.msg = `${cname(leadBy)}最大，重新出牌`; }
     renderC();
@@ -4087,7 +4499,7 @@ async function runB2(tk) {
 async function runDDZ(tk) {
   const D = CG.DDZ; let S, tries = 0;
   for (;;) {
-    S = D.newRound(CS.rng, (CS.starter + CS.roundNo) % 3); CS.st = S; CS.acts = {};
+    S = D.newRound(CS.rng, (CS.starter + CS.roundNo) % 3); CS.st = S; CS.acts = {}; crecStart();
     beep('riffle'); renderC(); await cWait(500); chk(tk);
     while (S.phase === 'bid') {
       const p = S.turn; let v;
@@ -4109,7 +4521,7 @@ async function runDDZ(tk) {
     chk(tk);
     const lastBy = S.last && S.last.p;
     D.play(S, p, cards); CS.msg = '';
-    if (cards) { const pl = S.last.play; CS.acts[p] = { cards: S.last.cards, name: D.TYPE[pl.type] }; beep('flick'); CS.newPile = p;
+    if (cards) { const pl = S.last.play; CS.acts[p] = { cards: S.last.cards, name: D.TYPE[pl.type] }; beep('flick'); CS.newPile = p; crecStep(`${cname(p)} 出 ${CS.acts[p].name}`);
       if (pl.type === 'bomb' || pl.type === 'rocket') { cpop(p, D.TYPE[pl.type] + ' ×2', 'hu burst'); vib(60); beep('boom'); bombFx(p); } else if (['straight', 'pairs', 'plane', 'plane1', 'plane2'].includes(pl.type)) cpop(p, D.TYPE[pl.type], 'pon');
       if (S.hands[p].length <= 2 && S.phase === 'play') cpop(p, `剩 ${S.hands[p].length} 張`, 'chi'); }
     else CS.acts[p] = { pass: true };
@@ -4125,7 +4537,7 @@ async function runDDZ(tk) {
 
 // ---------- 暗棋 ----------
 async function runAQ(tk) {
-  const A = CG.AQ, first = (CS.starter + CS.roundNo) % 2, S = A.newGame(CS.rng, first); CS.st = S; CS.aqSel = -1;
+  const A = CG.AQ, first = (CS.starter + CS.roundNo) % 2, S = A.newGame(CS.rng, first); CS.st = S; CS.aqSel = -1; crecStart();
   beep('riffle'); CS.msg = `${cname(first)}先手：翻開的第一顆棋決定顏色`; renderC();
   while (!S.result) {
     chk(tk);
@@ -4134,7 +4546,7 @@ async function runAQ(tk) {
     else { await cWait(CSPD() * .9); chk(tk); mv = A.ai(S, p, CS.rng); }
     chk(tk);
     const cap = mv.t === 'move' && S.board[mv.to];
-    A.apply(S, p, mv); CS.msg = ''; CS.aqSel = -1;
+    A.apply(S, p, mv); CS.msg = ''; CS.aqSel = -1; crecStep(`${cname(p)} ${mv.t === 'flip' ? '翻棋' : '走棋'}`);
     if (mv.t === 'flip' && S.plies === 1) cpop(p, (S.color[p] ? '黑方' : '紅方'), 'chi');
     if (cap) { beep('claim'); cpop(p, '吃 ' + A.NAMES[cap.side][cap.r], cap.r >= 6 ? 'hu' : 'pon'); } else beep('discard');
     renderC();
@@ -4148,6 +4560,7 @@ async function runAQ(tk) {
 
 // ---------- 結算 ----------
 function cRoundOver(pts, detail, text, mag) {
+  if (CS.rec) crecEnd(text);
   const base = CS.base, delta = pts[0] * base;
   pts.forEach((v, i) => CS.scores[i] += v * base);
   WAL.coins += delta;
@@ -4156,6 +4569,7 @@ function cRoundOver(pts, detail, text, mag) {
   CS.log.push({ text });
   if (!CS.best || mag > CS.best.mag) CS.best = { no: CS.roundNo, who: text, mag };
   CS.result = { pts, detail, text, delta };
+  v5Track(g, { pts, delta });
   CS.over = CS.roundNo >= CS.rounds;
   if (CS.over) finishC();
   saveCST(); save(); refreshWallet(); renderC();
@@ -4212,6 +4626,7 @@ function cchip(p) {
   if (CS.game === 'b2' && S) { turn = S.turn === p && S.winner == null; cnt = S.hands[p].length; }
   if (CS.game === 'ddz' && S) { turn = S.turn === p && (S.phase === 'bid' || S.phase === 'play'); cnt = S.hands[p].length; if (S.landlord != null) badge = p === S.landlord ? '<span class="dtag">地主</span>' : '<span class="wtag">農民</span>'; }
   if (CS.game === 'aq' && S) { turn = S.turn === p && !S.result; badge = S.color[p] == null ? '<span class="wtag">未定</span>' : `<span class="dtag ${S.color[p] ? 'blk' : ''}">${S.color[p] ? '黑方' : '紅方'}</span>`; }
+  if (CS.game === 'sl' && S) { turn = S.turn === p && !S.done; }
   if (CS.game === 'ssz' && S) { badge = S.phase === 'arrange' ? `<span class="wtag">${S.done[p] ? '已排好' : '排牌中'}</span>` : ''; }
   const cntHTML = cnt !== '' && p !== 0 ? `<span class="ccnt ${cnt <= 2 ? 'warn' : ''}">${cnt}</span>` : '';
   return `<div class="seatchip glass ${turn ? 'active' : ''} ${pos === 0 ? 'me-chip' : ''}" style="${CCHIP[pos]}">${avatar(P.av, 36)}
@@ -4234,8 +4649,8 @@ function renderC() {
   $('#cgame').dataset.game = CS.game;
   const h = [];
   h.push(`<div class="g-abs cinfo glass"><b>${GAMES[CS.game].name}</b><span>第 ${CS.roundNo}/${CS.rounds} 局</span><span>底 ${CS.base}</span>${CS.game === 'ddz' && S.cur ? `<span>叫 ${S.cur} 分・炸 ${S.bombs}</span>` : ''}${CS.cfg.room ? `<span>房號 ${CS.cfg.room}</span>` : ''}</div>`);
-  for (let p = 0; p < CS.n; p++) h.push(cchip(p));
-  ({ ssz: renderSSZ, b2: renderB2, ddz: renderDDZ, aq: renderAQ })[CS.game](h, S);
+  if (CS.game !== 'he') for (let p = 0; p < CS.n; p++) h.push(cchip(p));
+  ({ ssz: renderSSZ, b2: renderB2, ddz: renderDDZ, aq: renderAQ, he: renderHE, sl: renderSL })[CS.game](h, S);
   if (CS.msg) h.push(`<div class="g-abs cmsg">${esc(CS.msg)}</div>`);
   if (CS.auto && !CS.result) h.push(`<div class="g-abs cbar"><span class="glass pillnote">🤖 託管中</span><button class="btn primary" data-cact="unauto">取消託管</button></div>`);
   else if (CS.result) h.push(`<div class="g-abs cbar"><button class="btn ghost" data-cact="result">查看結果</button><button class="btn primary" data-cact="next">${CS.over ? '最終結算' : '下一局'}</button></div>`);
@@ -4299,6 +4714,7 @@ $('#ctbl').addEventListener('click', e => {
     if (a === 'pass') return resolveC(null);
     if (a === 'hint') return cHint();
     if (a === 'play') return cPlay();
+    if (pd.kind === 'he' || pd.kind === 'sl') return v5Act(a, b);
     if (pd.kind === 'ssz') return sszAct(a, b);
     return;
   }
@@ -4370,14 +4786,14 @@ $('#cMenu').onclick = () => { beep('tap');
       if (m === 'set') gameSettings();
       if (m === 'auto') { CS.auto = !CS.auto; closeModal(); toast(CS.auto ? '已開啟託管，電腦代打' : '已取消託管');
         if (CS.auto && CS.pending) { const pd = CS.pending, S = CS.st; CS.pending = null;
-          pd.res(pd.kind === 'b2' ? CG.B2.ai(S, 0) : pd.kind === 'ddz' ? CG.DDZ.ai(S, 0) : pd.kind === 'bid' ? CG.DDZ.aiBid(S.hands[0], S.cur) : pd.kind === 'aq' ? CG.AQ.ai(S, 0) : autoSSZ()); }
+          pd.res(pd.kind === 'b2' ? CG.B2.ai(S, 0) : pd.kind === 'ddz' ? CG.DDZ.ai(S, 0) : pd.kind === 'bid' ? CG.DDZ.aiBid(S.hands[0], S.cur) : pd.kind === 'aq' ? CG.AQ.ai(S, 0) : (pd.kind === 'he' || pd.kind === 'sl') ? v5Auto(pd) : autoSSZ()); }
         renderC(); }
       if (m === 'leave') { closeModal(); leaveC(); }
     });
   });
 };
 OPEN.crules = g => {
-  const R = {
+  const R = Object.assign({
     ssz: `<li>4 人各 13 張，排成 <b>頭墩 3 張、中墩 5 張、尾墩 5 張</b>，必須 <b>頭墩 ≤ 中墩 ≤ 尾墩</b>，否則「倒水」被每家打槍。</li>
       <li>牌型：烏龍＜對子＜兩對＜三條＜順子＜同花＜葫蘆＜鐵支＜同花順（A2345 為最小順子）。頭墩只算烏龍、對子、三條。</li>
       <li>每一家與其他三家逐墩比大小，贏一墩得 1 水；特殊墩：<b>頭墩三條 3 水、中墩葫蘆 2 水、中墩鐵支 8 水、中墩同花順 10 水、尾墩鐵支 4 水、尾墩同花順 5 水</b>。</li>
@@ -4396,10 +4812,522 @@ OPEN.crules = g => {
       <li>棋子上下左右走一格；大吃小、同級可吃：帥將＞仕士＞相象＞俥車＞傌馬＞炮包＞兵卒，但 <b>兵卒可吃帥將</b>、帥將不能吃兵卒。</li>
       <li><b>炮／包</b> 不能直接吃相鄰的棋，要隔一顆棋（不論明暗）跳吃，可吃任何棋子。</li>
       <li>吃光對方或對方無棋可走即獲勝；連續 50 步沒有吃子或翻棋為和局。每局勝者得 1 局分 × 底分。</li>`,
-  }[g];
+  }, CRULES_V5)[g];
   modal(`<h2>${GAMES[g].name} 規則</h2><ul class="rules">${R}</ul><div class="foot"><button class="btn mint" data-close>知道了</button></div>`, null, { cls: 'wide' });
 };
 window.__CS = CS; window.__bombFx = bombFx; window.__cRoundFx = cRoundFx; window.__startCardMatch = startCardMatch; window.__startCRound = startCRound; window.__renderC = renderC; window.__showCResult = showCResult; window.__showCFinal = showCFinal; window.__resolveC = resolveC;
+
+// ================= v5.0：造型・活動・通行證・排位・補給・公平・第三方登入（皆為原創、離線模擬） =================
+const V5 = Object.assign({ skin: '', owned: ['o0-0', 'o1-0', 'o2-0', 'o6-0', 'a0-0'], fx: 'gold', fxOwned: ['gold'], refill: '', ev: {}, pass: { xp: 0, claimed: [] }, rank: null, td3: true, crep: [] }, LS.get('v5', {}));
+const saveV5 = () => LS.set('v5', V5);
+// ---------- 原創角色造型（程序生成 112 款） ----------
+const OCC = ['台客', '主婦', '工人', '醫生', '廚師', '警察', '學生', '上班族', '老闆', '阿嬤', '農夫', '漁夫'];
+const ANI = ['貓咪', '小狗', '熊貓', '兔子', '老虎', '猴子', '小豬', '石虎'];
+const FEST = [['中秋', '柚子帽', '#5f8f3a'], ['過年', '財神帽', '#c8202c'], ['聖誕', '聖誕帽', '#c8202c'], ['夏日', '草帽墨鏡', '#e0a33a']];
+const CWAY = [['經典', '#3c6ea8', '#2d5a8c'], ['暖橘', '#c8743a', '#a3582a'], ['薄荷', '#3f9a7e', '#2e7c64'], ['紫夜', '#6a4ea0', '#523a82']];
+const SKINTONE = ['#f1c9a5', '#e3b48c', '#cf9a74', '#f6d7bb'];
+const FEST_BASES = ['o0', 'o1', 'o2', 'o3', 'o4', 'o5', 'a0', 'a2'];
+const SKINS = (() => {
+  const L = [];
+  OCC.forEach((n, i) => CWAY.forEach((c, v) => L.push({ id: `o${i}-${v}`, name: `${n}・${c[0]}`, grp: 'occ', price: v === 0 ? (i < 6 ? 1500 : 3000) : 4000 + i * 200 })));
+  ANI.forEach((n, i) => CWAY.forEach((c, v) => L.push({ id: `a${i}-${v}`, name: `${n}・${c[0]}`, grp: 'ani', price: 6000 + v * 1000 })));
+  FEST.forEach((f, k) => FEST_BASES.forEach((b, j) => { const isA = b[0] === 'a', bi = +b.slice(1);
+    L.push({ id: `f${k}-${j}`, name: `${f[0]}・${isA ? ANI[bi] : OCC[bi]}`, grp: 'fest', fest: k, price: 15000, event: true, perk: ['back-' + ['pomelo', 'lucky', 'xmas', 'summer'][k], 'fx-' + ['lantern', 'firecracker', 'snow', 'sparkle'][k]] }); }));
+  return L;
+})();
+const skinById = id => SKINS.find(s => s.id === id);
+function skinSVG(id) {
+  const m = /^([oaf])(\d+)-(\d+)$/.exec(id || '') || ['', 'o', '0', '0'];
+  let kind = m[1], a = +m[2], b = +m[3], fest = -1;
+  if (kind === 'f') { fest = a; const base = FEST_BASES[b]; kind = base[0]; a = +base.slice(1); b = fest; }
+  const cw = CWAY[b % 4], tone = SKINTONE[(a + b) % 4];
+  let s = '';
+  const body = (col, extra = '') => `<path d="M8 66c1-13 11-20 24-20s23 7 24 20z" fill="${col}"/>${extra}`;
+  const eyes = (y = 31, col = '#2a1d16') => `<circle cx="27.5" cy="${y}" r="1.5" fill="${col}"/><circle cx="36.5" cy="${y}" r="1.5" fill="${col}"/>`;
+  const smile = (y = 37) => `<path d="M28.5 ${y}q3.5 3 7 0" stroke="#7a3b2a" stroke-width="1.4" fill="none" stroke-linecap="round"/>`;
+  const head = `<path d="M28 42h8v6c-2 2-6 2-8 0z" fill="${tone}"/><ellipse cx="32" cy="31" rx="11.5" ry="13" fill="${tone}"/><circle cx="25" cy="36" r="2" fill="#e88" opacity=".35"/><circle cx="39" cy="36" r="2" fill="#e88" opacity=".35"/>`;
+  if (kind === 'o') {
+    const shirt = [cw[1], cw[1], '#e98b2a', '#f4f6f8', '#f4f6f8', '#23395f', '#f4f6f8', '#3a4250', '#2b2b30', '#b0567a', '#7a8c5a', '#f2c230'][a];
+    s += body(shirt);
+    if (a === 0) s += '<g fill="#fff" opacity=".55"><circle cx="18" cy="58" r="2"/><circle cx="44" cy="56" r="2.4"/><circle cx="26" cy="62" r="1.6"/><circle cx="40" cy="63" r="1.8"/></g><path d="M25 48q7 8 14 0" stroke="#e8c04a" stroke-width="1.8" fill="none"/>';
+    if (a === 1) s += '<path d="M22 50h20v16H22z" fill="#fff8ee"/><rect x="28" y="56" width="8" height="5" rx="1" fill="#f0b7a0"/>';
+    if (a === 2) s += '<path d="M14 54l6 12M50 54l-6 12" stroke="#f6f0a0" stroke-width="3"/>';
+    if (a === 3) s += '<path d="M32 48l-8 18M32 48l8 18" stroke="#c9d3df" stroke-width="1.5"/><path d="M26 49q-2 9 6 9q8 0 6-9" stroke="#3a4a5a" stroke-width="1.6" fill="none"/><circle cx="32" cy="58" r="2.2" fill="#9fb0c0"/>';
+    if (a === 4) s += '<path d="M25 47l7 6 7-6 2 4-9 4-9-4z" fill="#d8323a"/><g fill="#9aa"><circle cx="32" cy="60" r="1.2"/><circle cx="32" cy="64" r="1.2"/></g>';
+    if (a === 5) s += '<path d="M40 54l3 1 1 3-3 2-3-2 1-3z" fill="#e8c04a"/>';
+    if (a === 6) s += '<path d="M26 47l6 5 6-5" stroke="#fff" stroke-width="2" fill="none"/><path d="M15 52l3 14M49 52l-3 14" stroke="#7a4f2a" stroke-width="3"/>';
+    if (a === 7 || a === 8) s += `<path d="M30 47h4l1.5 4-3.5 12-3.5-12z" fill="${a === 8 ? '#c8202c' : cw[0]}"/><path d="M24 47l8 6 8-6" stroke="#fff" stroke-width="1.6" fill="none"/>`;
+    if (a === 8) s += '<circle cx="21" cy="56" r="2.2" fill="#e8c04a"/>';
+    if (a === 9) s += '<g fill="#f4d0e0" opacity=".7"><circle cx="18" cy="58" r="2.4"/><circle cx="45" cy="57" r="2.4"/><circle cx="30" cy="63" r="2"/></g>';
+    if (a === 10) s += '<path d="M20 48q12 8 24 0l-2 5q-10 5-20 0z" fill="#fff"/>';
+    s += head + eyes() + smile();
+    const hair = ['#1b1714', '#3a2a20', '#2a2420', '#2d241e', '#222', '#1d1d1d', '#1a1a1a', '#2b2018', '#3a3330', '#b9b9b9', '#2a2420', '#2a2420'][a];
+    if (a === 0) s += `<path d="M20 28c0-10 6-15 12-15 8 0 13 4 13 12-4-4-10-5-15-4-4 1-7 3-10 7z" fill="${hair}"/><rect x="22" y="28" width="8.5" height="5" rx="2" fill="#111"/><rect x="33.5" y="28" width="8.5" height="5" rx="2" fill="#111"/><path d="M30.5 30h3" stroke="#111" stroke-width="1.4"/>`;
+    if (a === 1) s += `<g fill="${hair}"><circle cx="22" cy="24" r="5"/><circle cx="28" cy="19" r="5.5"/><circle cx="36" cy="19" r="5.5"/><circle cx="42" cy="24" r="5"/><circle cx="21" cy="31" r="3.5"/><circle cx="43" cy="31" r="3.5"/></g><g fill="#f08aa0"><rect x="26" y="14" width="5" height="3" rx="1.5"/><rect x="34" y="14" width="5" height="3" rx="1.5"/></g>`;
+    if (a === 2) s += '<path d="M19 27a13 12 0 0 1 26 0z" fill="#f2c230"/><rect x="16" y="26" width="32" height="3.5" rx="1.7" fill="#e0aa18"/><rect x="30" y="16" width="4" height="10" rx="1" fill="#fff" opacity=".5"/>';
+    if (a === 3) s += `<path d="M21 27c0-9 5-13 11-13s11 4 11 13c-3-3-7-4-11-4s-8 1-11 4z" fill="${hair}"/><circle cx="32" cy="21" r="3.4" fill="#d9e2ea" stroke="#8a99a8" stroke-width="1"/>`;
+    if (a === 4) s += '<g fill="#fff" stroke="#d8dde3" stroke-width=".8"><circle cx="25" cy="13" r="6"/><circle cx="32" cy="10" r="7"/><circle cx="39" cy="13" r="6"/><rect x="23" y="15" width="18" height="10" rx="2"/></g>';
+    if (a === 5) s += '<path d="M19 24c2-8 24-8 26 0z" fill="#23395f"/><rect x="18" y="23" width="28" height="4" rx="1" fill="#16243f"/><path d="M22 27h20l-3 3H25z" fill="#111"/><circle cx="32" cy="19" r="2.4" fill="#e8c04a"/>';
+    if (a === 6) s += `<path d="M20 29c-1-10 5-16 12-16s13 6 12 16c-2-4-6-6-12-6s-10 2-12 6z" fill="${hair}"/><g fill="none" stroke="#333" stroke-width="1.3"><circle cx="27.5" cy="31" r="3.6"/><circle cx="36.5" cy="31" r="3.6"/><path d="M31 31h2"/></g>`;
+    if (a === 7) s += `<path d="M20 29c0-10 6-16 13-15 7 0 12 5 11 14-3-5-9-8-17-7-3 2-5 5-7 8z" fill="${hair}"/>`;
+    if (a === 8) s += `<path d="M20 31c-1-5 1-8 3-9M44 31c1-5-1-8-3-9" stroke="${hair}" stroke-width="3" fill="none"/><g fill="none" stroke="#c9a23a" stroke-width="1.4"><rect x="23.5" y="28.5" width="8" height="5" rx="1.5"/><rect x="32.5" y="28.5" width="8" height="5" rx="1.5"/></g>`;
+    if (a === 9) s += `<circle cx="32" cy="14" r="5" fill="${hair}"/><path d="M20 30c0-10 5-15 12-15s12 5 12 15c-3-4-7-6-12-6s-9 2-12 6z" fill="${hair}"/><g fill="none" stroke="#6a4a2a" stroke-width="1.2"><circle cx="27.5" cy="31" r="3.3"/><circle cx="36.5" cy="31" r="3.3"/></g>`;
+    if (a === 10) s += '<path d="M8 27L32 9l24 18z" fill="#d9b56a" stroke="#a8843a" stroke-width="1"/><path d="M20 27l12-12 12 12" stroke="#a8843a" stroke-width=".8" fill="none"/>';
+    if (a === 11) s += '<path d="M18 26c1-9 27-9 28 0z" fill="#e3c14a"/><rect x="14" y="25" width="36" height="3.4" rx="1.7" fill="#c9a12e"/><path d="M24 40q8 6 16 0" stroke="#5a4636" stroke-width="2" fill="none" opacity=".5"/>';
+  } else {
+    const fur = [['#e8a45a', '#fff3e0'], ['#c98c50', '#f6e2c8'], ['#f4f4f4', '#222'], ['#f2eef0', '#f6c6d4'], ['#f0962c', '#fff'], ['#9a6a44', '#f0cfa8'], ['#f6b6c4', '#f08aa0'], ['#c9a46a', '#f6ecd8']][a];
+    const f0 = b % 2 && a !== 2 ? `color-mix(in srgb, ${fur[0]} 80%, #555)` : fur[0];
+    s += body(cw[1]);
+    if (a === 0 || a === 4 || a === 7) s += `<path d="M20 22l2-12 9 8zM44 22l-2-12-9 8z" fill="${f0}"/><path d="M22 20l1-6 5 5zM42 20l-1-6-5 5z" fill="${fur[1]}" opacity=".8"/>`;
+    if (a === 1) s += `<ellipse cx="18" cy="29" rx="5" ry="10" fill="#8a5a30"/><ellipse cx="46" cy="29" rx="5" ry="10" fill="#8a5a30"/>`;
+    if (a === 2 || a === 5) s += `<circle cx="20" cy="18" r="5.5" fill="${a === 2 ? '#222' : f0}"/><circle cx="44" cy="18" r="5.5" fill="${a === 2 ? '#222' : f0}"/>`;
+    if (a === 3) s += `<ellipse cx="25" cy="10" rx="4" ry="12" fill="${f0}"/><ellipse cx="39" cy="10" rx="4" ry="12" fill="${f0}"/><ellipse cx="25" cy="11" rx="2" ry="8" fill="${fur[1]}"/><ellipse cx="39" cy="11" rx="2" ry="8" fill="${fur[1]}"/>`;
+    if (a === 6) s += `<path d="M20 20l4-8 6 6zM44 20l-4-8-6 6z" fill="${f0}"/>`;
+    s += `<ellipse cx="32" cy="31" rx="13.5" ry="13" fill="${f0}"/>`;
+    if (a === 5) s += `<ellipse cx="32" cy="34" rx="9" ry="8" fill="${fur[1]}"/>`;
+    if (a === 2) s += '<ellipse cx="26.5" cy="30" rx="3.6" ry="4.6" fill="#222" transform="rotate(-20 26.5 30)"/><ellipse cx="37.5" cy="30" rx="3.6" ry="4.6" fill="#222" transform="rotate(20 37.5 30)"/>';
+    if (a === 4) s += '<g stroke="#2a1a10" stroke-width="1.6" stroke-linecap="round"><path d="M32 18v4M27 19l1 3M37 19l-1 3M19 30h4M41 30h4M20 35h3M41 35h3"/></g>';
+    if (a === 7) s += '<g fill="#6a4a2a"><circle cx="24" cy="24" r="1.3"/><circle cx="40" cy="24" r="1.3"/><circle cx="21" cy="33" r="1.2"/><circle cx="43" cy="33" r="1.2"/></g><path d="M29 22q3-3 6 0" stroke="#fff" stroke-width="1.4" fill="none"/>';
+    s += eyes(30, a === 2 ? '#fff' : '#1a1a1a');
+    if (a === 6) s += `<ellipse cx="32" cy="37" rx="5" ry="3.6" fill="${fur[1]}"/><circle cx="30.3" cy="37" r="1" fill="#a04060"/><circle cx="33.7" cy="37" r="1" fill="#a04060"/>`;
+    else s += `<path d="M30.5 35h3l-1.5 2z" fill="#3a2020"/><path d="M32 37q-2 3-4 2M32 37q2 3 4 2" stroke="#3a2020" stroke-width="1.1" fill="none"/>`;
+    if (a === 0 || a === 4 || a === 7) s += '<g stroke="#5a4030" stroke-width=".8"><path d="M22 35h-7M22 37l-6 2M42 35h7M42 37l6 2"/></g>';
+  }
+  if (fest === 0) s += '<path d="M19 22c2-9 24-9 26 0q-13 4-26 0z" fill="#7fb04a"/><path d="M19 22q13 4 26 0" stroke="#f6e7a0" stroke-width="1.6" fill="none"/><path d="M32 13q2-5 6-6" stroke="#4a7a2a" stroke-width="2" fill="none"/><path d="M38 7q4 1 4 4-4 0-4-4z" fill="#5f9a3a"/>';
+  if (fest === 1) s += '<path d="M19 22q13-14 26 0z" fill="#c8202c"/><rect x="17" y="20" width="30" height="4" rx="2" fill="#e8c04a"/><path d="M17 20q-5-3-6 1M47 20q5-3 6 1" stroke="#c8202c" stroke-width="2.4" fill="none"/><circle cx="32" cy="15" r="2.6" fill="#e8c04a"/><rect x="44" y="50" width="9" height="12" rx="1.5" fill="#d8323a"/><circle cx="48.5" cy="55" r="2" fill="#e8c04a"/>';
+  if (fest === 2) s += '<path d="M19 22q6-16 22-10l8 8-3 3-6-5q-4-2-8 4z" fill="#d8323a"/><rect x="17" y="20" width="28" height="5" rx="2.5" fill="#fff"/><circle cx="48" cy="22" r="3.4" fill="#fff"/>';
+  if (fest === 3) s += '<ellipse cx="32" cy="22" rx="20" ry="4.5" fill="#e6c26a"/><path d="M22 22q10-14 20 0z" fill="#efd58a"/><rect x="22" y="18" width="20" height="2.6" fill="#d8323a"/><rect x="22" y="28" width="8.5" height="4.6" rx="2" fill="#1a1a1a" opacity=".85"/><rect x="33.5" y="28" width="8.5" height="4.6" rx="2" fill="#1a1a1a" opacity=".85"/><g fill="#f58fb0"><circle cx="20" cy="52" r="2.5"/><circle cx="26" cy="55" r="2.5"/><circle cx="38" cy="55" r="2.5"/><circle cx="44" cy="52" r="2.5"/></g>';
+  return `<svg viewBox="0 0 64 64" aria-hidden="true">${s}</svg>`;
+}
+const skinBg = id => { const m = /^([oaf])(\d+)-(\d+)$/.exec(id || ''); if (!m) return '#3c6ea8'; if (m[1] === 'f') return ['#2f5a3a', '#7a1f24', '#1f4a3a', '#2a6a8a'][+m[2]]; return CWAY[+m[3] % 4][2]; };
+const myAv = () => V5.skin ? 'sk:' + V5.skin : ACC.avatar;
+
+// ---------- 專屬道具：牌背與胡牌特效 ----------
+const EX_BACKS = { pomelo: ['中秋柚香背', '#7fb04a', '#5f8f3a', '#3f6a24', '#2a4a18', 0, 'ex'], lucky: ['新春紅包背', '#d8323a', '#b0222a', '#8a141c', '#5a0c12', 0, 'ex'], xmas: ['聖誕雪夜背', '#2a7a5a', '#1f5f46', '#c8202c', '#7a1418', 0, 'ex'], summer: ['夏日海風背', '#3ab0d8', '#2a8ab0', '#1f6a8a', '#124a62', 0, 'ex'] };
+const WIN_FX = { gold: ['金光（預設）', ['#ffd54a', '#ff8a3d', '#ff4d4d', '#fff3b0', '#7fe0ff'], 0], sakura: ['櫻花雨', ['#ffc0d6', '#ff8ab0', '#fff', '#ffd6e6'], 8000], jade: ['翡翠流光', ['#7fe0b0', '#3fbf8a', '#d0fff0', '#2a8a6a'], 8000],
+  lantern: ['中秋燈籠（專屬）', ['#ff8a3d', '#ffd54a', '#c8202c'], -1], firecracker: ['新春鞭炮（專屬）', ['#ff2a2a', '#ffd54a', '#fff'], -1], snow: ['聖誕飄雪（專屬）', ['#ffffff', '#cfe8ff', '#a8d0ff'], -1], sparkle: ['夏日浪花（專屬）', ['#7fe0ff', '#3ab0d8', '#fff', '#ffe08a'], -1] };
+const fxColors = () => (WIN_FX[V5.fx] || WIN_FX.gold)[1];
+function grantPerks(sk) { (sk.perk || []).forEach(p => { if (p.startsWith('back-')) { if (!SHOP.owned.includes(p)) SHOP.owned.push(p); } else { const k = p.slice(3); if (!V5.fxOwned.includes(k)) V5.fxOwned.push(k); } }); }
+function ownSkin(id) { if (!V5.owned.includes(id)) V5.owned.push(id); const sk = skinById(id); if (sk) grantPerks(sk); saveV5(); save(); }
+
+PAGES.wardrobe = { title: '造型', sub: '原創角色 112 款・專屬牌背與胡牌特效', render(el, tab = 'occ') {
+  const tabs = [['occ', '職業'], ['ani', '動物'], ['fest', '節慶限定'], ['item', '專屬道具']];
+  const cur = V5.skin || '';
+  let body = '';
+  if (tab === 'item') {
+    body = `<h4 class="wh">胡牌特效</h4><div class="wgrid">${Object.entries(WIN_FX).map(([k, v]) => { const own = V5.fxOwned.includes(k), on = V5.fx === k;
+      return `<div class="witem glass ${on ? 'on' : ''}"><div class="fxprev">${v[1].map(c => `<i style="background:${c}"></i>`).join('')}</div><b>${v[0]}</b><small>${own ? (on ? '使用中' : '已擁有') : v[2] > 0 ? fmt(v[2]) + ' 金幣' : '節慶造型附贈'}</small>${own ? `<button class="btn sm ${on ? 'ghost' : 'mint'}" data-fx="${k}" ${on ? 'disabled' : ''}>${on ? '使用中' : '使用'}</button>` : v[2] > 0 ? `<button class="btn sm primary" data-fxb="${k}">購買</button>` : '<button class="btn sm ghost" disabled>未取得</button>'}</div>`; }).join('')}</div>
+      <h4 class="wh">專屬牌背（穿戴節慶造型即取得）</h4><div class="wgrid">${Object.entries(EX_BACKS).map(([k, v]) => { const own = SHOP.owned.includes('back-' + k), on = SHOP.back === k;
+      return `<div class="witem glass ${on ? 'on' : ''}"><div class="bprev"><div class="t back" style="--w:40px;background:linear-gradient(160deg,${v[1]},${v[2]} 55%,${v[3]})"></div></div><b>${v[0]}</b><small>${own ? '已擁有' : '節慶造型附贈'}</small>${own ? `<button class="btn sm ${on ? 'ghost' : 'mint'}" data-bk="${k}" ${on ? 'disabled' : ''}>${on ? '使用中' : '使用'}</button>` : '<button class="btn sm ghost" disabled>未取得</button>'}</div>`; }).join('')}</div>`;
+  } else {
+    const L = SKINS.filter(s => s.grp === tab);
+    body = `<div class="wgrid">${L.map(s => { const own = V5.owned.includes(s.id), on = cur === s.id;
+      return `<div class="witem glass ${on ? 'on' : ''}" data-sk="${s.id}"><span class="av ring" style="width:58px;height:58px"><i style="background:${skinBg(s.id)}">${skinSVG(s.id)}</i></span><b>${s.name}</b><small>${own ? (on ? '穿戴中' : '已擁有') : s.event ? '活動獎勵／' + fmt(s.price) : fmt(s.price) + ' 金幣'}</small>${s.perk ? '<em class="perk">附專屬牌背＋特效</em>' : ''}</div>`; }).join('')}</div>`;
+  }
+  el.innerHTML = `<div class="wardw"><div class="wprev glass">${avatar(myAv(), 120)}<b>${esc(ACC.nick)}</b><small>${cur ? skinById(cur).name : '預設頭像'}</small>
+      <button class="btn sm ghost" id="wReset">${cur ? '換回預設頭像' : '使用預設頭像中'}</button><div class="sub" style="font-size:11px;margin-top:6px">造型會顯示在牌桌座位上</div></div>
+    <div class="wmain"><div class="tabs">${tabs.map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" data-t="${k}">${l}</button>`).join('')}</div>${body}</div></div>`;
+  el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { pageStack[pageStack.length - 1][1] = b.dataset.t; beep('tap'); rerender(); });
+  el.querySelector('#wReset').onclick = () => { V5.skin = ''; saveV5(); rerender(); };
+  el.querySelectorAll('[data-sk]').forEach(b => b.onclick = () => {
+    const s = skinById(b.dataset.sk); beep('tap');
+    if (V5.owned.includes(s.id)) { V5.skin = s.id; saveV5(); toast('已穿戴：' + s.name); return rerender(); }
+    confirmBox('購買造型', `${s.name}<br>${fmt(s.price)} 金幣（遊戲幣，無現金價值）${s.perk ? '<br><small>附贈專屬牌背與胡牌特效</small>' : ''}`, '購買並穿戴', () => {
+      if (WAL.coins < s.price) return toast('金幣不足');
+      addCoins(-s.price); ownSkin(s.id); V5.skin = s.id; saveV5(); beep('coin'); toast('購買成功：' + s.name); rerender(); });
+  });
+  el.querySelectorAll('[data-fx]').forEach(b => b.onclick = () => { V5.fx = b.dataset.fx; saveV5(); particles({ rays: true, n: 60, colors: fxColors() }); rerender(); });
+  el.querySelectorAll('[data-fxb]').forEach(b => b.onclick = () => { const k = b.dataset.fxb, v = WIN_FX[k]; if (WAL.coins < v[2]) return toast('金幣不足'); addCoins(-v[2]); V5.fxOwned.push(k); V5.fx = k; saveV5(); beep('coin'); rerender(); });
+  el.querySelectorAll('[data-bk]').forEach(b => b.onclick = () => { SHOP.back = b.dataset.bk; save(); applyTheme(); rerender(); });
+} };
+
+// ---------- 限時活動（依日期換季）＋ 免費通行證 ----------
+function seasonTheme(d = new Date()) {
+  const m = d.getMonth() + 1, y = d.getFullYear();
+  if (m >= 9 && m <= 10) return { k: 0, name: '中秋團圓祭', end: `${y}-10-31`, color: '#5f8f3a', deco: '🥮' };
+  if (m >= 11) return { k: 2, name: '聖誕雪夜祭', end: `${y}-12-31`, color: '#2a7a5a', deco: '🎄' };
+  if (m <= 2) return { k: 1, name: '新春開運祭', end: `${y}-02-${y % 4 ? 28 : 29}`, color: '#c8202c', deco: '🧧' };
+  return { k: 3, name: '夏日海風祭', end: `${y}-08-31`, color: '#2a8ab0', deco: '🏖️' };
+}
+const evKey = () => { const t = seasonTheme(); return t.k + ':' + t.end; };
+const EVC = () => (V5.ev[evKey()] = V5.ev[evKey()] || { c: {}, claimed: [], tier: [] });
+function v5Track(kind, data) {
+  try {
+    const E = EVC(), c = E.c, inc = (k, n = 1) => c[k] = (c[k] || 0) + n;
+    inc('rounds'); inc('g_' + kind);
+    let xp = 10;
+    if (kind === 'mj') { if (data.type === 'win' && data.winner === 0) { inc('wins'); xp += 25; if (data.selfDraw) inc('tsumo'); if (data.total >= 5) inc('big'); } }
+    else if (data && data.pts && data.pts[0] > 0) { inc('wins'); xp += 15; }
+    if (data && data.delta > 0) inc('earn', data.delta);
+    V5.pass.xp += xp; saveV5();
+  } catch (e) {}
+}
+const EV_MISS = () => { const t = seasonTheme(); return [
+  { id: 'r5', name: '任意遊戲完成 5 局', k: 'rounds', need: 5, pt: 20 },
+  { id: 'r20', name: '任意遊戲完成 20 局', k: 'rounds', need: 20, pt: 40 },
+  { id: 'w3', name: '麻將胡牌 3 次', k: 'wins', need: 3, pt: 30 },
+  { id: 'ts', name: '自摸 2 次', k: 'tsumo', need: 2, pt: 30 },
+  { id: 'big', name: '胡 5 台以上 1 次', k: 'big', need: 1, pt: 40 },
+  { id: 'he', name: '德州撲克打 5 手', k: 'g_he', need: 5, pt: 25 },
+  { id: 'sl', name: '射龍門玩 3 局', k: 'g_sl', need: 3, pt: 25 },
+  { id: 'mj2', name: `${t.deco} 二人麻將或龍鳳對決 3 局`, k: 'g_mj', need: 3, pt: 25 },
+]; };
+const EV_TRACK = k => [[30, '金幣 3,000', { c: 3000 }], [60, '玉幣 5', { j: 5 }], [90, '房卡 3', { cards: 3 }], [120, '金幣 8,000', { c: 8000 }], [160, `${FEST[k][0]}造型：${OCC[0]}`, { sk: `f${k}-0` }],
+  [200, '玉幣 15', { j: 15 }], [240, `${FEST[k][0]}造型：${OCC[1]}`, { sk: `f${k}-1` }], [270, '金幣 20,000', { c: 20000 }], [300, `${FEST[k][0]}造型：${ANI[0]}`, { sk: `f${k}-6` }]];
+const PASS_LV = 30, PASS_XP = 120;
+const passReward = lv => lv % 10 === 0 ? { sk: ['o7-1', 'a3-2', 'a7-3'][lv / 10 - 1], name: ['上班族・暖橘', '兔子・薄荷', '石虎・紫夜'][lv / 10 - 1] + ' 造型' } : lv % 5 === 0 ? { j: 5, name: '玉幣 5' } : lv % 3 === 0 ? { cards: 1, name: '房卡 1' } : { c: 500 + lv * 100, name: '金幣 ' + fmt(500 + lv * 100) };
+function giveReward(r) { if (r.c) addCoins(r.c); if (r.j) addCoins(0, r.j); if (r.cards) { WAL.cards += r.cards; save(); refreshWallet(); } if (r.sk) { ownSkin(r.sk); toast('獲得造型：' + skinById(r.sk).name); } beep('coin'); }
+PAGES.events = { title: '活動', sub: '限時活動・任務・獎勵路線・免費通行證', render(el, tab = 'ev') {
+  const t = seasonTheme(), E = EVC(), M = EV_MISS(), pts = M.filter(m => E.claimed.includes(m.id)).reduce((s, m) => s + m.pt, 0);
+  const days = Math.max(0, Math.ceil((new Date(t.end + 'T23:59:59') - new Date()) / 864e5));
+  let body = '';
+  if (tab === 'ev') {
+    const TR = EV_TRACK(t.k);
+    body = `<div class="evban" style="--ec:${t.color}"><span class="deco">${t.deco}</span><div><b>${t.name}</b><small>限時活動・剩 ${days} 天（至 ${t.end}）・本季限定「${FEST[t.k][0]}」造型與專屬牌背、胡牌特效</small></div><div class="evpt"><b>${pts}</b><small>活動點數</small></div></div>
+      <div class="evcols"><div class="glass evm"><h4>活動任務</h4>${M.map(m => { const cur = Math.min(m.need, E.c[m.k] || 0), done = cur >= m.need, cl = E.claimed.includes(m.id);
+        return `<div class="mrow"><div><b>${m.name}</b><small>${cur}/${m.need}・+${m.pt} 點</small><div class="bar"><i style="width:${cur / m.need * 100}%"></i></div></div><button class="btn sm ${cl ? 'ghost' : done ? 'primary' : 'ghost'}" data-em="${m.id}" ${cl || !done ? 'disabled' : ''}>${cl ? '已領' : done ? '領點數' : '進行中'}</button></div>`; }).join('')}</div>
+      <div class="glass evt"><h4>獎勵路線</h4><div class="track">${TR.map(([need, name, r], i) => { const cl = E.tier.includes(i), ok = pts >= need;
+        return `<div class="tnode ${cl ? 'cl' : ok ? 'ok' : ''}"><span class="tn">${need}</span>${r.sk ? `<span class="av" style="width:34px;height:34px"><i style="background:${skinBg(r.sk)}">${skinSVG(r.sk)}</i></span>` : `<span class="tic">${r.c ? '🪙' : r.j ? '💠' : '🎫'}</span>`}<small>${name}</small><button class="btn sm ${ok && !cl ? 'primary' : 'ghost'}" data-et="${i}" ${!ok || cl ? 'disabled' : ''}>${cl ? '已領' : '領取'}</button></div>`; }).join('')}</div></div></div>`;
+  } else {
+    const lv = Math.min(PASS_LV, Math.floor(V5.pass.xp / PASS_XP)), inLv = V5.pass.xp % PASS_XP;
+    body = `<div class="evban pass"><span class="deco">🎟️</span><div><b>免費通行證・第 ${seasonNo()} 季</b><small>打任何遊戲都會累積經驗（每局 +10、贏再加分）・全部獎勵免費，<b>沒有付費版</b></small></div><div class="evpt"><b>Lv.${lv}</b><small>${lv >= PASS_LV ? '已滿級' : `${inLv}/${PASS_XP} XP`}</small></div></div>
+      <div class="ptrack">${Array.from({ length: PASS_LV }, (_, i) => i + 1).map(n => { const r = passReward(n), cl = V5.pass.claimed.includes(n), ok = lv >= n;
+        return `<div class="pnode glass ${cl ? 'cl' : ok ? 'ok' : ''}"><span class="tn">Lv${n}</span>${r.sk ? `<span class="av" style="width:34px;height:34px"><i style="background:${skinBg(r.sk)}">${skinSVG(r.sk)}</i></span>` : `<span class="tic">${r.c ? '🪙' : r.j ? '💠' : '🎫'}</span>`}<small>${r.name}</small><button class="btn sm ${ok && !cl ? 'primary' : 'ghost'}" data-pv="${n}" ${!ok || cl ? 'disabled' : ''}>${cl ? '已領' : '領'}</button></div>`; }).join('')}</div>`;
+  }
+  el.innerHTML = `<div class="tabs">${[['ev', t.deco + ' ' + t.name], ['pass', '🎟️ 免費通行證'], ['daily', '📋 每日任務']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" data-t="${k}">${l}</button>`).join('')}</div>${body}`;
+  el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { if (b.dataset.t === 'daily') return OPEN.event(); pageStack[pageStack.length - 1][1] = b.dataset.t; beep('tap'); rerender(); });
+  el.querySelectorAll('[data-em]').forEach(b => b.onclick = () => { E.claimed.push(b.dataset.em); saveV5(); beep('coin'); toast('活動點數入帳'); rerender(); });
+  el.querySelectorAll('[data-et]').forEach(b => b.onclick = () => { const i = +b.dataset.et, r = EV_TRACK(t.k)[i][2]; E.tier.push(i); saveV5(); giveReward(r); toast('已領取：' + EV_TRACK(t.k)[i][1]); rerender(); });
+  el.querySelectorAll('[data-pv]').forEach(b => b.onclick = () => { const n = +b.dataset.pv, r = passReward(n); V5.pass.claimed.push(n); saveV5(); giveReward(r); toast('已領取：' + r.name); rerender(); });
+} };
+
+// ---------- 每日金幣補給 ----------
+const REFILL_TO = 5000, REFILL_BELOW = 2000;
+function dailyRefill() {
+  if (!ACC || V5.refill === today() || WAL.coins >= REFILL_BELOW) return false;
+  const add = REFILL_TO - WAL.coins; V5.refill = today(); saveV5(); addCoins(add);
+  modal(`<h2 class="grad">每日金幣補給</h2><div class="sub">你的金幣低於 ${fmt(REFILL_BELOW)}，今天免費補到 <b>${fmt(REFILL_TO)}</b>（+${fmt(add)}）。每天一次，全部是遊戲幣。</div><div class="foot"><button class="btn primary" data-close>收下</button></div>`);
+  beep('coins'); return true;
+}
+
+// ---------- 排位賽 ----------
+const TIERS = [['銅牌', 0, '#b07a4a'], ['白銀', 300, '#b8c4d0'], ['黃金', 700, '#e8c04a'], ['白金', 1200, '#7fe0d0'], ['鑽石', 1800, '#8ab8ff'], ['雀聖', 2600, '#ff8ad0']];
+const seasonNo = (d = new Date()) => (d.getFullYear() - 2026) * 12 + d.getMonth() + 1 - 8; // 2026 年 9 月為第 1 季，每月一季
+const tierOf = pts => { let i = 0; TIERS.forEach((t, k) => { if (pts >= t[1]) i = k; }); return i; };
+const RANK_PTS = [40, 15, -10, -25];
+function rankState() {
+  const s = seasonNo();
+  if (!V5.rank) V5.rank = { season: s, pts: 0, games: 0, wins: 0, best: 0, history: [] };
+  if (V5.rank.season !== s) { // 換季：依上季段位發獎、軟重置
+    const old = V5.rank, ti = tierOf(old.pts), rw = [1000, 3000, 6000, 10000, 16000, 30000][ti];
+    sendMail(`第 ${old.season} 季排位獎勵`, `上季段位：${TIERS[ti][0]}（${old.pts} 分）。附上賽季獎勵。`, { coins: rw, jade: ti * 3 });
+    V5.rank = { season: s, pts: Math.floor(old.pts * .5), games: 0, wins: 0, best: tierOf(old.pts * .5), history: [] };
+  }
+  saveV5(); return V5.rank;
+}
+function rankBadge(pts, size = 54) { const t = TIERS[tierOf(pts)]; return `<span class="rbadge" style="--rc:${t[2]};width:${size}px;height:${size}px"><svg viewBox="0 0 40 40"><path d="M20 2l15 7v11c0 9-7 15-15 18C12 35 5 29 5 20V9z" fill="var(--rc)" stroke="#fff" stroke-opacity=".6"/><text x="20" y="25" text-anchor="middle" font-size="11" font-weight="900" fill="#1a2440">${t[0][0]}</text></svg></span>`; }
+function rankedResult(place) {
+  const R = rankState(), d = RANK_PTS[place - 1] + (place === 1 && R.pts < 300 ? 10 : 0), before = tierOf(R.pts);
+  R.pts = Math.max(0, R.pts + d); R.games++; if (place === 1) R.wins++; R.best = Math.max(R.best, tierOf(R.pts)); R.history.unshift({ d: today(), place, delta: d }); R.history = R.history.slice(0, 20); saveV5();
+  const after = tierOf(R.pts);
+  setTimeout(() => { toast(`排位 第 ${place} 名：${d >= 0 ? '+' : ''}${d} 分（${TIERS[after][0]} ${R.pts}）`, 3500); if (after > before) { bigText('升段・' + TIERS[after][0], 'cal', 2600); particles({ fireworks: true, colors: fxColors() }); } }, 600);
+  return d;
+}
+function rankBoard() {
+  const s = seasonNo(), rng = seeded(s * 7919 + 13), R = rankState();
+  const names = BOTS.map(b => b.name).concat(['雀神阿忠', '清一色小美', '自摸王', '海底撈月', '槓上開花', '一炮三響', '東風少爺', '嶺上客', '聽牌高手', '台中阿彬', '高雄阿芳', '花蓮小鐵', '金門阿嬤', '竹北工程師', '台南府城', '基隆雨', '宜蘭蔥', '嘉義雞肉飯', '新竹風', '屏東太陽']);
+  const L = names.slice(0, 40).map((n, i) => ({ name: n, av: i % 12, pts: Math.floor(3400 * Math.pow(rng(), 1.6)) + (i < 3 ? 2200 : 0), games: 20 + Math.floor(rng() * 300) }));
+  L.push({ name: ACC.nick, av: myAv(), pts: R.pts, games: R.games, me: true });
+  return L.sort((a, b) => b.pts - a.pts);
+}
+PAGES.ranked = { title: '排位賽', sub: '每月一季・段位積分・賽季獎勵（對手為電腦玩家，排行為模擬資料）', render(el, tab = 'me') {
+  const R = rankState(), ti = tierOf(R.pts), nx = TIERS[ti + 1];
+  const tabs = [['me', '我的段位'], ['board', '排行榜'], ['rule', '規則與獎勵']];
+  let body = '';
+  if (tab === 'me') body = `<div class="rkw"><div class="glass rkme">${rankBadge(R.pts, 96)}<b style="color:${TIERS[ti][2]}">${TIERS[ti][0]}</b><div class="num big">${R.pts} 分</div>
+      <div class="bar"><i style="width:${nx ? (R.pts - TIERS[ti][1]) / (nx[1] - TIERS[ti][1]) * 100 : 100}%"></i></div><small>${nx ? `距離 ${nx[0]} 還差 ${nx[1] - R.pts} 分` : '已達最高段位'}</small>
+      <small>第 ${R.season} 季・已打 ${R.games} 場・第一名 ${R.wins} 次</small><button class="btn primary" id="rkGo">⚔️ 開始排位（四人一圈）</button></div>
+    <div class="glass rkhist"><h4>最近排位</h4>${R.history.length ? R.history.map(h => `<div class="hrow2b"><span>${h.d}</span><span>第 ${h.place} 名</span><b class="${h.delta >= 0 ? 'pos' : 'neg'}">${h.delta >= 0 ? '+' : ''}${h.delta}</b></div>`).join('') : '<div class="empty">還沒有排位紀錄</div>'}</div></div>`;
+  if (tab === 'board') { const L = rankBoard(); body = `<div class="glass rkboard">${L.slice(0, 50).map((p, i) => `<div class="rkr ${p.me ? 'me' : ''}"><span class="no">${i + 1}</span>${avatar(p.av, 30)}<b>${esc(p.name)}</b>${rankBadge(p.pts, 26)}<span>${TIERS[tierOf(p.pts)][0]}</span><span class="num">${p.pts}</span><small>${p.games} 場</small></div>`).join('')}</div>`; }
+  if (tab === 'rule') body = `<div class="glass rkrule"><ul class="rules"><li>排位賽固定為 <b>四人台灣麻將・一圈（4 局）・底 100／台 20・標準規則</b>，對手為電腦玩家。</li><li>依整場名次加減分：第 1 名 <b>+40</b>、第 2 名 <b>+15</b>、第 3 名 <b>−10</b>、第 4 名 <b>−25</b>（銅牌段第 1 名再 +10）。積分不會低於 0。</li>
+    <li>段位：${TIERS.map(t => `${t[0]} ${t[1]}+`).join('、')}。</li><li>每月 1 日換季；上一季段位發放獎勵到郵件：${TIERS.map((t, i) => `${t[0]} ${fmt([1000, 3000, 6000, 10000, 16000, 30000][i])} 金幣`).join('、')}（另加玉幣）。新賽季積分保留一半。</li></ul></div>`;
+  el.innerHTML = `<div class="tabs">${tabs.map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" data-t="${k}">${l}</button>`).join('')}<span class="hpill">第 ${R.season} 季</span></div>${body}`;
+  el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { pageStack[pageStack.length - 1][1] = b.dataset.t; beep('tap'); rerender(); });
+  const g = el.querySelector('#rkGo'); if (g) g.onclick = () => { if (lowCoins(100)) return; matching({ game: 'mj', n: 4, hands: 4, base: 100, perTai: 20, preset: 'std', cap: 0, rules: { chi: true, pon: true, kan: true, tsumo: true }, mode: `排位賽・第 ${R.season} 季`, ranked: true }, pickBots(3), '排位配對中'); };
+} };
+
+// ---------- 公平對戰 ----------
+OPEN.fair = () => modal(`<h2>🛡️ 公平對戰說明</h2><ul class="rules">
+  <li><b>洗牌完全隨機</b>：每局開始時用瀏覽器的密碼學亂數（crypto.getRandomValues）產生一個「種子」，再用公開的 mulberry32 演算法＋Fisher–Yates 洗牌排出整副牌山。</li>
+  <li><b>沒有劇本、不作牌</b>：牌山只由種子決定，程式裡沒有依照輸贏、儲值或段位調整牌序的邏輯；電腦玩家打牌的程式也不會改動牌山。</li>
+  <li><b>可以自己驗證</b>：每局結束可按「牌山」查看整副牌的順序；牌譜會保存種子，在牌譜回放中按「驗證牌山」，會用同一個種子重新洗一次並比對，結果完全相同才顯示 ✔。</li>
+  <li>本遊戲為離線單機版，對手都是電腦，金幣、玉幣、房卡都是不能兌換現金的遊戲幣，<b>不涉及任何真錢</b>。</li></ul>
+  <div class="foot"><button class="btn mint" data-close>了解</button></div>`, null, { cls: 'wide' });
+const newSeed = () => { try { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] & 0x7fffffff; } catch (e) { return (Math.random() * 2147483647) | 0; } };
+
+// ================= v5.0：德州撲克・射龍門（牌桌介面） =================
+const HE_POS = ['left:12px;top:470px', 'left:12px;top:300px', 'left:12px;top:96px', 'left:calc(50% - 80px);top:6px', 'right:12px;top:96px', 'right:12px;top:300px'];
+const HE_CARDS = ['left:calc(50% - 74px);top:400px', 'left:196px;top:304px', 'left:196px;top:100px', 'left:calc(50% + 90px);top:10px', 'right:196px;top:100px', 'right:196px;top:304px'];
+const HE_BET = ['left:calc(50% - 20px);top:356px', 'left:290px;top:300px', 'left:290px;top:150px', 'left:calc(50% - 20px);top:104px', 'right:290px;top:150px', 'right:290px;top:300px'];
+const HE_STYLE_OF = p => ['tight', 'loose', 'aggro', 'calling', 'tight'][(p + CS.matchId.length) % 5] || 'tight';
+const heLabel = L => !L ? '' : L.t === 'fold' ? '棄牌' : L.t === 'check' ? '過牌' : L.t === 'call' ? `跟注 ${L.amt}` : L.t === 'allin' ? `全下 ${L.to}` : L.t === 'raise' ? `加注到 ${L.to}` : '';
+function hePop(p, text, kind = 'chi') {
+  const xy = { 0: [STW / 2, 330], 1: [250, 300], 2: [250, 150], 3: [STW / 2, 120], 4: [STW - 250, 150], 5: [STW - 250, 300] }[p];
+  const d = document.createElement('div'); d.className = 'pop sm k-' + kind; d.style.left = xy[0] + 'px'; d.style.top = xy[1] + 'px'; d.innerHTML = `<span>${text}</span>`;
+  $('#cpops').appendChild(d); setTimeout(() => d.remove(), 1200);
+}
+async function runHE(tk) {
+  if (!CS.he || CS.he.id !== CS.matchId) CS.he = { id: CS.matchId, stacks: Array(CS.n).fill(200), dealer: rnd(CS.n) };
+  const H = CS.he; H.stacks = H.stacks.map(s => s <= 0 ? 200 : s); H.dealer = (H.dealer + 1) % CS.n;
+  const S = PK.HE.newHand({ stacks: H.stacks, dealer: H.dealer, rng: CS.rng, sb: 1, bb: 2 }); CS.st = S; CS.heShow = false;
+  crecStart(); beep('riffle'); CS.msg = ''; renderC(); await cWait(500); chk(tk);
+  while (!S.result) {
+    chk(tk);
+    const p = S.toAct, street = S.street; let a;
+    if (p === 0 && !CS.auto) a = await askHuman('he', { raise: Math.min(PK.HE.legal(S, 0).maxTo, S.curBet + Math.max(S.minRaise, Math.round(PK.HE.pot(S) * .5))) });
+    else { await cWait(CSPD() * .75); chk(tk); a = PK.HE.ai(S, p, p === 0 ? 'tight' : HE_STYLE_OF(p), CS.rng); }
+    chk(tk);
+    PK.HE.act(S, p, a);
+    const L = S.log.filter(x => x.p === p).pop();
+    CS.acts[p] = { text: heLabel(L) };
+    if (L.t === 'fold') beep('tap'); else if (L.t === 'check') beep('draw'); else if (L.t === 'allin') { beep('boom'); hePop(p, '全下！', 'hu burst'); } else if (L.t === 'raise') { beep('claim'); hePop(p, '加注', 'pon'); } else beep('coin');
+    crecStep(`${cname(p)} ${heLabel(L)}`);
+    if (S.street !== street && !S.result) { await cWait(250); CS.acts = {}; beep('flick'); crecStep(['', '翻牌', '轉牌', '河牌'][S.street]); }
+    renderC();
+  }
+  CS.heShow = S.result.showdown; CS.acts = {};
+  const won = S.result.won, w = won.map((x, q) => q).filter(q => won[q] > 0);
+  if (S.result.showdown) { beep('riffle'); w.forEach(q => hePop(q, S.result.shown[q].name, 'hu')); }
+  crecStep('攤牌：' + w.map(q => `${cname(q)} 贏 ${won[q]}`).join('、'));
+  renderC(); await cWait(1400); chk(tk);
+  H.stacks = S.stacks.slice();
+  const pts = S.result.delta;
+  const detail = `<div class="ddzres"><div class="sub">底池 ${S.result.pots.map((pt, i) => `${i ? '邊池' + i : '主池'} ${pt.amt}`).join('・')}${S.refund ? `・退回未跟注 ${S.refund.amt}` : ''}</div>${S.seated.map((s, p) => s ? `<div class="sszp ${p === 0 ? 'me' : ''}"><div class="who">${avatar(CS.players[p].av, 26)}<b>${esc(cname(p))}</b>${S.folded[p] ? '<span class="tagx">棄牌</span>' : S.result.shown[p] ? `<span class="tagx">${S.result.shown[p].name}</span>` : ''}<span class="num ${pts[p] > 0 ? 'pos' : pts[p] < 0 ? 'neg' : ''}">${pts[p] > 0 ? '+' : ''}${pts[p]} 籌碼</span></div><div class="cardsr">${(S.result.showdown && !S.folded[p]) || p === 0 ? S.hole[p].map(c => cardHTML(c, 34)).join('') : S.hole[p].map(() => cardHTML(-1, 34)).join('')}</div></div>` : '').join('')}<div class="cardsr board">${S.board.map(c => cardHTML(c, 34)).join('')}</div></div>`;
+  crecEnd(S.result.showdown ? `攤牌・${w.map(q => cname(q) + ' ' + S.result.shown[q].name).join('、')}` : `${cname(w[0])} 收下底池`);
+  cRoundOver(pts, detail, w.length ? `${cname(w[0])} 贏得 ${Math.max(...won)} 籌碼` : '平分', Math.max(...won));
+}
+function renderHE(h, S) {
+  const pot = PK.HE.pot(S), show = CS.heShow;
+  h.push(`<div class="g-abs heoval"></div>`);
+  h.push(`<div class="g-abs hepot"><b>底池 ${pot}</b>${S.allin.some(Boolean) && PK.HE.pots(S).length > 1 ? `<small>${PK.HE.pots(S).map((pt, i) => (i ? '邊池' : '主池') + ' ' + pt.amt).join('・')}</small>` : ''}</div>`);
+  h.push(`<div class="g-abs heboard">${[0, 1, 2, 3, 4].map(i => S.board[i] != null ? cardHTML(S.board[i], 58, ANIM() ? 'flipc' : '') : '<div class="pc slot" style="--w:58px"></div>').join('')}</div>`);
+  for (let p = 0; p < CS.n; p++) {
+    const P = CS.players[p], turn = S.toAct === p && !S.result, a = CS.acts[p];
+    const dl = p === S.dealer ? '<span class="dbtn">D</span>' : '', bl = p === S.sbP ? '<span class="wtag">小盲</span>' : p === S.bbP ? '<span class="wtag">大盲</span>' : '';
+    h.push(`<div class="seatchip glass ${turn ? 'active' : ''} ${S.folded[p] ? 'folded' : ''} ${p === 0 ? 'me-chip' : ''}" style="${HE_POS[p]}">${avatar(P.av, 36)}<div><div class="nm">${esc(P.name)}${dl}</div><div class="row2">${bl}<span class="sc num">${S.stacks[p]}</span>${p ? `<span class="hst">${PK.HE.STYLES[HE_STYLE_OF(p)].name}</span>` : ''}</div></div></div>`);
+    if (S.seated[p] && !S.folded[p] && p !== 0) h.push(`<div class="g-abs hehole" style="${HE_CARDS[p]}">${S.hole[p].map(c => cardHTML(show ? c : -1, show ? 40 : 30)).join('')}</div>`);
+    if (S.bet[p] > 0 || a) h.push(`<div class="g-abs hebet" style="${HE_BET[p]}">${S.bet[p] > 0 ? `<span class="chip3"></span>${S.bet[p]}` : ''}${a ? `<em>${a.text}</em>` : ''}</div>`);
+  }
+  if (S.seated[0]) h.push(`<div class="g-abs hemine ${S.folded[0] ? 'fold' : ''}">${S.hole[0].map(c => cardHTML(c, 76)).join('')}${S.board.length >= 3 && !S.folded[0] ? `<small>${PK.best(S.hole[0].concat(S.board)).name}</small>` : ''}</div>`);
+  const pd = CS.pending;
+  if (pd && pd.kind === 'he' && !CS.auto) {
+    const L = PK.HE.legal(S, 0), pot2 = pot + L.toCall, opts = [];
+    if (L.canRaise) { const add = (lbl, to) => { to = Math.max(L.minTo, Math.min(L.maxTo, Math.round(to))); if (!opts.some(o => o[1] === to)) opts.push([lbl, to]); };
+      add('最小', L.minTo); add('½池', S.curBet + pot2 * .5); add('滿池', S.curBet + pot2); }
+    h.push(`<div class="g-abs cbar hebar">${L.check ? '' : '<button class="btn ghost" data-cact="hefold">棄牌</button>'}<button class="btn mint" data-cact="hecall">${L.check ? '過牌' : `跟注 ${L.toCall}`}</button>${opts.filter(o => o[1] < L.maxTo).map(([l, to]) => `<button class="btn primary sm" data-cact="heraise" data-to="${to}">${S.curBet ? '加注' : '下注'} ${to}<small>${l}</small></button>`).join('')}${L.canRaise || L.toCall >= S.stacks[0] ? `<button class="btn coral" data-cact="heallin">全下 ${L.maxTo}</button>` : ''}</div>`);
+  }
+}
+// ---------- 射龍門 ----------
+const SL_STYLE = p => ['tight', 'loose', 'aggro', 'calling'][(p + CS.matchId.length) % 4];
+async function runSL(tk) {
+  const S = PK.SL.newRound(CS.n, CS.rng, 1, 2, (CS.starter + CS.roundNo) % CS.n); CS.st = S; CS.slLast = null; CS.slChoice = 'hi';
+  crecStart(); beep('riffle'); CS.msg = `每人下底注 1 注・彩池 ${S.pot} 注`; renderC(); await cWait(600); chk(tk);
+  while (!S.done) {
+    chk(tk); const p = S.turn; PK.SL.deal(S); CS.slLast = null; beep('flick'); CS.msg = ''; renderC();
+    await cWait(CSPD() * .7); chk(tk);
+    const kind = PK.SL.kind(S.posts); let a;
+    if (kind === 'adjacent') { a = { bet: 0 }; await cWait(500); }
+    else if (p === 0 && !CS.auto) { CS.slChoice = PK.SL.odds(S, 'hi').win >= PK.SL.odds(S, 'lo').win ? 'hi' : 'lo'; a = await askHuman('sl'); }
+    else { a = PK.SL.ai(S, p, SL_STYLE(p)); await cWait(CSPD() * .5); }
+    chk(tk);
+    const r = PK.SL.resolve(S, p, a.bet, a.choice); CS.slLast = r;
+    if (r.out === 'win') { beep('coin'); cpop(p, `進門！+${r.amt}`, 'hu'); }
+    else if (r.out === 'post') { beep('boom'); cpop(p, `撞柱！−${-r.amt}`, 'pon burst'); shake($('#cgame')); }
+    else if (r.out === 'lose') { beep('lose'); cpop(p, `出界 −${-r.amt}`, 'chi'); }
+    else { beep('tap'); cpop(p, kind === 'adjacent' ? '沒門・不打' : '不打', 'chi'); }
+    crecStep(`${cname(p)}：${slTxt(r)}`);
+    renderC(); await cWait(CSPD() * 1.4); chk(tk);
+  }
+  const pts = S.net;
+  const detail = `<div class="ddzres"><div class="sub">本局 ${S.log.length} 手・剩餘彩池 ${S.refund || 0} 注平均退回</div>${S.log.map(r => `<div class="slrow"><b>${esc(cname(r.p))}</b>${r.posts.map(c => cardHTML(c, 24)).join('')}${r.third != null ? '→' + cardHTML(r.third, 24) : ''}<span>${slTxt(r)}</span></div>`).join('')}</div>`;
+  crecEnd(`彩池結算・${pts.map((v, q) => cname(q) + (v >= 0 ? ' +' : ' ') + v).join('、')}`);
+  cRoundOver(pts, detail, `${cname(pts.indexOf(Math.max(...pts)))} 本局最多 +${Math.max(...pts)} 注`, Math.max(...pts));
+}
+const slTxt = r => r.out === 'pass' ? '不打' : `押 ${r.bet}${r.choice ? (r.choice === 'hi' ? '猜大' : '猜小') : ''}・${r.out === 'win' ? '進門 +' + r.amt : r.out === 'post' ? '撞柱 ' + r.amt : '出界 ' + r.amt}`;
+function renderSL(h, S) {
+  h.push(`<div class="g-abs slpot"><span class="chip3 big"></span><b>彩池 ${S.pot} 注</b><small>每注 ${CS.base} 金幣・剩 ${S.turnsLeft} 手</small></div>`);
+  const posts = S.posts || (CS.slLast && CS.slLast.posts), third = CS.slLast && CS.slLast.third;
+  h.push(`<div class="g-abs slgate">${posts ? cardHTML(posts[0], 84, 'post') : '<div class="pc slot" style="--w:84px"></div>'}<div class="slmid">${third != null ? cardHTML(third, 84, 'third ' + (CS.slLast.out || '')) : '<div class="pc slot q" style="--w:84px"><span>?</span></div>'}</div>${posts ? cardHTML(posts[1], 84, 'post') : '<div class="pc slot" style="--w:84px"></div>'}</div>`);
+  if (S.posts) { const k = PK.SL.kind(S.posts); h.push(`<div class="g-abs slkind">${k === 'pair' ? '兩柱同點：猜下一張比它大或小（撞柱賠 3 倍）' : k === 'adjacent' ? '兩柱相鄰，中間沒有牌：不打' : `押第三張落在 ${CG.FACE[S.posts[0] >> 2]} 與 ${CG.FACE[S.posts[1] >> 2]} 之間（撞柱賠 2 倍）`}</div>`); }
+  for (let p = 0; p < CS.n; p++) { const lr = S.log.filter(r => r.p === p).pop(); if (lr) h.push(`<div class="g-abs pile p${cpos(p)}"><span class="passb">${slTxt(lr)}</span></div>`); }
+  const pd = CS.pending;
+  if (pd && pd.kind === 'sl' && !CS.auto && S.posts) {
+    const pair = PK.SL.kind(S.posts) === 'pair', o = PK.SL.odds(S, pair ? CS.slChoice : null), mx = S.pot;
+    const bets = [...new Set([1, Math.max(1, Math.round(mx / 4)), Math.max(1, Math.round(mx / 2)), mx])].filter(b => b <= mx);
+    h.push(`<div class="g-abs cbar slbar">${pair ? `<button class="btn ${CS.slChoice === 'hi' ? 'primary' : 'ghost'} sm" data-cact="slhi">猜大</button><button class="btn ${CS.slChoice === 'lo' ? 'primary' : 'ghost'} sm" data-cact="sllo">猜小</button>` : ''}<span class="glass pillnote">勝 ${Math.round(o.win * 100)}%・撞柱 ${Math.round(o.post * 100)}%</span><button class="btn ghost" data-cact="slpass">不打</button>${bets.map(b => `<button class="btn ${b === mx ? 'coral' : 'mint'} sm" data-cact="slbet" data-b="${b}">押 ${b}${b === mx ? '（全池）' : ''}</button>`).join('')}</div>`);
+  }
+}
+function v5Act(a, b) {
+  const S = CS.st;
+  if (a === 'hefold') return resolveC({ t: 'fold' });
+  if (a === 'hecall') return resolveC({ t: 'call' });
+  if (a === 'heraise') return resolveC({ t: 'raise', to: +b.dataset.to });
+  if (a === 'heallin') return resolveC({ t: 'allin' });
+  if (a === 'slhi' || a === 'sllo') { CS.slChoice = a === 'slhi' ? 'hi' : 'lo'; return renderC(); }
+  if (a === 'slpass') return resolveC({ bet: 0 });
+  if (a === 'slbet') return resolveC({ bet: +b.dataset.b, choice: CS.slChoice });
+}
+const v5Auto = pd => pd.kind === 'he' ? PK.HE.ai(CS.st, 0, 'tight', CS.rng) : pd.kind === 'sl' ? PK.SL.ai(CS.st, 0, 'tight') : null;
+
+// ---------- 撲克類牌譜（每局逐步快照） ----------
+function crecStart() { CS.rec = { game: CS.game, seed: CS.seed, date: today(), names: CS.players.map(p => p.name), avs: CS.players.map(p => p.av), round: CS.roundNo, steps: [] }; crecStep('發牌'); }
+function crecSnap() {
+  const S = CS.st, g = CS.game; if (!S) return {};
+  if (g === 'he') return { hands: S.hole.map(x => x.slice()), board: S.board.slice(), stacks: S.stacks.slice(), pot: PK.HE.pot(S), folded: S.folded.slice() };
+  if (g === 'sl') return { posts: S.posts ? S.posts.slice() : CS.slLast ? CS.slLast.posts.slice() : [], third: CS.slLast ? CS.slLast.third : null, pot: S.pot, net: S.net.slice() };
+  if (g === 'b2' || g === 'ddz') return { hands: S.hands.map(x => x.slice()), board: Object.values(CS.acts).length ? [] : [] , last: Object.fromEntries(Object.entries(CS.acts).filter(([k, v]) => v.cards).map(([k, v]) => [k, v.cards])) };
+  if (g === 'ssz') return { rows: (S.plays || []).map(pl => pl.arr ? pl.arr.map(r => r.slice()) : []) };
+  if (g === 'aq') return { board: S.board.map(pc => pc ? [pc.side, pc.r, pc.up ? 1 : 0] : null) };
+  return {};
+}
+function crecStep(text) { try { if (CS.rec) CS.rec.steps.push({ text, s: crecSnap() }); } catch (e) {} }
+function crecEnd(text) {
+  try { if (!CS.rec) return; crecStep(text); CS.rec.text = `${GAMES[CS.game].name}・第 ${CS.roundNo} 局・${text}`; CS.rec.id = 'c' + Date.now().toString(36);
+    const L = LS.get('creplays', []); L.unshift(CS.rec); LS.set('creplays', L.slice(0, 12)); CS.rec = null; } catch (e) {}
+}
+
+// ================= v5.0：新玩法登錄・牌譜逐步檢視・牌山・3D 電動桌・龍鳳對決介面 =================
+Object.assign(GAMES, {
+  mj2: { name: '二人麻將', tag: '一對一・16 張・不能吃', color: 'sky', n: 2, glyph: '二', mjv: true },
+  lf: { name: '龍鳳對決', tag: '原創 2v2 隊伍麻將・龍珠鳳羽加台', color: 'coral', n: 4, glyph: '龍', mjv: true },
+  he: { name: '德州撲克', tag: '無限注・6 人桌・邊池', color: 'lilac', n: 6, glyph: '♠', rounds: [[10, '10 手'], [20, '20 手']], bases: [5, 10, 20], unit: '籌碼' },
+  sl: { name: '射龍門', tag: '兩柱夾一張・撞柱賠兩倍', color: 'lemon', n: 4, glyph: '門', rounds: [[4, '4 局'], [8, '8 局']], bases: [10, 30, 50], unit: '注' },
+});
+Object.assign(GART, {
+  mj2: () => tile(9, 44, '', '', 'position:absolute;left:10px;top:4px;rotate:-8deg') + tile(0, 44, '', '', 'position:absolute;left:54px;top:2px;rotate:8deg'),
+  lf: () => `<div class="lfart"><span class="d">龍</span><span class="f">鳳</span></div>`,
+  he: () => [47, 46].map((c, i) => cardHTML(c, 42, '', `style="--w:42px;position:absolute;left:${16 + i * 36}px;top:${i * 4}px;rotate:${i ? 9 : -9}deg"`)).join(''),
+  sl: () => cardHTML(3, 38, '', 'style="--w:38px;position:absolute;left:4px;top:8px;rotate:-12deg"') + cardHTML(40, 38, '', 'style="--w:38px;position:absolute;left:44px;top:0"') + cardHTML(31, 38, '', 'style="--w:38px;position:absolute;left:84px;top:8px;rotate:12deg"'),
+});
+const MJV_CFG = g => g === 'mj2' ? { n: 2, rules: { chi: false, pon: true, kan: true, tsumo: true }, mode: '二人麻將' } : { n: 4, rules: { chi: true, pon: true, kan: true, tsumo: true }, mode: '龍鳳對決', lf: true };
+PAGES.mjvar = { title: '快速開始', sub: '選擇設定，電腦玩家自動配桌', render(el, g) {
+  const G0 = GAMES[g], Q = QS.c[g] = Object.assign({ hands: 4, base: 100, perTai: 20 }, QS.c[g] || {});
+  $('#page h1').textContent = G0.name + '・快速開始';
+  const ch = (key, opts) => `<div class="chips">${opts.map(([v, l]) => `<button class="chip ${Q[key] === v ? 'on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
+  el.innerHTML = `<div class="qsw"><div class="glass qs2">
+    <div class="opt"><div class="lb">場次</div>${ch('hands', QUANS)}</div>
+    <div class="opt"><div class="lb">底／台</div>${ch('base', [[100, '底 100'], [300, '底 300'], [500, '底 500']])}${ch('perTai', [[20, '台 20'], [50, '台 50'], [100, '台 100']])}</div>
+    <div class="ds">${g === 'mj2' ? '兩人對打・16 張・有花 144 張・<b>不能吃</b>、可碰槓・其餘台數同約定規則' : '你和對家（電腦）同隊對抗上下家・<b>隊友分數合計</b>・隊友放槍不算錢・每局翻出龍珠與鳳羽，胡牌時每張 +1 台，兩種都有再 +2「龍鳳呈祥」'}</div></div>
+    <div class="qsfoot"><button class="btn ghost" data-open="crules" data-arg="${g}">規則</button><button class="btn ghost" data-go="back">返回</button><button class="btn primary" id="qGo">開始配桌</button></div></div>`;
+  el.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { Q[b.dataset.k] = +b.dataset.v; save(); beep('tap'); rerender(); });
+  el.querySelector('#qGo').onclick = () => { if (lowCoins(Q.base)) return; const c = MJV_CFG(g); matching(Object.assign({ game: 'mj', hands: Q.hands, base: Q.base, perTai: Q.perTai, preset: 'std', cap: 0 }, c), pickBots(c.n - 1)); };
+} };
+const CRULES_V5 = {
+  mj2: `<li><b>二人麻將（本作採用的常見兩人規則）</b>：兩人對打，使用完整 144 張（含花），每人 16 張、莊家 17 張。</li><li><b>不能吃</b>（只有一個對手，吃牌會太快）；可以碰、明槓、暗槓、加槓，可放槍也可自摸。</li>
+    <li>台數、花牌、海底保留 16 張、連莊拉莊與「約定規則」相同；放槍與自摸都由對手一人支付。</li><li>適合快速對局，一圈 4 局，莊家胡牌或流局連莊。</li>`,
+  lf: `<li><b>龍鳳對決是本作原創的活動模式</b>（不是任何現有遊戲的規則）。四人台灣麻將，<b>你和對家同一隊（龍隊）</b>，上家與下家為另一隊（鳳隊）。</li>
+    <li>每局開始翻出一張 <b>龍珠</b>（任一數牌）與一張 <b>鳳羽</b>（任一字牌），顯示在牌桌左上角。胡牌時手牌＋明牌中每張龍珠、鳳羽各 <b>+1 台</b>；龍珠與鳳羽都有，再加 <b>龍鳳呈祥 +2 台</b>。</li>
+    <li><b>隊友放槍不算錢</b>（自家人），自摸時隊友不用付；只有敵隊要付。整場以隊伍合計分數比輸贏。</li><li>其餘牌型、台數與約定規則相同。</li>`,
+  he: `<li><b>無限注德州撲克</b>，6 人桌（你＋5 位風格不同的電腦：穩健、愛玩、激進、跟注站）。每手每人起始 200 籌碼（100 個大盲），輸光自動補回 200。</li>
+    <li>盲注 1／2，莊家按鈕每手輪轉；兩人單挑時莊家放小盲並先行動。每人 2 張底牌＋5 張公牌（翻牌 3、轉牌 1、河牌 1，各燒 1 張）。</li>
+    <li>四輪下注：翻牌前、翻牌、轉牌、河牌。可以棄牌、過牌、跟注、加注（最少加注為前一次加注額，至少一個大盲）或全下；不足額的全下不會重新開放加注。</li>
+    <li>有人全下時依投入額切出 <b>主池與邊池</b>，每個池只由有資格的玩家比牌；沒人跟的多餘下注退回。同牌力平分，零頭給莊家左手第一位贏家。</li>
+    <li>牌型：高牌＜一對＜兩對＜三條＜順子＜同花＜葫蘆＜鐵支＜同花順（A-2-3-4-5 最小順子）。每手輸贏的籌碼 × 底分換成金幣。</li>`,
+  sl: `<li><b>射龍門</b>（常見玩法）：每局每人先下 <b>1 注底注</b> 到彩池。輪到你時發兩張「門柱」，你可以押 1 注～整個彩池，賭第三張落在兩柱之間（不含柱子）。</li>
+    <li><b>進門</b>：從彩池贏回押注；<b>出界</b>：押注賠進彩池；<b>撞柱</b>（和任一柱同點）：<b>賠 2 倍</b>。</li>
+    <li>兩柱 <b>同點</b>：先選「猜大」或「猜小」，猜中贏、猜錯輸，撞柱賠 <b>3 倍</b>。兩柱 <b>相鄰</b>（如 7、8，中間沒牌）只能不打。</li>
+    <li>A 最大、2 最小；牌用完自動重洗。每人輪兩圈或彩池被贏光就結束，剩下的彩池平均退回（每注 × 底分換成金幣）。</li>`,
+};
+// ---------- 龍鳳對決：牌桌資訊 ----------
+function lfInfo() {
+  if (!(G.cfg && G.cfg.lf && G.n === 4 && G.lfTiles)) return '';
+  const tA = G.scores[0] + G.scores[2], tB = G.scores[1] + G.scores[3];
+  return `<div class="g-abs lfinfo glass"><b>🐉 龍鳳對決</b><div><span class="d">龍珠</span> ${tile(G.lfTiles[0], 22)} <span class="f">鳳羽</span> ${tile(G.lfTiles[1], 22)}</div><span class="ts"><b class="d">龍隊 ${tA >= 0 ? '+' : ''}${fmt(tA)}</b><b class="f">鳳隊 ${tB >= 0 ? '+' : ''}${fmt(tB)}</b></span></div>`;
+}
+function lfAdjust(res) {
+  if (!(G.cfg && G.cfg.lf && G.n === 4 && res.type === 'win' && G.lfTiles)) return;
+  const pl = G.game.players[res.winner];
+  PK.LF.adjust(res, pl.hand.concat(pl.melds.flatMap(m => m.tiles)), G.lfTiles[0], G.lfTiles[1], G.perTai, G.game.scores);
+  if (res.lf && res.lf.tai) setTimeout(() => { popup(res.winner, res.lf.d && res.lf.f ? '龍鳳呈祥' : res.lf.d ? '龍珠加台' : '鳳羽加台', 'kan burst'); particles({ n: 70, colors: ['#ff5a5a', '#ffd54a', '#7fe0ff'] }); }, 700);
+}
+// ---------- 牌山 ----------
+OPEN.wall = (src) => {
+  const g = src || G.game; if (!g || !g.wallOrder) return toast('這局沒有牌山資料');
+  const W = g.wallOrder, TT = W.length, back = g.backN || 0, rem = g.wall ? g.wall.length : 0, front = TT - rem - back, deal = (g.n || 4) * 16 + 1;
+  const cls = i => i < deal ? 'dl' : i < front ? 'fr' : i >= TT - back ? 'bk' : 'rm';
+  modal(`<h2>牌山・整副牌順序</h2><div class="sub">本局種子 <b class="num">${G.handStart && g === G.game ? G.handStart.seed : (src && src.seed) || '—'}</b>・共 ${TT} 張・由前往後摸，補花／槓從尾端補。</div>
+    <div class="wlegend"><span class="dl">開局配牌</span><span class="fr">輪流摸牌</span><span class="bk">尾端補牌</span><span class="rm">沒摸到（海底與剩牌）</span></div>
+    <div class="wallgrid">${W.map((t, i) => `<div class="wc ${cls(i)}"><small>${i + 1}</small>${tile(t, 21)}</div>`).join('')}</div>
+    <div class="foot"><button class="btn ghost" data-open="fair">公平對戰說明</button><button class="btn mint" data-close>關閉</button></div>`, null, { cls: 'wide wallm' });
+};
+// ---------- 麻將牌譜：逐步前進／後退（所有人手牌） ----------
+async function buildSteps(r) {
+  const g = new MJ.Game({ dealer: r.dealer, roundWind: r.roundWind, scores: (r.scores || [0, 0, 0, 0]).slice(), lian: r.lian, base: r.base, perTai: r.perTai, players: r.n, rules: r.rules, preset: r.preset || 'std', rng: MJ.mulberry32(r.seed) });
+  let i = 0; const acts = r.acts || [];
+  const hum = { turn: (gg, p, o) => acts[i++] || MJ.AI.turn(gg, p, o), claim: (gg, p, t, o, f) => acts[i++] || { type: 'pass' } };
+  const steps = [];
+  const snap = (text, ev) => steps.push({ text, ev, wall: g.wall ? g.wall.length : 0, turn: g.turn, P: g.players.map(p => ({ hand: p.hand.slice(), melds: p.melds.map(m => ({ type: m.type, tiles: m.tiles.slice(), claimed: m.claimed })), flowers: p.flowers.slice(), discards: p.discards.slice() })) });
+  const nm = p => r.names[p] || '玩家' + (p + 1);
+  const res = await MJ.playHand(g, [hum].concat(Array(r.n - 1).fill(MJ.AI)), { delay: 0, onEvent: ev => {
+    if (ev.type === 'deal') snap('開局配牌', ev);
+    else if (ev.type === 'draw') snap(`${nm(ev.p)} 摸牌`, ev);
+    else if (ev.type === 'discard') snap(`${nm(ev.p)} 打出 ${tileName(ev.t)}`, ev);
+    else if (ev.type === 'claim') snap(`${nm(ev.p)} ${ev.text}`, ev);
+  } });
+  snap(res.type === 'win' ? `${nm(res.winner)} ${res.selfDraw ? '自摸' : '胡牌'}・${res.total} 台` : '流局', { type: 'end' });
+  return { steps, res, g };
+}
+PAGES.rview = { title: '牌譜檢視', sub: '逐步前進／後退・顯示所有人的手牌', render(el, id) {
+  const r = REPLAYS.find(x => x.id === id), cr = !r && LS.get('creplays', []).find(x => x.id === id);
+  if (!r && !cr) { el.innerHTML = '<div class="empty">找不到這份牌譜</div>'; return; }
+  if (cr) return renderCView(el, cr);
+  el.innerHTML = '<div class="empty">重建牌局中…</div>';
+  buildSteps(r).then(B => {
+    let k = 0; const N = B.steps.length;
+    const verify = () => { const g2 = new MJ.Game({ dealer: r.dealer, players: r.n, rules: r.rules, preset: r.preset || 'std', rng: MJ.mulberry32(r.seed) }); g2.deal(); return r.wall ? g2.wallOrder.join(',') === r.wall : g2.wallOrder.join(',') === B.g.wallOrder.join(','); };
+    const draw = () => {
+      const s = B.steps[k], ev = s.ev || {};
+      el.innerHTML = `<div class="rvw"><div class="rvtop glass"><b>${esc(r.text)}</b><span class="sub">種子 <b class="num">${r.seed}</b></span><span class="rvstep">第 ${k + 1} / ${N} 步・${esc(s.text)}・牌牆剩 ${s.wall}</span></div>
+        <div class="rvplayers">${s.P.map((p, i) => `<div class="rvp glass ${ev.p === i ? 'cur' : ''}"><div class="who">${avatar(r.avs[i], 26)}<b>${esc(r.names[i])}</b><small>${p.flowers.map(t => tile(t, 16)).join('')}</small></div>
+          <div class="rvh">${p.melds.map(m => `<span class="meld">${m.tiles.map(t => tile(t, 20, t === m.claimed ? 'clm' : '')).join('')}</span>`).join('')}<span class="gap"></span>${p.hand.slice().sort((a, b) => a - b).map(t => tile(t, 22)).join('')}</div>
+          <div class="rvd">${p.discards.map((t, j) => tile(t, 15, ev.type === 'discard' && ev.p === i && j === p.discards.length - 1 ? 'last' : '')).join('')}</div></div>`).join('')}</div>
+        <div class="rvbar glass"><button class="btn ghost sm" data-s="0">⏮</button><button class="btn mint" data-s="-1">◀ 上一步</button><input type="range" min="0" max="${N - 1}" value="${k}" id="rvr"><button class="btn mint" data-s="1">下一步 ▶</button><button class="btn ghost sm" data-s="end">⏭</button>
+          <button class="btn ghost sm" id="rvW">牌山</button><button class="btn ghost sm" id="rvV">驗證牌山</button><button class="btn primary sm" data-open="replay" data-arg="${r.id}">▶ 牌桌回放</button></div></div>`;
+      el.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { const v = b.dataset.s; k = v === '0' ? 0 : v === 'end' ? N - 1 : Math.max(0, Math.min(N - 1, k + +v)); beep('tap'); draw(); });
+      el.querySelector('#rvr').oninput = e => { k = +e.target.value; draw(); };
+      el.querySelector('#rvW').onclick = () => OPEN.wall(Object.assign(B.g, { seed: r.seed }));
+      el.querySelector('#rvV').onclick = () => verify() ? toast('✔ 用種子 ' + r.seed + ' 重新洗牌，牌山完全相同', 3500) : toast('✘ 牌山不相符');
+    };
+    draw();
+  }).catch(e => { el.innerHTML = `<div class="empty">牌譜重建失敗：${esc(e.message)}</div>`; });
+} };
+function renderCView(el, cr) {
+  let k = 0; const N = cr.steps.length;
+  const draw = () => {
+    const st = cr.steps[k], s = st.s || {}; let body = '';
+    if (cr.game === 'he') body = `<div class="rvplayers">${(s.hands || []).map((h, i) => `<div class="rvp glass ${s.folded && s.folded[i] ? 'fold' : ''}"><div class="who">${avatar(cr.avs[i], 26)}<b>${esc(cr.names[i])}</b><small>${s.stacks ? s.stacks[i] : ''} 籌碼${s.folded && s.folded[i] ? '・棄牌' : ''}</small></div><div class="rvh">${h.map(c => cardHTML(c, 34)).join('')}</div></div>`).join('')}</div><div class="rvboard glass">公牌 ${(s.board || []).map(c => cardHTML(c, 40)).join('') || '—'}<b>底池 ${s.pot || 0}</b></div>`;
+    else if (cr.game === 'sl') body = `<div class="rvboard glass">${(s.posts || []).map(c => cardHTML(c, 60)).join(' ')}${s.third != null ? ' → ' + cardHTML(s.third, 60) : ''}<b>彩池 ${s.pot}</b></div><div class="rvplayers">${(s.net || []).map((v, i) => `<div class="rvp glass"><div class="who">${avatar(cr.avs[i], 26)}<b>${esc(cr.names[i])}</b><small>${v >= 0 ? '+' : ''}${v} 注</small></div></div>`).join('')}</div>`;
+    else if (cr.game === 'aq') body = `<div class="rvboard glass"><div class="aqmini">${(s.board || []).map(pc => `<i>${pc ? pieceHTML({ side: pc[0], r: pc[1], up: !!pc[2] }, 30) : ''}</i>`).join('')}</div></div>`;
+    else if (cr.game === 'ssz') body = `<div class="rvplayers">${(s.rows || []).map((rows, i) => `<div class="rvp glass"><div class="who">${avatar(cr.avs[i], 26)}<b>${esc(cr.names[i])}</b></div><div class="rvh">${rows.map(r => r.map(c => cardHTML(c, 28)).join('')).join('<span class="gap"></span>')}</div></div>`).join('')}</div>`;
+    else body = `<div class="rvplayers">${(s.hands || []).map((h, i) => `<div class="rvp glass"><div class="who">${avatar(cr.avs[i], 26)}<b>${esc(cr.names[i])}</b><small>${h.length} 張</small></div><div class="rvh">${h.map(c => cardHTML(c, 28)).join('')}</div>${s.last && s.last[i] ? `<div class="rvd">出：${s.last[i].map(c => cardHTML(c, 24)).join('')}</div>` : ''}</div>`).join('')}</div>`;
+    el.innerHTML = `<div class="rvw"><div class="rvtop glass"><b>${esc(cr.text || GAMES[cr.game].name)}</b><span class="sub">種子 <b class="num">${cr.seed}</b></span><span class="rvstep">第 ${k + 1} / ${N} 步・${esc(st.text)}</span></div>${body}
+      <div class="rvbar glass"><button class="btn ghost sm" data-s="0">⏮</button><button class="btn mint" data-s="-1">◀ 上一步</button><input type="range" min="0" max="${N - 1}" value="${k}" id="rvr"><button class="btn mint" data-s="1">下一步 ▶</button><button class="btn ghost sm" data-s="end">⏭</button></div></div>`;
+    el.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { const v = b.dataset.s; k = v === '0' ? 0 : v === 'end' ? N - 1 : Math.max(0, Math.min(N - 1, k + +v)); beep('tap'); draw(); });
+    el.querySelector('#rvr').oninput = e => { k = +e.target.value; draw(); };
+  };
+  draw();
+}
+// ---------- 3D 電動桌：開局升降動畫 ----------
+function liftTable() {
+  if (!ANIM() || !CFG.td3) return;
+  try {
+    const d = document.createElement('div'); d.className = 'mtable'; d.innerHTML = '<i class="l"></i><i class="r"></i><b>電動桌洗牌中</b>';
+    $('#pops').appendChild(d); sfx('shuffle'); setTimeout(() => sfx('shuffle'), 450); setTimeout(() => d.remove(), 1500);
+  } catch (e) {}
+}
+Object.assign(BACKS, EX_BACKS);
+['ssz', 'b2', 'ddz', 'aq'].forEach(k => { const v = GAMES[k]; delete GAMES[k]; GAMES[k] = v; });
+window.__OPEN = OPEN; window.__V5 = V5;
 
 
 document.body.insertAdjacentHTML('afterbegin', TileArt.defs());
