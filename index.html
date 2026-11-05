@@ -1646,6 +1646,80 @@ body.lite .ai53dragon{display:none}
 #home .lchar{overflow:visible!important;height:420px!important;width:220px!important;bottom:0!important;transform:translateX(-78%)!important}
 #home .scene52img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;z-index:0;pointer-events:none}
 .pop .ai53wrap b{font-size:22px;margin-top:-10px}
+/* ===== v5.8 麻將整體動畫加強（摸打吃碰槓胡／回合／大廳）：僅 CSS 個別 transform 屬性疊加，不覆蓋牌面與 3D 桌 ===== */
+/* --- 飛牌：陰影、落點漣漪、河牌落地回彈 --- */
+.flyt .t{filter:drop-shadow(0 10px 9px rgba(0,0,0,.42))}
+.flysh{position:absolute;height:10px;margin-top:-5px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.6),rgba(0,0,0,0) 70%);z-index:44;pointer-events:none;opacity:0;transform:translate(-50%,0)}
+.fxrip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;pointer-events:none;z-index:43;border:2px solid rgba(255,240,200,.85);box-shadow:0 0 10px rgba(255,220,140,.55),inset 0 0 8px rgba(255,220,140,.4);animation:rip58 .58s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rip58{from{transform:scale(.25,.13);opacity:.95}to{transform:scale(1.3,.62);opacity:0}}
+.fxrip.ink{width:200px;height:200px;margin:-100px 0 0 -100px;border:0;box-shadow:none;z-index:39;background:radial-gradient(circle,rgba(170,20,10,0) 34%,rgba(170,20,10,.5) 46%,rgba(170,20,10,.15) 56%,rgba(170,20,10,0) 66%);animation:ink58 .62s cubic-bezier(.15,.8,.3,1) forwards}
+body:has(#game.dq52) .fxrip.ink{background:radial-gradient(circle,rgba(255,80,210,0) 34%,rgba(255,90,220,.55) 46%,rgba(190,60,255,.18) 56%,rgba(255,80,210,0) 66%);mix-blend-mode:screen}
+.fxrip.ink.kan,body:has(#game.dq52) .fxrip.ink.kan{background:radial-gradient(circle,rgba(80,200,255,0) 34%,rgba(80,200,255,.55) 46%,rgba(110,90,255,.18) 56%,rgba(80,200,255,0) 66%)}
+.fxrip.ink.gold,body:has(#game.dq52) .fxrip.ink.gold{background:radial-gradient(circle,rgba(255,210,80,0) 34%,rgba(255,200,60,.6) 46%,rgba(255,120,20,.2) 56%,rgba(255,210,80,0) 66%);mix-blend-mode:screen}
+@keyframes ink58{0%{transform:scale(.25);opacity:1}100%{transform:scale(1.75);opacity:0}}
+#game .river .t.land58{animation:land58 .34s cubic-bezier(.3,1.5,.5,1)}
+@keyframes land58{0%{scale:1.1 .88;filter:brightness(1.3)}55%{scale:.97 1.04}100%{scale:1;filter:none}}
+#game .river .t.last::before{animation:last58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s)}
+@keyframes last58{0%,100%{opacity:.6}50%{opacity:1}}
+/* --- 摸牌：從牌牆方向劃入、輕落、金光一閃 --- */
+#myhand.drawin > .t:last-child{animation:drawin58 .4s cubic-bezier(.2,.9,.3,1.12) backwards;animation-delay:var(--dt,0ms)}
+@keyframes drawin58{0%{translate:48px -70px;rotate:10deg;scale:1.12;opacity:0;filter:brightness(1.35) drop-shadow(0 0 10px rgba(255,220,120,.95))}62%{translate:0 5px;rotate:0deg;scale:1;opacity:1}82%{translate:0 -2px}100%{translate:0 0;filter:none}}
+/* --- 配牌：仿實體一次四張、四墩依序落下（最後一張補花／莊家第 17 張） --- */
+#myhand.dealin > .t{animation:dealin58 .44s cubic-bezier(.2,.9,.3,1.12) backwards}
+#myhand.dealin > .t:nth-child(n){animation-delay:var(--dt,0ms)}
+#myhand.dealin > .t:nth-child(n+5){animation-delay:calc(var(--dt,0ms) + .14s)}#myhand.dealin > .t:nth-child(n+9){animation-delay:calc(var(--dt,0ms) + .28s)}
+#myhand.dealin > .t:nth-child(n+13){animation-delay:calc(var(--dt,0ms) + .42s)}#myhand.dealin > .t:nth-child(n+17){animation-delay:calc(var(--dt,0ms) + .58s)}
+@keyframes dealin58{0%{translate:0 -150px;scale:.55;rotate:-7deg;opacity:0;filter:brightness(.55)}64%{translate:0 6px;scale:1.03;rotate:0deg;opacity:1}100%{translate:0 0;scale:1;filter:none}}
+/* --- 喊牌：更重的印章撞擊（猛縮→回彈→停留→上浮淡出，總長 1 秒內） --- */
+.pop.burst{animation:burstin58 1s cubic-bezier(.2,1,.4,1) forwards}
+@keyframes burstin58{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}12%{transform:translate(-50%,-50%) scale(1.16);opacity:1}22%{transform:translate(-50%,-50%) scale(.95)}30%{transform:translate(-50%,-50%) scale(1)}78%{opacity:1;transform:translate(-50%,-52%) scale(1)}100%{transform:translate(-50%,-64%) scale(.96);opacity:0}}
+@keyframes neonin{0%{transform:scale(3) rotate(var(--tilt,0deg));opacity:0;filter:brightness(3) blur(4px)}14%{transform:scale(.84) rotate(var(--tilt,0deg));opacity:1;filter:brightness(2.2)}24%{transform:scale(1.08) rotate(var(--tilt,0deg));filter:brightness(1.3)}34%{transform:scale(1) rotate(var(--tilt,0deg))}78%{opacity:1;filter:brightness(1.1)}100%{transform:scale(1.04) rotate(var(--tilt,0deg));opacity:0}}
+@keyframes stampin{0%{transform:scale(3.2) rotate(-16deg);opacity:0;filter:blur(3px)}40%{transform:scale(.82) rotate(-5deg);opacity:1;filter:none}62%{transform:scale(1.08) rotate(-8deg)}80%{transform:scale(.98) rotate(-7deg)}100%{transform:scale(1) rotate(-7deg)}}
+/* --- 胡／自摸大字：光暈＋掃光 --- */
+.bigfx .bgl{position:absolute;left:50%;top:50%;width:78vmin;height:78vmin;margin:-39vmin 0 0 -39vmin;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,236,160,.6),rgba(255,160,40,.22) 42%,rgba(255,120,0,0) 70%);mix-blend-mode:screen;animation:bgl58 1.8s ease-out forwards}
+.bigfx.grey .bgl{background:radial-gradient(circle,rgba(200,210,230,.35),rgba(120,130,160,0) 65%)}
+@keyframes bgl58{0%{transform:scale(.2);opacity:0}14%{transform:scale(1.12);opacity:1}60%{opacity:.75}100%{transform:scale(1.35);opacity:0}}
+.bigfx span{position:relative}
+.bigfx span::after{content:attr(data-t);position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;-webkit-text-stroke:0;
+  background:linear-gradient(105deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.95) 50%,rgba(255,255,255,0) 58%) 0 0/300% 100% no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:shine58 .9s .32s ease-in-out both}
+.bigfx.grey span::after{display:none}
+@keyframes shine58{from{background-position:100% 0}to{background-position:0 0}}
+.coinhit{animation:coinhit58 .22s ease}
+@keyframes coinhit58{50%{scale:1.1;filter:brightness(1.35)}}
+/* --- 回合：座位呼吸光＋底光條、輪到我時手牌底光、中央風位脈動 --- */
+#game.dq52 .mjseat.active{animation:seat58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s)}
+@keyframes seat58{0%,100%{box-shadow:0 0 0 1px var(--ac,#ffd23a),0 0 6px 0 var(--ac,#ffd23a),0 4px 12px rgba(0,0,0,.55)}50%{box-shadow:0 0 0 2px var(--ac,#ffd23a),0 0 20px 5px var(--ac,#ffd23a),0 4px 12px rgba(0,0,0,.55)}}
+#game.dq52 .mjseat.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-6px;height:3px;border-radius:2px;background:var(--ac,#ffd23a);box-shadow:0 0 8px var(--ac,#ffd23a),0 0 16px var(--ac,#ffd23a);animation:bar58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s);pointer-events:none}
+#game:not(.dq52) .mjseat.active .av{animation:av58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s)}
+@keyframes av58{0%,100%{box-shadow:0 0 0 3px #ffe27a,0 0 8px 2px rgba(255,226,122,.6)}50%{box-shadow:0 0 0 3px #ffe27a,0 0 22px 8px rgba(255,226,122,.95)}}
+#game.myturn58 #myhand::after{content:"";position:absolute;left:3%;right:3%;bottom:-7px;height:4px;border-radius:3px;pointer-events:none;
+  background:linear-gradient(90deg,rgba(58,160,255,0),#3aa0ff 20%,#bfe8ff 50%,#3aa0ff 80%,rgba(58,160,255,0));box-shadow:0 0 12px #3aa0ff,0 0 24px rgba(58,160,255,.6);animation:bar58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s)}
+@keyframes bar58{0%,100%{opacity:.4;scale:.9 1}50%{opacity:1;scale:1 1}}
+#game.dq52 .plate .w.on{animation:won58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s)}
+@keyframes won58{0%,100%{scale:1;text-shadow:0 0 6px var(--ac)}50%{scale:1.22;text-shadow:0 0 10px var(--ac),0 0 20px var(--ac)}}
+#game.dq52 .plate::after{content:"";position:absolute;inset:-4px;border-radius:15px;pointer-events:none;border:2px solid var(--ac,#ffd23a);opacity:.35;animation:ring58 1.6s ease-in-out infinite;animation-delay:var(--ph,0s)}
+@keyframes ring58{50%{opacity:.9;box-shadow:0 0 16px var(--ac,#ffd23a)}}
+/* --- 大廳：分類卡錯開彈入、懸停發光、按鈕光澤與按壓回饋、點主持人撒金點 --- */
+#home.enter52 .cat52{animation:catin58 .62s cubic-bezier(.2,1.35,.4,1) both,bob52 3.2s ease-in-out .7s infinite}
+#home.enter52 .cat52:nth-child(2){animation-delay:.09s,-.3s}#home.enter52 .cat52:nth-child(3){animation-delay:.18s,-1.3s}
+@keyframes catin58{0%{transform:skewX(-8deg) translateY(40px) scale(.85);opacity:0}100%{transform:skewX(-8deg) translateY(0) scale(1);opacity:1}}
+.cat52{transition:filter .2s}.cat52:hover{filter:brightness(1.1) drop-shadow(0 0 12px rgba(255,220,140,.55))}
+.pill52,.gift52{overflow:hidden}
+.pill52::after,.gift52::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;pointer-events:none;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));animation:gloss58 4.2s ease-in-out infinite}
+.pill52:nth-child(2)::after{animation-delay:1.4s}.gift52::after{animation-delay:2.6s}
+@keyframes gloss58{0%,70%{left:-60%}100%{left:130%}}
+.gift52{position:absolute}
+.pill52,.shop52,.gift52,.lb52b i,.tr52 .ti svg{transition:scale .12s ease,filter .12s ease}
+.pill52:active,.shop52:active,.gift52:active,.lb52b:active i,.tr52 .ti:active svg{scale:.92;filter:brightness(1.18)}
+.spk58{position:fixed;width:10px;height:10px;margin:-5px 0 0 -5px;pointer-events:none;z-index:9997;border-radius:50%;background:radial-gradient(circle,#fff,#ffd23a 45%,rgba(255,180,40,0) 70%);animation:spk58 .7s ease-out forwards}
+@keyframes spk58{0%{opacity:1;scale:.6}100%{opacity:0;translate:var(--sx) var(--sy);scale:1.4}}
+/* --- 可關閉：動畫關閉／減少動態／省電 --- */
+body.noanim .mjseat.active,body.noanim .mjseat.active::after,body.noanim .mjseat.active .av,body.noanim #game.myturn58 #myhand::after,body.noanim .plate .w.on,body.noanim .plate::after,
+body.noanim .river .t.last::before,body.noanim .river .t.land58,body.noanim .pill52::after,body.noanim .gift52::after,body.noanim .spk58,body.noanim #home.enter52 .cat52,
+body.lite .mjseat.active::after,body.lite .plate::after,body.lite .river .t.last::before,body.lite .pill52::after,body.lite .gift52::after,body.lite .spk58{animation:none!important}
+body.noanim .flysh,body.noanim .fxrip,body.noanim .spk58{display:none}
+@media (prefers-reduced-motion:reduce){.fxrip,.flysh,.spk58{display:none}.mjseat.active,.mjseat.active::after,#myhand::after,.plate::after,.plate .w.on,.pill52::after,.gift52::after{animation:none!important}}
 
 </style>
 </head>
@@ -3649,48 +3723,76 @@ const sayTile = (t, seat) => say('t' + t, seat, TILE_SAY[t]);
 // ---- 動畫工具（舞台座標） ----
 const stageK = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--k')) || 1;
 function stageXY(el) { const st = $('#game').getBoundingClientRect(), r = el.getBoundingClientRect(), k = stageK(); return { x: (r.left - st.left) / k, y: (r.top - st.top) / k, w: r.width / k, h: r.height / k }; }
-// 飛牌：在 #pops 內產生一張牌從 from 飛到目標元素位置，目標先隱藏、抵達後顯示
-function flyTile(t, from, toEl, w, ms = 280) {
-  if (!ANIM() || !toEl) return;
+// 飛牌（v5.8）：拋物線弧＋落地壓扁回彈＋桌面陰影＋落點漣漪；onland 在落地瞬間呼叫（對齊打牌音效）
+const LITE = () => document.body.classList.contains('lite');
+function ripple(x, y, cls = '', host) {
+  if (!ANIM()) return;
+  try { const r = document.createElement('i'); r.className = 'fxrip ' + cls; r.style.left = x + 'px'; r.style.top = y + 'px'; (host || $('#pops')).appendChild(r); setTimeout(() => r.remove(), 700); } catch (e) {}
+}
+function flyTile(t, from, toEl, w, ms = 300, onland) {
+  if (!ANIM() || !toEl) { if (onland) onland(); return; }
+  let landed = false; const land = () => { if (landed) return; landed = true; try { onland && onland(); } catch (e) {} };
   try {
     const to = stageXY(toEl), d = document.createElement('div'); d.className = 'flyt';
     d.innerHTML = tile(t, w || to.w); const tt = d.firstChild; d.style.cssText = `left:${to.x}px;top:${to.y}px`;
-    $('#pops').appendChild(d); toEl.style.visibility = 'hidden';
-    const dx = from.x - to.x, dy = from.y - to.y;
-    const an = tt.animate([{ transform: `translate(${dx}px,${dy}px) scale(1.35) rotate(${dx > 0 ? 8 : -8}deg)`, opacity: .9 }, { transform: 'translate(0,0) scale(1)', opacity: 1 }], { duration: ms, easing: 'cubic-bezier(.2,.8,.3,1)' });
-    const done = () => { d.remove(); toEl.style.visibility = ''; };
+    const sh = document.createElement('i'); sh.className = 'flysh'; sh.style.cssText = `left:${to.x + to.w / 2}px;top:${to.y + to.h * .92}px;width:${to.w * 1.1}px`;
+    const host = $('#pops'); host.appendChild(sh); host.appendChild(d); toEl.style.visibility = 'hidden';
+    const dx = from.x - to.x, dy = from.y - to.y, dist = Math.hypot(dx, dy), lift = Math.min(70, 18 + dist * .22), r0 = dx > 0 ? 14 : -14;
+    const E = 'cubic-bezier(.3,.6,.35,1)';
+    const an = tt.animate([
+      { transform: `translate(${dx}px,${dy}px) scale(1.32) rotate(${r0}deg)`, opacity: .85, offset: 0 },
+      { transform: `translate(${dx * .45}px,${dy * .45 - lift}px) scale(1.22) rotate(${r0 * .35}deg)`, opacity: 1, offset: .45 },
+      { transform: 'translate(0,0) scale(1.04,.9) rotate(0)', offset: .78 },
+      { transform: 'translate(0,-3px) scale(.98,1.04)', offset: .9 },
+      { transform: 'translate(0,0) scale(1)', opacity: 1, offset: 1 }], { duration: ms, easing: E });
+    sh.animate([{ transform: `translate(calc(-50% + ${dx}px),${dy}px) scale(.5)`, opacity: .15 }, { transform: `translate(calc(-50% + ${dx * .45}px),${dy * .45}px) scale(.75)`, opacity: .25, offset: .45 }, { transform: 'translate(-50%,0) scale(1)', opacity: .55, offset: .78 }, { transform: 'translate(-50%,0) scale(1)', opacity: 0 }], { duration: ms + 80, easing: E, fill: 'forwards' });
+    setTimeout(() => { land(); if (!LITE()) ripple(to.x + to.w / 2, to.y + to.h * .78); }, ms * .78);
+    const done = () => { d.remove(); sh.remove(); toEl.style.visibility = ''; land(); try { toEl.classList.remove('land58'); void toEl.offsetWidth; toEl.classList.add('land58'); } catch (e) {} };
     an.onfinish = done; setTimeout(done, ms + 200);
-  } catch (e) {}
+  } catch (e) { land(); }
 }
-// 光芒／粒子：canvas 全螢幕，自動移除
+// 光芒／粒子（v5.8）：閃光→衝擊波→旋轉光芒→火花＋金箔紙屑（重力、旋轉）；手機與 lite 自動減量
 function particles(opts = {}) {
   if (!ANIM()) return;
   try {
-    const cv = document.createElement('canvas'), W = innerWidth, H = innerHeight, dpr = Math.min(2, devicePixelRatio || 1);
+    const cv = document.createElement('canvas'), W = innerWidth, H = innerHeight, dpr = Math.min(LITE() ? 1 : 2, devicePixelRatio || 1);
     cv.className = 'fxcv'; cv.width = W * dpr; cv.height = H * dpr; document.body.appendChild(cv);
     const c = cv.getContext('2d'); if (!c) { cv.remove(); return; } c.scale(dpr, dpr);
+    const small = Math.min(W, H) < 500 || LITE(), K = small ? .6 : 1;
     const P = [], cols = opts.colors || ['#ffd54a', '#ff8a3d', '#ff4d4d', '#fff3b0', '#7fe0ff'];
-    const burst = (x, y, n, sp) => { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = sp * (.4 + Math.random()); P.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, c: cols[i % cols.length], r: 1.5 + Math.random() * 2.5 }); } };
+    const cx = opts.x ?? W / 2, cy = opts.y ?? H / 2, R = Math.max(W, H);
+    const burst = (x, y, n, sp) => { n = Math.round(n * K); for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = sp * (.35 + Math.random()), conf = !opts.noConf && i % 3 === 0;
+      P.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - (conf ? 2 : 0), life: 1, dec: .008 + Math.random() * .008, c: cols[i % cols.length], r: conf ? 3 + Math.random() * 3 : 1.4 + Math.random() * 2.2, conf, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, tw: Math.random() * 6 }); } };
+    const rings = [];
     const bursts = opts.fireworks ? 7 : 1; let fired = 0, t0 = performance.now(), dur = opts.dur || 1600;
-    const fire = () => { burst(opts.fireworks ? W * (.2 + Math.random() * .6) : (opts.x ?? W / 2), opts.fireworks ? H * (.18 + Math.random() * .35) : (opts.y ?? H / 2), opts.n || 70, opts.speed || 6); fired++; };
+    const fire = () => { const x = opts.fireworks ? W * (.2 + Math.random() * .6) : cx, y = opts.fireworks ? H * (.18 + Math.random() * .35) : cy;
+      burst(x, y, opts.n || 70, opts.speed || 6); rings.push({ x, y, t: performance.now(), c: cols[fired % cols.length] }); fired++; };
     fire();
     const step = now => {
       const el = now - t0;
       if (opts.fireworks && fired < bursts && el > fired * 260) fire();
       c.clearRect(0, 0, W, H);
-      if (opts.rays && el < 900) { c.save(); c.translate(opts.x ?? W / 2, opts.y ?? H / 2); c.rotate(el / 900); const a = 1 - el / 900; for (let i = 0; i < 12; i++) { c.rotate(Math.PI / 6); c.fillStyle = `rgba(255,220,120,${.22 * a})`; c.beginPath(); c.moveTo(0, 0); c.lineTo(-24, -Math.max(W, H)); c.lineTo(24, -Math.max(W, H)); c.fill(); } c.restore(); }
-      for (const p of P) { p.x += p.vx; p.y += p.vy; p.vy += .12; p.vx *= .985; p.life -= .012; if (p.life > 0) { c.globalAlpha = p.life; c.fillStyle = p.c; c.beginPath(); c.arc(p.x, p.y, p.r, 0, 7); c.fill(); } }
-      c.globalAlpha = 1;
+      if (opts.rays && el < 260) { const a = 1 - el / 260, g = c.createRadialGradient(cx, cy, 0, cx, cy, R * .6); g.addColorStop(0, `rgba(255,250,220,${.55 * a})`); g.addColorStop(.4, `rgba(255,200,90,${.25 * a})`); g.addColorStop(1, 'rgba(255,180,60,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H); }
+      if (opts.rays && el < 1100) { c.save(); c.translate(cx, cy); c.rotate(el / 1400); const a = el < 150 ? el / 150 : 1 - (el - 150) / 950; c.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < 14; i++) { c.rotate(Math.PI / 7); const gr = c.createLinearGradient(0, 0, 0, -R * .75); gr.addColorStop(0, `rgba(255,236,160,${.32 * a})`); gr.addColorStop(1, 'rgba(255,200,80,0)'); c.fillStyle = gr; c.beginPath(); c.moveTo(0, 0); c.lineTo(i % 2 ? -14 : -26, -R * .75); c.lineTo(i % 2 ? 14 : 26, -R * .75); c.fill(); }
+        c.restore(); }
+      for (const g of rings) { const e = (now - g.t) / 650; if (e < 0 || e > 1) continue; const rr = 20 + e * (opts.fireworks ? 120 : 260) * (small ? .7 : 1); c.globalAlpha = (1 - e) * .8; c.strokeStyle = g.c; c.lineWidth = 6 * (1 - e) + 1; c.beginPath(); c.arc(g.x, g.y, rr, 0, 7); c.stroke(); }
+      c.globalCompositeOperation = 'lighter';
+      for (const p of P) { p.x += p.vx; p.y += p.vy; p.vy += p.conf ? .06 : .12; p.vx *= p.conf ? .97 : .985; if (p.conf) { p.vy = Math.min(p.vy, 2.2); p.vx += Math.sin(el / 160 + p.tw) * .05; } p.life -= p.dec; p.rot += p.vr;
+        if (p.life <= 0) continue; c.globalAlpha = Math.min(1, p.life * 1.4) * (p.conf ? 1 : .7 + .3 * Math.sin(el / 50 + p.tw)); c.fillStyle = p.c;
+        if (p.conf) { c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.scale(1, Math.cos(p.rot * 2)); c.fillRect(-p.r, -p.r * .5, p.r * 2, p.r); c.restore(); } else { c.beginPath(); c.arc(p.x, p.y, p.r, 0, 7); c.fill(); } }
+      c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
       if (el < dur) requestAnimationFrame(step); else cv.remove();
     };
     requestAnimationFrame(step); setTimeout(() => cv.remove(), dur + 600);
   } catch (e) {}
 }
-// 大字（胡／自摸／大牌名）
+// 大字（胡／自摸／大牌名）（v5.8）：光暈＋掃光＋落地震動
 function bigText(text, cls = '', ms = 1800) {
   if (!ANIM()) return;
-  const d = document.createElement('div'); d.className = 'bigfx ' + cls; d.innerHTML = `<span>${esc(text)}</span>`;
+  const d = document.createElement('div'); d.className = 'bigfx ' + cls; d.innerHTML = `<i class="bgl"></i><span data-t="${esc(text)}">${esc(text)}</span>`;
   document.body.appendChild(d); setTimeout(() => d.remove(), ms);
+  setTimeout(() => shake($('#game.on') || $('.screen.on'), cls === 'grey' ? 3 : 9), Math.round(ms * .15));
 }
 // 金幣流：從一組元素飛到目標元素（固定定位，結算畫面用）
 function coinFlow(fromEls, toEl, n = 6) {
@@ -3700,16 +3802,33 @@ function coinFlow(fromEls, toEl, n = 6) {
     fromEls.forEach((fe, k) => { if (!fe) return; const fr = fe.getBoundingClientRect();
       for (let i = 0; i < n; i++) { const c = document.createElement('i'); c.className = 'fxcoin'; const sx = fr.left + fr.width / 2 + (Math.random() - .5) * 30, sy = fr.top + fr.height / 2;
         c.style.left = sx + 'px'; c.style.top = sy + 'px'; document.body.appendChild(c);
-        const a = c.animate([{ transform: 'translate(0,0) scale(.6)', opacity: 0 }, { transform: `translate(${(tx - sx) * .4}px,${(ty - sy) * .4 - 60}px) scale(1.1)`, opacity: 1, offset: .45 }, { transform: `translate(${tx - sx}px,${ty - sy}px) scale(.8)`, opacity: .9 }], { duration: 750, delay: k * 160 + i * 70, easing: 'ease-in-out', fill: 'backwards' });
-        a.onfinish = () => c.remove(); setTimeout(() => c.remove(), 2500); }
+        const sw = (Math.random() - .5) * 80, up = 50 + Math.random() * 50;
+        const a = c.animate([{ transform: 'translate(0,0) scale(.5) rotateY(0)', opacity: 0 }, { transform: `translate(${(tx - sx) * .35 + sw}px,${(ty - sy) * .35 - up}px) scale(1.15) rotateY(360deg)`, opacity: 1, offset: .45 }, { transform: `translate(${tx - sx}px,${ty - sy}px) scale(.7) rotateY(900deg)`, opacity: .95 }], { duration: 780, delay: k * 160 + i * 70, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'backwards' });
+        a.onfinish = () => { c.remove(); try { toEl.classList.remove('coinhit'); void toEl.offsetWidth; toEl.classList.add('coinhit'); } catch (e) {} }; setTimeout(() => c.remove(), 2500); }
     });
     setTimeout(() => sfx('coins'), 200);
   } catch (e) {}
 }
-function shake(el) { if (!ANIM() || !el) return; try { el.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-6px,3px)' }, { transform: 'translate(5px,-4px)' }, { transform: 'translate(-3px,2px)' }, { transform: 'translate(0,0)' }], { duration: 380 }); } catch (e) {} }
+// 震動（v5.8）：用獨立 translate 屬性，不覆蓋元素原本的 transform（3D 桌面、縮放）；振幅遞減
+function shake(el, amp = 6) {
+  if (!ANIM() || !el || LITE()) return;
+  try { const k = [0, 1, -.8, .6, -.4, .2, 0].map((f, i) => ({ translate: `${(i % 2 ? -1 : 1) * f * amp}px ${f * amp * .5 * (i % 3 ? 1 : -1)}px` }));
+    el.animate(k, { duration: 260 + amp * 14, easing: 'ease-out', composite: 'add' }); } catch (e) { try { el.animate([{ translate: '0 0' }, { translate: `${amp}px 0` }, { translate: '0 0' }], { duration: 250 }); } catch (e2) {} }
+}
+// 喊牌撞擊（v5.8）：印章落下時的墨暈＋碎金＋短震
+function stampFx(p, kind) {
+  if (!ANIM()) return;
+  try {
+    const xy = POPXY()[vpos(p)], k = stageK(), st = $('#game').getBoundingClientRect();
+    const hu = /hu|zm/.test(kind), kan = /kan/.test(kind);
+    setTimeout(() => { ripple(xy[0], xy[1], 'ink ' + (hu ? 'gold' : kan ? 'kan' : '')); shake($('#game'), hu ? 8 : kan ? 6 : 4);
+      if (!LITE()) particles({ x: st.left + xy[0] * k, y: st.top + xy[1] * k, n: hu ? 46 : 26, speed: hu ? 6 : 4.5, dur: 900, noConf: !hu,
+        colors: hu ? ['#ffd54a', '#fff3b0', '#ff9a2a'] : kan ? ['#7ad8ff', '#c0a0ff', '#fff'] : /chi/.test(kind) ? ['#ff6a7a', '#ffd0d8', '#fff'] : ['#ff7ae0', '#ffd0f6', '#fff'] }); }, 150);
+  } catch (e) {}
+}
 function applyAnim() { try { document.body.classList.toggle('noanim', !ANIM()); } catch (e) {} }
 setTimeout(applyAnim, 0);
-window.__fx = { sfx, say, sayTile, particles, bigText, coinFlow, flyTile };
+window.__fx = { sfx, say, sayTile, particles, bigText, coinFlow, flyTile, shake, ripple, stampFx };
 
 // ================= 各頁面 =================
 const me = () => ({ name: ACC.nick, av: myAv(), lv: level(), me: true });
@@ -4510,6 +4629,7 @@ function popup(p, text, kind) {
   const d = document.createElement('div'); d.className = 'pop k-' + kind;
   const xy = POPXY()[vpos(p)]; d.style.left = xy[0] + 'px'; d.style.top = xy[1] + 'px'; d.innerHTML = `<span>${text}</span>`;
   $('#pops').appendChild(d); setTimeout(() => d.remove(), 1200);
+  if (/burst/.test(kind)) try { stampFx(p, kind); } catch (e) {}
 }
 function emote(p, text) {
   G.emo[p] = text; renderGame(); const tk = G.token;
@@ -4519,20 +4639,21 @@ const BOT_EMO = { win: ['😆', '胡啦！', '運氣好而已～', '🎉'], lose
 const SEATXY = p => { const xy = POPXY()[vpos(p)]; return vpos(p) === 0 ? { x: STW / 2, y: 470 } : { x: xy[0], y: xy[1] }; };
 function onEvent(ev) {
   try {
-    if (ev.type === 'deal') { G.dealAnim = true; G.liftOnce = true; if (CFG.td3 && ANIM()) liftTable(); else beep('shuffle'); }
-    else if (ev.type === 'draw') { if (ev.p === G.view) { G.drawAnim = true; beep('draw'); } }
+    if (ev.type === 'deal') { G.dealAnim = true; G.dealT0 = performance.now() + (CFG.td3 && ANIM() ? 520 : 0); G.liftOnce = true; if (CFG.td3 && ANIM()) liftTable(); else beep('shuffle'); if (ANIM()) [0, 1, 2, 3, 4].forEach(i => setTimeout(() => beep('draw'), (CFG.td3 ? 520 : 0) + 200 + i * 140)); }
+    else if (ev.type === 'draw') { if (ev.p === G.view) { G.drawAnim = true; G.drawT0 = performance.now(); beep('draw'); } }
     else if (ev.type === 'claim') {
       const kind = ev.text === '碰' ? 'pon' : ev.text === '吃' ? 'chi' : 'kan';
       popup(ev.p, ev.text, kind + ' burst'); beep('claim'); say(kind, ev.p, ev.text);
       if (G.kind === 'play' && ev.p !== 0 && Math.random() < .12) setTimeout(() => emote(ev.p, pick(BOT_EMO.claim)), 400);
-    } else if (ev.type === 'discard') { G.newRiver = ev.p; beep('discard'); sayTile(ev.t, ev.p); }
+    } else if (ev.type === 'discard') { G.newRiver = ev.p; if (!ANIM()) { beep('discard'); sayTile(ev.t, ev.p); } else beep('flick'); }
   } catch (e) {}
   const from = ev.type === 'claim' ? G.lastRiverXY : null;
   renderGame();
   try {
     if (ev.type === 'discard' && ANIM()) {
       const el = $(`#game .river.r${vpos(ev.p)} .t.last`);
-      if (el) { flyTile(ev.t, SEATXY(ev.p), el, 32, 260); G.lastRiverXY = stageXY(el); }
+      const thud = () => { beep('discard'); sayTile(ev.t, ev.p); };
+      if (el) { flyTile(ev.t, SEATXY(ev.p), el, 32, 300, thud); G.lastRiverXY = stageXY(el); } else thud();
     } else if (ev.type === 'claim' && from && ANIM()) {
       const m = G.game.players[ev.p].melds.at(-1), host = vpos(ev.p) === 0 ? $('#myhand') : $(`#game .melds.${['', 'm-r', 'm-top', 'm-l'][vpos(ev.p)]}`);
       const me = host && host.querySelectorAll('.meld'), last = me && me[me.length - 1];
@@ -4746,7 +4867,11 @@ function renderGame() {
       const badge = (CFG.ting || G.tingPick) && tingSet.has(t) ? '<span class="tp"><svg viewBox="0 0 14 11"><path d="M1.5 1.5h11L7 9.5z"/></svg></span>' : '';
       return (drawn != null && i === disp.length - 1 ? '<span class="gap"></span>' : '') + tile(t, tw, cls, `data-i="${i}"`).replace('</div>', badge + '</div>');
     }).join('');
-  h.push(`<div class="g-abs hand ${G.dealAnim && ANIM() ? 'dealin' : ''} ${G.drawAnim && drawn != null && ANIM() ? 'drawin' : ''} ${G.ting && !g.result ? 'tingglow' : ''}" id="myhand">${handHtml}</div>`);
+  // v5.8：重繪時動畫接續（以負延遲換算已經過時間），配牌／摸牌不會因為頻繁重繪而中斷或跳格
+  const nowT = performance.now(), dEl = nowT - (G.dealT0 || -1e9), wEl = nowT - (G.drawT0 || -1e9);
+  const dealOn = ANIM() && (G.dealAnim || dEl < 1050), drawOn = ANIM() && drawn != null && (G.drawAnim || wEl < 400) && !dealOn;
+  const hst = dealOn ? `--dt:${(-dEl).toFixed(0)}ms` : drawOn ? `--dt:${(-wEl).toFixed(0)}ms` : '';
+  h.push(`<div class="g-abs hand ${dealOn ? 'dealin' : ''} ${drawOn ? 'drawin' : ''} ${G.ting && !g.result ? 'tingglow' : ''}" id="myhand" style="${hst}">${handHtml}</div>`);
   G.dealAnim = false; G.drawAnim = false;
   if (CFG.ting && !g.result && G.kind !== 'replay') {
     let waits = [], label = '';
@@ -6029,7 +6154,7 @@ renderHome = function () {
         ${sb('data-go="replays"', '🎞️', '回放')}
       </div>
       <div class="lstage">
-        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.5</span></div>
+        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.8</span></div>
         <div class="lring"></div><div class="lped"></div>
         <button class="lchar" data-go="wardrobe">${sk ? skinSVG(sk) : avatar(myAv(), 150)}</button>
         <div class="lbubble">${LOBBY_TIPS[new Date().getMinutes() % LOBBY_TIPS.length]}</div>
@@ -6118,7 +6243,7 @@ const _renderHome51 = renderHome;
 renderHome = function () {
   _renderHome51();
   const h = $('#home'); if (!h || !h.querySelector('.lobby')) return;
-  h.querySelector('.hver') && (h.querySelector('.hver').textContent = 'v5.5');
+  h.querySelector('.hver') && (h.querySelector('.hver').textContent = 'v5.8');
   h.insertAdjacentHTML('beforeend', `<div class="lmarq"><span class="horn">📢</span><div class="mq"><span id="mqt"></span></div></div>
     <div class="lnet"><span class="srv">台灣一服</span>${sigHTML()}<span class="onl">● 線上 <b id="lonl">${fmt(LIVE.online)}</b></span></div>`);
   const mq = $('#mqt'); marqueeNext(mq); mq.addEventListener('animationiteration', () => marqueeNext(mq)); mq.addEventListener('animationend', () => marqueeNext(mq));
@@ -6256,6 +6381,9 @@ function post52() {
   hud.querySelector('.h52r').textContent = `${rw}風${sw} (第 ${quan} 局)`;
   const lz = hud.querySelector('.lz52'); lz.textContent = G.lian ? `${G.lian} 連莊` : G.ting && !g.result ? '聽牌中' : ''; lz.style.display = lz.textContent ? '' : 'none';
   const pl = gm.querySelector('.plate'); if (pl) { const on = pl.querySelector('.w.on'); const a = on ? +(/w(\d)/.exec(on.className) || [])[1] : -1; pl.style.setProperty('--ac', a >= 0 ? SEATCOL[a] : '#ffd23a'); const lf = pl.querySelector('.left'); if (lf && !pl.querySelector('.seg8')) lf.insertAdjacentHTML('beforebegin', '<span class="seg8">88</span>'); }
+  // v5.8 回合指示：座位顏色、呼吸光相位連續（重繪不重置）、輪到我時手牌底光
+  try { gm.style.setProperty('--ph', -(performance.now() % 1600).toFixed(0) + 'ms'); gm.classList.toggle('myturn58', g.turn === me && !g.result);
+    gm.querySelectorAll('.mjseat').forEach(el => { const m = /\bs(\d)\b/.exec(el.className); if (m) el.style.setProperty('--ac', SEATCOL[+m[1]]); }); } catch (e) {}
   // 手牌弧形
   const hs = [...gm.querySelectorAll('#myhand > .t')], n = hs.length, mid = (n - 1) / 2;
   hs.forEach((t, i) => { const d = (i - mid) / Math.max(1, mid); t.style.setProperty('--arc', (d * d * 7).toFixed(1) + 'px'); t.style.setProperty('--rot', (d * 2.2).toFixed(2) + 'deg'); });
@@ -6421,7 +6549,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.5</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.8</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -6437,6 +6565,8 @@ renderHome = function () {
   h.classList.remove('enter52'); void h.offsetWidth; h.classList.add('enter52');
   const ch = h.querySelector('.lchar');
   ch.addEventListener('pointerdown', e => { ch.classList.remove('tap52'); void ch.offsetWidth; ch.classList.add('tap52'); bubble52(pick(TAPS52)); }, true);
+  ch.addEventListener('pointerdown', e => { if (!ANIM() || CFG.lite) return; for (let i = 0; i < 9; i++) { const sp = document.createElement('i'); sp.className = 'spk58'; const a = Math.PI * 2 * i / 9 + Math.random() * .4, r = 34 + Math.random() * 30;
+    sp.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--sx:${(Math.cos(a) * r).toFixed(0)}px;--sy:${(Math.sin(a) * r - 10).toFixed(0)}px;animation-delay:${i * 12}ms`; document.body.appendChild(sp); setTimeout(() => sp.remove(), 900); } }, true);
   setTimeout(() => bubble52(`${esc(ACC.nick)}，歡迎回到鬧熱牌館！`), 700);
 };
 setInterval(() => { const c = document.querySelector('#home .lchar'); if (!c || CFG.lite) return; c.classList.remove('wave52'); void c.offsetWidth; c.classList.add('wave52'); if (Math.random() < .4) bubble52(pick(TAPS52)); }, 9000);
