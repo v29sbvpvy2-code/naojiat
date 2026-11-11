@@ -6374,7 +6374,7 @@ renderHome = function () {
         ${sb('data-go="replays"', '🎞️', '回放')}
       </div>
       <div class="lstage">
-        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.11</span></div>
+        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.13</span></div>
         <div class="lring"></div><div class="lped"></div>
         <button class="lchar" data-go="wardrobe">${sk ? skinSVG(sk) : avatar(myAv(), 150)}</button>
         <div class="lbubble">${LOBBY_TIPS[new Date().getMinutes() % LOBBY_TIPS.length]}</div>
@@ -6819,7 +6819,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.11</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.13</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -6880,7 +6880,7 @@ window.__popup = popup;
   const CG = _G;
   root.CG = CG;
 
-  const BD2_VER = 'v5.12';
+  const BD2_VER = 'v5.13';
   const FACE = CG.FACE, SUIT = CG.SUIT;
   const rk = CG.rk, st = CG.st;
   const byId = (a, b) => a - b;
@@ -7167,7 +7167,7 @@ window.__popup = popup;
 // ---------- 瀏覽器 UI 補丁：必須放在 build IIFE 頂層，才能改到 cPlay／renderC 等區域變數 ----------
 if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
   const B2 = CG.B2;
-  const BD2_VER = B2.VER || 'v5.12';
+  const BD2_VER = B2.VER || 'v5.13';
   const club3 = 0, spade2 = 51;
 
   const RULES_HTML = `
@@ -7196,7 +7196,7 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
           const cur = (ver.textContent || '').trim();
           const m = cur.match(/v?(\d+)\.(\d+)/);
           const n = m ? (+m[1] * 100 + +m[2]) : 0;
-          // 對方已出 v5.11 牌面修正，本版為 v5.12
+          // v5.13：沿用大老二 v5.12，疊加麻將牌面／印章／桌框修正
           if (n < 512) ver.textContent = BD2_VER;
         }
         const card = h.querySelector('[data-go="gamehub"][data-arg="b2"], [data-arg="b2"].gcard');
