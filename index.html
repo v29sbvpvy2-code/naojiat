@@ -51,6 +51,13 @@ body.ts-photo .t:not(.back) svg{
   overflow:hidden;
   border-radius:inherit;
 }
+
+/* v5.19.1：自己的暗槓——四張牌背為主，牌面以正片疊底隱約透出筆畫，並標小字名稱 */
+.t.back.akan-mine{overflow:hidden}
+.t.back.akan-mine .akan-face{position:absolute;left:12%;top:10%;width:76%;height:68%;opacity:.55;filter:grayscale(.15) contrast(1.2);pointer-events:none;z-index:2;mix-blend-mode:multiply}
+.t.back.akan-mine .akan-lb{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);z-index:3;font-size:calc(var(--w)*.2);line-height:1.05;font-style:normal;font-weight:800;color:#fff4c4;text-shadow:0 0 3px #062814,0 1px 2px #000;white-space:nowrap;opacity:.95;pointer-events:none;letter-spacing:.02em;background:rgba(8,40,22,.45);padding:0 3px;border-radius:3px}
+body.ts-photo .t.back.akan-mine .akan-face{mix-blend-mode:multiply;opacity:.5;filter:grayscale(.1) contrast(1.25);border-radius:6%}
+#game .hand .meld.akan .t.back{margin-bottom:6px}
 :root{--k:1;--mint:#c9a45a;--coral:#ff7a59;--gold:#ffc857;--cream:#f6f1e7;--ink:#0b1f22;
   --ui:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC','Noto Sans CJK TC','Microsoft JhengHei',sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -1905,6 +1912,8 @@ body.lite .shake510{animation:none}
 .b2calc b{color:#ffd76a;font-size:14px}
 .b2calc .b2cap{font-style:normal;margin-left:4px;padding:1px 7px;border-radius:7px;background:#7a1a12;color:#fff;border:1px solid #f3c55a}
 .b2note{margin-top:6px;font-size:12px;opacity:.75;text-align:center}
+
+.panel.wide .bd2rules,.panel.wide .hzrules{max-height:min(68vh,520px);overflow-y:auto;padding-bottom:8px;padding-right:4px}
 /* WSD look-alike card atlases (original artwork, no trademarks). */
 .pc.wsd{
   background-color:#fcfaf0;
@@ -2103,6 +2112,8 @@ body:not(.noanim) .hzbird.hit .t{animation:hzbirdpop .5s cubic-bezier(.2,1.6,.4,
 .winrow .t .lai,.hzbird .t .lai{min-width:12px;height:12px;padding:0 1px;font-size:8px;line-height:12px;top:1px;right:1px;border-radius:6px}
 
 .hzasrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 2px;padding:6px 12px;border-radius:12px;background:rgba(200,16,46,.14);border:1px solid rgba(255,207,74,.35);color:#fff3c8}.hzasrow span{opacity:.75;font-size:13px}
+
+.panel.wide .hzrules{max-height:min(62vh,420px);overflow-y:auto;padding-bottom:12px;padding-right:6px}
 /* ================= v5.20 擬真牌桌 ================= */
 #game.r520 .tilt3d .melds,#game.r520 .mjseat .sflw{display:none!important}
 #game.r520::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse 70% 62% at 50% 46%,rgba(255,236,190,.07),rgba(255,236,190,0) 55%,rgba(0,0,0,.28) 100%)}
@@ -2242,6 +2253,11 @@ body.noanim #home.l520 .mb5 > *{animation:none!important}
 #game .cbtn:active,#game .claimbar .btn:active,#game .autotog:active,#panel .btn:active{transform:scale(.97)}
 @media (hover:hover){#game .cbtn:hover,#game .claimbar .btn:hover{filter:brightness(1.08)}}
 #game button:focus-visible,#panel button:focus-visible,#home button:focus-visible{outline:2px solid #f6d77e;outline-offset:2px}
+
+/* v5.19.1：暗槓四張皆背面；自己的暗槓隱約透出牌面 */
+#game.r520 .mq5 .meld.akan .t.back.akan-mine .akan-face{opacity:.5;filter:grayscale(.1) contrast(1.2);mix-blend-mode:multiply}
+#game.r520 .mq5 .meld.akan .t.back.akan-mine .akan-lb{font-size:calc(var(--w)*.24);bottom:8%}
+#game.r520 .mq5.q2 .meld.akan .akan-lb,#game.r520 .mq5.q1 .meld.akan .akan-lb,#game.r520 .mq5.q3 .meld.akan .akan-lb{/* 對手座位不會有 akan-mine */}
 
 </style>
 </head>
@@ -5685,7 +5701,14 @@ function meldOrder(m) {
   const rest = m.tiles.slice(); rest.splice(rest.indexOf(m.claimed), 1);
   return [[rest[0], false], [m.claimed, true], [rest[1], false]];
 }
-const meldHTML = (m, w, reveal) => `<span class="meld ${m.type}">${meldOrder(m).map(([t, c], i) => tile(m.type === 'akan' && !reveal && (i === 0 || i === 3) ? -1 : t, w, c ? 'clm' : '')).join('')}</span>`;
+// v5.19.1／v5.20：暗槓四張一律背面朝上。對手看不到任何資訊；自己的暗槓可從牌背隱約看見牌面（結算再全部翻開）。
+const meldHTML = (m, w, reveal, mine = false) => `<span class="meld ${m.type}">${meldOrder(m).map(([t, c], i) => {
+  if (m.type === 'akan' && !reveal) {
+    if (mine) return `<div class="t back akan-mine" style="--w:${w}px"><svg class="akan-face" viewBox="0 0 60 80"><use href="#T${t}"/></svg><em class="akan-lb">${typeof tileName === 'function' ? tileName(t) : ''}</em></div>`;
+    return tile(-1, w, 'akan-hid');
+  }
+  return tile(t, w, c ? 'clm' : '');
+}).join('')}</span>`;
 function riverHTML(p, g, w) {
   const pl = g.players[p], ld = g.lastDiscard, pos = vpos(p), dy = [40, 0, -40, 0][pos], dx = [0, 40, 0, -40][pos];
   const html = pl.discards.map((t, i) => {
@@ -5761,7 +5784,7 @@ function renderGame() {
   G.tingSet = tingSet;
   const winT = g.result && g.result.type === 'win' && g.result.winner === V ? g.result.winTile : null;
   let winMarked = false;
-  const handHtml = me.melds.map(m => meldHTML(m, 30, true)).join('') + (me.melds.length ? '<span class="gap"></span>' : '') +
+  const handHtml = me.melds.map(m => meldHTML(m, 30, !!G.reveal, true)).join('') + (me.melds.length ? '<span class="gap"></span>' : '') +
     disp.map((t, i) => {
       let cls = 'h' + (i === G.sel ? ' sel' : '') + (G.tingPick && !tingSet.has(t) ? ' dim' : '') + (g.isHZ && t === g.wild ? ' hzw' : '');
       if (winT != null && t === winT && !winMarked && i === disp.length - 1) { cls += ' win'; winMarked = true; }
@@ -5891,7 +5914,7 @@ function playerInfo(p) {
   const g = G.game, P = G.players[p], pl = g.players[p];
   const bot = P.bot, isF = bot && FRIENDS.includes(bot);
   modal(`<div class="pinfo">${avatar(P.av, 72)}<div><h2>${esc(P.name)}</h2><div class="sub">Lv.${P.lv}・${WINDS[pl.seatWind]}家${p === g.dealer ? '・莊家' : ''}・分數 ${fmt(G.scores[p])}</div></div></div>
-    <h4>明牌與花牌</h4><div class="winrow">${pl.flowers.map(t => tile(t, 26)).join('')}${pl.melds.map(m => meldHTML(m, 28, G.reveal)).join('') || (pl.flowers.length ? '' : '<span class="sub">尚無明牌與花牌</span>')}</div>
+    <h4>明牌與花牌</h4><div class="winrow">${pl.flowers.map(t => tile(t, 26)).join('')}${pl.melds.map(m => meldHTML(m, 28, G.reveal, p === G.view)).join('') || (pl.flowers.length ? '' : '<span class="sub">尚無明牌與花牌</span>')}</div>
     <h4>打出的牌（${pl.discards.length}）</h4><div class="winrow">${pl.discards.map(t => tile(t, 22)).join('') || '<span class="sub">無</span>'}</div>
     <div class="foot">${bot ? (isF ? '<button class="btn ghost" disabled>已是好友</button>' : '<button class="btn ghost" id="af">＋ 加為好友</button>') : ''}<button class="btn mint" data-close>關閉</button></div>`, pn => {
       const af = pn.querySelector('#af'); if (af) af.onclick = () => addFriend(bot, af);
@@ -7505,7 +7528,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.19.1</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.19.1</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -8732,7 +8755,7 @@ function poolHTML(g) {
 function menqian(p, g, w) {
   const pl = g.players[p]; const nm = pl.melds.length;
   const inn = G.meldIn520 && G.meldIn520.p === p && now5() - G.meldIn520.t0 < 650 ? -(now5() - G.meldIn520.t0) : null;
-  const ms = pl.melds.map((m, i) => { let h = meldHTML(m, w, G.reveal); if (i === nm - 1 && inn != null && R5A()) h = h.replace('class="meld ', `style="--md:${inn.toFixed(0)}ms" class="in5 meld `); return h; }).join('');
+  const ms = pl.melds.map((m, i) => { let h = meldHTML(m, w, G.reveal, p === G.view); if (i === nm - 1 && inn != null && R5A()) h = h.replace('class="meld ', `style="--md:${inn.toFixed(0)}ms" class="in5 meld `); return h; }).join('');
   const fl = pl.flowers && pl.flowers.length ? `<span class="flw5">${pl.flowers.map(t => tile(t, Math.round(w * .82))).join('')}</span>` : '';
   return ms + fl;
 }
@@ -8831,7 +8854,7 @@ function post520() {
   { const vr = $('#game .rinfo .ver'); if (vr) vr.textContent = (g.isHZ ? '紅中・' : '') + 'v5.20'; }
   // 牌牆＋牌池替換
   t3.querySelectorAll('.wall, .river').forEach(e => e.remove());
-  const melOld = t3.querySelectorAll('.melds'); melOld.forEach(e => e.remove());
+  t3.querySelectorAll('.melds, .mq5').forEach(e => e.remove());
   let h = wall520(g) + poolHTML(g);
   for (let p = 0; p < G.n; p++) { const pos = vpos(p); h += `<div class="mq5 q${pos}">${menqian(p, g, pos === 0 ? 27 : 24)}</div>`; }
   t3.insertAdjacentHTML('afterbegin', h);
