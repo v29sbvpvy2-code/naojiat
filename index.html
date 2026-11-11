@@ -1890,7 +1890,7 @@ body.lite .shake510{animation:none}
 
 /* 結算微調 */
 .panel .b2res .sszp.me{border-color:#f3c55a}
-/* ================= v5.15 鬥雀風胡牌／和牌演出（純 CSS/JS，不動牌面圖） ================= */
+/* ================= v5.16 鬥雀風胡牌／和牌演出（金龍不擋文字／牌面；花牌與手牌列對齊） ================= */
 .hu515{position:fixed;inset:0;z-index:8000;overflow:hidden;color:#f8eed6;font-family:var(--kai,"Noto Serif TC","Songti TC",serif);
   pointer-events:auto;opacity:0;animation:hu515in .28s ease forwards;--hu-gold:#f3c55a;--hu-gold2:#ffe9a0}
 .hu515.out{animation:hu515out .28s ease forwards}
@@ -1912,7 +1912,7 @@ body.lite .shake510{animation:none}
 .hu515-skip{position:absolute;right:14px;top:10px;z-index:5;border:1px solid rgba(243,197,90,.7);background:rgba(20,6,4,.55);
   color:#f3e6c4;font:700 13px/1.2 system-ui,sans-serif;letter-spacing:1px;padding:6px 12px;border-radius:999px;cursor:pointer}
 .hu515-skip:hover{background:rgba(80,30,10,.7)}
-.hu515-hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font:600 12px/1 system-ui,sans-serif;letter-spacing:1px;opacity:.55;z-index:5;pointer-events:none}
+.hu515-hint{position:absolute;left:50%;bottom:auto;top:10px;transform:translateX(-50%);font:600 12px/1 system-ui,sans-serif;letter-spacing:1px;opacity:.5;z-index:5;pointer-events:none}
 .hu515-demo{position:absolute;left:14px;top:10px;z-index:5;font:700 12px/1 system-ui,sans-serif;letter-spacing:1px;
   padding:6px 10px;border-radius:999px;border:1px solid rgba(243,197,90,.55);background:rgba(20,6,4,.5);color:#f3c55a}
 
@@ -1947,12 +1947,16 @@ body.lite .shake510{animation:none}
   filter:drop-shadow(0 4px 0 #5a1808) drop-shadow(0 8px 16px rgba(0,0,0,.55));-webkit-text-stroke:1px rgba(90,20,8,.25)}
 
 /* 翻牌列 */
-.hu515-board{position:absolute;left:max(180px,24vw);right:3%;top:8%;bottom:8%;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;opacity:0}
+.hu515-board{position:absolute;left:max(180px,24vw);right:3%;top:8%;bottom:8%;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;opacity:0}
 .hu515-board.in{animation:hu515fade .35s ease forwards}
-.hu515-who{font:800 15px/1.2 var(--kai,serif);letter-spacing:2px;color:#f3e6c4;text-shadow:0 2px 8px #000;opacity:0;transform:translateY(-8px)}
+.hu515-who{font:800 15px/1.2 var(--kai,serif);letter-spacing:2px;color:#f3e6c4;text-shadow:0 2px 8px #000;opacity:0;transform:translateY(-8px);
+  padding:4px 12px;border-radius:999px;background:rgba(6,2,2,.72)}
 .hu515-who.in{animation:hu515fade .35s ease forwards}
-.hu515-flowers,.hu515-melds,.hu515-tiles{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:5px}
-.hu515-tiles{max-width:700px}
+.hu515-handrow{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:5px 6px;max-width:100%;
+  padding:6px 10px 4px;border-radius:12px;background:rgba(4,1,1,.42);box-shadow:0 4px 18px rgba(0,0,0,.35)}
+/* display:contents 讓花牌／副露與手牌同一列對齊，避免花牌獨自佔一行看起來偏高 */
+.hu515-flowers,.hu515-melds,.hu515-tiles{display:contents}
+.hu515-flowers .t,.hu515-melds .t{margin-bottom:calc(var(--hand-w,40px)*.12)}
 .hu515-flip{width:var(--w,40px);height:calc(var(--w,40px)*1.34);perspective:600px;margin-bottom:calc(var(--w,40px)*.12);opacity:0;transform:translateY(10px) scale(.86)}
 .hu515-flip.in{opacity:1;transform:none;transition:opacity .2s,transform .2s}
 .hu515-flip .inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transform:rotateY(180deg)}
@@ -1964,8 +1968,9 @@ body.lite .shake510{animation:none}
 @keyframes hu515fade{to{opacity:1;transform:none}}
 
 /* 台數 */
-.hu515-tai{width:min(260px,86%);margin-top:6px;opacity:0;padding:8px 14px 10px;border-radius:12px;
-  background:rgba(12,4,2,.72);border:1px solid rgba(243,197,90,.4);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.hu515-tai{width:min(360px,96%);margin-top:6px;opacity:0;padding:10px 14px 12px;border-radius:12px;
+  background:rgba(6,2,2,.94);border:1px solid rgba(243,197,90,.5);box-shadow:0 8px 28px rgba(0,0,0,.65),0 0 0 1px rgba(0,0,0,.55);
+  position:relative;z-index:5}
 .hu515-tai.in{animation:hu515fade .3s ease forwards}
 .hu515-row{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:2px 4px;border-left:3px solid rgba(243,197,90,.15);
   font:700 15px/1.35 var(--kai,serif);letter-spacing:1px;color:#efe2c0;opacity:0;transform:translateX(16px)}
@@ -1981,20 +1986,23 @@ body.lite .shake510{animation:none}
 @keyframes hu515pulse{50%{filter:drop-shadow(0 3px 0 #5a1808) drop-shadow(0 0 26px rgba(255,220,100,.95))}}
 .hu515-sub{text-align:center;font:600 12px/1.2 system-ui,sans-serif;opacity:.65;margin-top:2px}
 
-/* 金龍＋爆光 */
-.hu515-dragon{position:absolute;inset:0;z-index:6;pointer-events:none;display:grid;place-items:center;opacity:0}
-.hu515-dragon.in{animation:hu515dg 1.55s ease both}
-.hu515-dragon img{width:min(86vw,640px);height:auto;object-fit:contain;filter:drop-shadow(0 0 24px rgba(255,200,80,.7));animation:hu515dgfly 1.55s ease both}
-.hu515-boom{position:absolute;left:50%;top:46%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;pointer-events:none;z-index:5;
-  background:radial-gradient(circle,rgba(255,240,180,.95),rgba(255,200,80,.45) 30%,transparent 70%);opacity:0}
+/* 金龍：走背景上緣、半透明、z-index 低於牌面與台數文字，飛完離場 */
+.hu515-dragon{position:absolute;inset:0;z-index:1;pointer-events:none;display:flex;align-items:flex-start;justify-content:center;
+  padding-top:1%;opacity:0}
+.hu515-dragon.in{animation:hu515dg 1.6s ease both}
+.hu515-dragon img{width:min(82vw,580px);height:auto;object-fit:contain;opacity:.7;mix-blend-mode:screen;
+  filter:drop-shadow(0 0 16px rgba(255,200,80,.45));animation:hu515dgfly 1.6s ease both}
+.hu515-boom{position:absolute;left:50%;top:18%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(255,240,180,.8),rgba(255,200,80,.35) 30%,transparent 70%);opacity:0}
 .hu515-boom.in{animation:hu515boom .7s ease forwards}
-@keyframes hu515dg{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}
-@keyframes hu515dgfly{0%{transform:translate(-40vw,8vh) scale(.7) rotate(-8deg)}100%{transform:translate(38vw,-6vh) scale(1.15) rotate(6deg)}}
-@keyframes hu515boom{0%{opacity:.95;transform:scale(.4)}100%{opacity:0;transform:scale(42)}}
+@keyframes hu515dg{0%{opacity:0}10%{opacity:1}75%{opacity:1}100%{opacity:0}}
+@keyframes hu515dgfly{0%{transform:translate(-52vw,-4vh) scale(.72) rotate(-10deg)}100%{transform:translate(54vw,-10vh) scale(1.02) rotate(8deg)}}
+@keyframes hu515boom{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(36)}}
 
 /* 金幣與分數 */
-.hu515-pay{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:6px;min-height:28px}
-.hu515-pay .p{font:700 14px/1.2 system-ui,sans-serif;color:#f3e6c4;opacity:0;transform:translateY(8px)}
+.hu515-pay{display:flex;gap:6px 8px;justify-content:center;flex-wrap:wrap;margin-top:8px;min-height:28px;width:100%}
+.hu515-pay .p{font:700 13px/1.2 system-ui,sans-serif;color:#f3e6c4;opacity:0;transform:translateY(8px);
+  padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.45)}
 .hu515-pay .p.in{animation:hu515fade .3s ease forwards}
 .hu515-pay .p em{font-style:normal;color:#ffd36b;margin-left:4px}
 .hu515-pay .p.pos em{color:#7dffb0}
@@ -2012,14 +2020,24 @@ body.noanim .hu515{animation:none;opacity:1}
 
 @media (max-height:430px){
   .hu515-hero{width:min(30vw,220px)}
-  .hu515-board{left:max(150px,22vw);top:6%;bottom:5%;gap:4px}
+  .hu515-board{left:max(150px,22vw);top:10%;bottom:6%;gap:4px}
   .hu515-word{font-size:min(12vw,48px)}
   .hu515-total{font-size:min(10vw,42px)}
   .hu515-row{font-size:14px;padding:1px 8px}
   .hu515-smash img{width:min(24vw,128px)}
+  .hu515-dragon img{width:min(70vw,480px)}
+}
+@media (max-width:520px){
+  .hu515-hero{width:min(42vw,160px);height:46%;z-index:2}
+  .hu515-board{left:3%;right:3%;top:6%;bottom:4%;gap:6px;justify-content:flex-start;padding-top:10px}
+  .hu515-word{font-size:min(18vw,56px)}
+  .hu515-total{font-size:min(14vw,48px)}
+  .hu515-tai{width:min(320px,96%)}
+  .hu515-dragon img{width:min(120vw,420px)}
+  .hu515-handrow{padding:4px 6px 2px}
 }
 
-body.hu515-on .bub52,body.hu515-on #bub52,body.hu515-on #home .lchar,body.hu515-on #home .lring,body.hu515-on #home .lped,
+body.hu515-on #rotate,body.hu515-on .bub52,body.hu515-on #bub52,body.hu515-on #home .lchar,body.hu515-on #home .lring,body.hu515-on #home .lped,
 body.hu515-on #home .lplaque,body.hu515-on #home .lbubble,body.hu515-on #home .lname,
 body.hu515-on #home .bnav,body.hu515-on .toast{visibility:hidden !important}
 body.hu515-on #home .games,body.hu515-on #home .lside,body.hu515-on #home .topbar,
@@ -6533,7 +6551,7 @@ renderHome = function () {
         ${sb('data-go="replays"', '🎞️', '回放')}
       </div>
       <div class="lstage">
-        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.15</span></div>
+        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.16</span></div>
         <div class="lring"></div><div class="lped"></div>
         <button class="lchar" data-go="wardrobe">${sk ? skinSVG(sk) : avatar(myAv(), 150)}</button>
         <div class="lbubble">${LOBBY_TIPS[new Date().getMinutes() % LOBBY_TIPS.length]}</div>
@@ -6978,7 +6996,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.15</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.16</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -7526,7 +7544,7 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
   } catch (e) {}
 }
 
-// ================= v5.15 鬥雀風胡牌／和牌演出（純 CSS/JS/canvas；不動牌面圖；尊重 CFG.anim / noanim / lite） =================
+// ================= v5.16 鬥雀風胡牌／和牌演出（金龍不擋台數／牌面；花牌與手牌列對齊；尊重 CFG.anim / noanim / lite） =================
 (function () {
   const DEMO_HAND = [0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8, 8, 8]; // 清一色萬子 17 張（自摸九萬）
   const DEMO_FLOWERS = [34, 35];
@@ -7650,9 +7668,11 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
       <div class="hu515-smash">${seal ? `<img src="${seal}" alt="${title}">` : ''}<div class="hu515-word">${esc(title)}</div></div>
       <div class="hu515-board">
         <div class="hu515-who">${esc(who)}　${esc(title)}${res.special ? '' : (res.selfDraw ? '' : (res.from != null ? '　（' + esc(payerName(res.from)) + ' 放槍）' : ''))}</div>
-        <div class="hu515-flowers">${flw}</div>
-        <div class="hu515-melds">${melds}</div>
-        <div class="hu515-tiles">${flips}</div>
+        <div class="hu515-handrow" style="--hand-w:${tw}px">
+          <div class="hu515-flowers">${flw}</div>
+          <div class="hu515-melds">${melds}</div>
+          <div class="hu515-tiles">${flips}</div>
+        </div>
         <div class="hu515-tai">
           ${tai.map(([n, v]) => `<div class="hu515-row"><span>${esc(n)}</span><b>${v} 台</b></div>`).join('')}
           <div class="hu515-total"><span class="n">0</span> 台</div>
