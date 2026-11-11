@@ -1890,6 +1890,140 @@ body.lite .shake510{animation:none}
 
 /* 結算微調 */
 .panel .b2res .sszp.me{border-color:#f3c55a}
+/* ================= v5.15 鬥雀風胡牌／和牌演出（純 CSS/JS，不動牌面圖） ================= */
+.hu515{position:fixed;inset:0;z-index:8000;overflow:hidden;color:#f8eed6;font-family:var(--kai,"Noto Serif TC","Songti TC",serif);
+  pointer-events:auto;opacity:0;animation:hu515in .28s ease forwards;--hu-gold:#f3c55a;--hu-gold2:#ffe9a0}
+.hu515.out{animation:hu515out .28s ease forwards}
+@keyframes hu515in{to{opacity:1}}
+@keyframes hu515out{to{opacity:0}}
+.hu515-dim{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% 42%,rgba(40,12,6,.55),rgba(4,2,2,.94) 58%,#000 100%);
+  pointer-events:none}
+.hu515-rays{position:absolute;left:50%;top:46%;width:220vmax;height:220vmax;margin:-110vmax 0 0 -110vmax;pointer-events:none;
+  background:repeating-conic-gradient(from 0deg,rgba(255,210,80,.16) 0 4deg,rgba(255,210,80,0) 4deg 14deg);
+  -webkit-mask-image:radial-gradient(circle,rgba(0,0,0,.95) 8%,transparent 58%);
+  mask-image:radial-gradient(circle,rgba(0,0,0,.95) 8%,transparent 58%);
+  animation:hu515spin 18s linear infinite;opacity:.85}
+.hu515-rays.burst{animation:hu515spin 18s linear infinite,hu515flash .7s ease}
+@keyframes hu515spin{to{transform:rotate(360deg)}}
+@keyframes hu515flash{0%{filter:brightness(1)}30%{filter:brightness(2.4)}100%{filter:brightness(1)}}
+.hu515-vignette{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px 30px rgba(0,0,0,.65);background:radial-gradient(circle at 50% 50%,transparent 40%,rgba(0,0,0,.28) 100%)}
+
+.hu515-skip{position:absolute;right:14px;top:10px;z-index:5;border:1px solid rgba(243,197,90,.7);background:rgba(20,6,4,.55);
+  color:#f3e6c4;font:700 13px/1.2 system-ui,sans-serif;letter-spacing:1px;padding:6px 12px;border-radius:999px;cursor:pointer}
+.hu515-skip:hover{background:rgba(80,30,10,.7)}
+.hu515-hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font:600 12px/1 system-ui,sans-serif;letter-spacing:1px;opacity:.55;z-index:5;pointer-events:none}
+.hu515-demo{position:absolute;left:14px;top:10px;z-index:5;font:700 12px/1 system-ui,sans-serif;letter-spacing:1px;
+  padding:6px 10px;border-radius:999px;border:1px solid rgba(243,197,90,.55);background:rgba(20,6,4,.5);color:#f3c55a}
+
+/* 立繪＋金色掛線 */
+.hu515-hero{position:absolute;left:0;bottom:0;width:min(38vw,300px);height:100%;z-index:2;pointer-events:none;
+  display:flex;align-items:flex-end;justify-content:center;
+  transform:translateX(-72%);opacity:0}
+.hu515-hero.in{animation:hu515hero .7s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes hu515hero{to{transform:none;opacity:1}}
+.hu515-cord{position:absolute;left:58%;top:0;width:4px;height:22%;transform:translateX(-50%);
+  background:linear-gradient(180deg,#fff4c0 0%,#f3c55a 40%,#c9963a);
+  box-shadow:0 0 10px #f3c55a,0 0 22px rgba(255,200,80,.65);z-index:3}
+.hu515-cord i{position:absolute;left:50%;bottom:-7px;width:16px;height:16px;margin-left:-8px;border-radius:50%;
+  border:2px solid #f3c55a;box-shadow:0 0 10px #f3c55a,inset 0 0 6px #fff4c0;background:radial-gradient(circle at 35% 30%,#fff4c0,#c9862a)}
+.hu515-hero img{position:relative;z-index:2;height:96%;width:auto;max-width:100%;object-fit:contain;object-position:bottom center;
+  filter:drop-shadow(0 0 18px rgba(255,200,80,.35)) drop-shadow(8px 0 24px rgba(0,0,0,.55));
+  -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
+
+/* 印章＋大字砸下 */
+.hu515-smash{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);z-index:4;display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;opacity:0}
+.hu515-smash.in{animation:hu515smash .55s cubic-bezier(.15,1.55,.4,1) forwards}
+.hu515-smash.away{animation:hu515away .45s ease forwards}
+@keyframes hu515smash{0%{opacity:0;transform:translate(-50%,-50%) scale(2.5) rotate(-14deg) translateY(-18vh)}
+  70%{opacity:1;transform:translate(-50%,-50%) scale(.92) rotate(2deg)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}}
+@keyframes hu515away{to{opacity:0;transform:translate(-50%,-50%) scale(.6) translateY(-18vh)}}
+.hu515-smash img{width:min(28vw,168px);height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(255,190,60,.55))}
+.hu515-word{margin-top:-6px;font:900 min(14vw,64px)/.9 var(--kai,"Noto Serif TC",serif);letter-spacing:.12em;
+  background:linear-gradient(180deg,#fff6d0,#f3c55a 45%,#c9862a 78%,#fff0b0);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 #5a1808) drop-shadow(0 8px 16px rgba(0,0,0,.55));-webkit-text-stroke:1px rgba(90,20,8,.25)}
+
+/* 翻牌列 */
+.hu515-board{position:absolute;left:max(180px,24vw);right:3%;top:8%;bottom:8%;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;opacity:0}
+.hu515-board.in{animation:hu515fade .35s ease forwards}
+.hu515-who{font:800 15px/1.2 var(--kai,serif);letter-spacing:2px;color:#f3e6c4;text-shadow:0 2px 8px #000;opacity:0;transform:translateY(-8px)}
+.hu515-who.in{animation:hu515fade .35s ease forwards}
+.hu515-flowers,.hu515-melds,.hu515-tiles{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:5px}
+.hu515-tiles{max-width:700px}
+.hu515-flip{width:var(--w,40px);height:calc(var(--w,40px)*1.34);perspective:600px;margin-bottom:calc(var(--w,40px)*.12);opacity:0;transform:translateY(10px) scale(.86)}
+.hu515-flip.in{opacity:1;transform:none;transition:opacity .2s,transform .2s}
+.hu515-flip .inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transform:rotateY(180deg)}
+.hu515-flip.show .inner{transform:rotateY(0);transition:transform .42s cubic-bezier(.2,.8,.2,1)}
+.hu515-flip .inner .t{position:absolute;inset:0;width:100%;height:100%;margin:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.hu515-flip .inner .t.back{transform:rotateY(180deg)}
+.hu515-flip.win .t:not(.back){box-shadow:0 0 0 2px #ffd23a,0 0 16px 4px rgba(255,200,80,.75),0 calc(var(--w)*.15) 0 var(--bk2,#2a6b48)!important;animation:hu515glow 1.1s ease-in-out infinite}
+@keyframes hu515glow{50%{filter:brightness(1.25)}}
+@keyframes hu515fade{to{opacity:1;transform:none}}
+
+/* 台數 */
+.hu515-tai{width:min(260px,86%);margin-top:6px;opacity:0;padding:8px 14px 10px;border-radius:12px;
+  background:rgba(12,4,2,.72);border:1px solid rgba(243,197,90,.4);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.hu515-tai.in{animation:hu515fade .3s ease forwards}
+.hu515-row{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:2px 4px;border-left:3px solid rgba(243,197,90,.15);
+  font:700 15px/1.35 var(--kai,serif);letter-spacing:1px;color:#efe2c0;opacity:0;transform:translateX(16px)}
+.hu515-row.in{animation:hu515row .28s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes hu515row{to{opacity:1;transform:none;border-left-color:#f3c55a}}
+.hu515-row b{color:#ffd36b;font-variant-numeric:tabular-nums;font-size:18px;text-shadow:0 0 8px rgba(255,200,80,.45)}
+.hu515-total{margin-top:8px;text-align:center;font:900 min(11vw,52px)/1 var(--kai,serif);letter-spacing:.08em;
+  background:linear-gradient(180deg,#fffce8,#f3c55a 40%,#c9862a 80%,#ffe9a0);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 0 #5a1808) drop-shadow(0 0 14px rgba(255,200,80,.45));opacity:0;transform:scale(.8)}
+.hu515-total.in{animation:hu515tot .4s cubic-bezier(.15,1.4,.4,1) forwards}
+.hu515-total.done{animation:hu515tot .4s cubic-bezier(.15,1.4,.4,1) forwards,hu515pulse .9s ease .4s}
+@keyframes hu515tot{to{opacity:1;transform:none}}
+@keyframes hu515pulse{50%{filter:drop-shadow(0 3px 0 #5a1808) drop-shadow(0 0 26px rgba(255,220,100,.95))}}
+.hu515-sub{text-align:center;font:600 12px/1.2 system-ui,sans-serif;opacity:.65;margin-top:2px}
+
+/* 金龍＋爆光 */
+.hu515-dragon{position:absolute;inset:0;z-index:6;pointer-events:none;display:grid;place-items:center;opacity:0}
+.hu515-dragon.in{animation:hu515dg 1.55s ease both}
+.hu515-dragon img{width:min(86vw,640px);height:auto;object-fit:contain;filter:drop-shadow(0 0 24px rgba(255,200,80,.7));animation:hu515dgfly 1.55s ease both}
+.hu515-boom{position:absolute;left:50%;top:46%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;pointer-events:none;z-index:5;
+  background:radial-gradient(circle,rgba(255,240,180,.95),rgba(255,200,80,.45) 30%,transparent 70%);opacity:0}
+.hu515-boom.in{animation:hu515boom .7s ease forwards}
+@keyframes hu515dg{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}
+@keyframes hu515dgfly{0%{transform:translate(-40vw,8vh) scale(.7) rotate(-8deg)}100%{transform:translate(38vw,-6vh) scale(1.15) rotate(6deg)}}
+@keyframes hu515boom{0%{opacity:.95;transform:scale(.4)}100%{opacity:0;transform:scale(42)}}
+
+/* 金幣與分數 */
+.hu515-pay{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:6px;min-height:28px}
+.hu515-pay .p{font:700 14px/1.2 system-ui,sans-serif;color:#f3e6c4;opacity:0;transform:translateY(8px)}
+.hu515-pay .p.in{animation:hu515fade .3s ease forwards}
+.hu515-pay .p em{font-style:normal;color:#ffd36b;margin-left:4px}
+.hu515-pay .p.pos em{color:#7dffb0}
+.hu515-pay .p.neg em{color:#ff8a8a}
+.hu515-coin{position:fixed;z-index:8010;width:22px;height:22px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 35% 30%,#fff4c0,#f3c55a 45%,#c9862a 80%);
+  box-shadow:inset 0 0 0 2px #c77a00,0 2px 6px rgba(0,0,0,.4)}
+
+body.lite .hu515-rays,body.lite .hu515-boom,body.lite .hu515-dragon,body.lite .hu515-cord{display:none}
+body.lite .hu515-hero{transform:none;opacity:.7;animation:none}
+body.lite .hu515-smash{animation:none;opacity:1;transform:translate(-50%,-50%)}
+body.lite .hu515-flip .inner{transform:none;transition:none}
+body.noanim .hu515-rays,body.noanim .hu515-dragon,body.noanim .hu515-boom{display:none}
+body.noanim .hu515{animation:none;opacity:1}
+
+@media (max-height:430px){
+  .hu515-hero{width:min(30vw,220px)}
+  .hu515-board{left:max(150px,22vw);top:6%;bottom:5%;gap:4px}
+  .hu515-word{font-size:min(12vw,48px)}
+  .hu515-total{font-size:min(10vw,42px)}
+  .hu515-row{font-size:14px;padding:1px 8px}
+  .hu515-smash img{width:min(24vw,128px)}
+}
+
+body.hu515-on .bub52,body.hu515-on #bub52,body.hu515-on #home .lchar,body.hu515-on #home .lring,body.hu515-on #home .lped,
+body.hu515-on #home .lplaque,body.hu515-on #home .lbubble,body.hu515-on #home .lname,
+body.hu515-on #home .bnav,body.hu515-on .toast{visibility:hidden !important}
+body.hu515-on #home .games,body.hu515-on #home .lside,body.hu515-on #home .topbar,
+body.hu515-on #home .pill52,body.hu515-on #home .shop52{opacity:.18 !important;pointer-events:none}
 
 </style>
 </head>
@@ -3925,6 +4059,8 @@ function sfx(kind) {
       case 'lose': [392, 349, 311, 262].forEach((f, i) => tone(f, i * .14, .3, 'triangle', .12)); break;
       case 'boom': tone(80, 0, .9, 'sine', .55, 35); noise(0, .8, .5, 300, .5, 'lowpass'); noise(0, .2, .35, 1800, .6); break;
       case 'join': tone(660, 0, .1, 'sine', .1); tone(990, .08, .14, 'sine', .1); break;
+      case 'tai': tone(980, 0, .07, 'sine', .09); tone(1470, .05, .1, 'triangle', .07); break;   // 台數逐行
+      case 'slam': tone(70, 0, .45, 'sine', .5, 36); noise(0, .28, .4, 280, .55, 'lowpass'); noise(0, .12, .28, 1600, .7); break;
     }
   } catch (e) {}
 }
@@ -4921,13 +5057,15 @@ function handOver(res) {
   const g = G.game; G.result = res; G.reveal = true; G.pending = null;
   try { lfAdjust(res); } catch (e) { console.error(e); }
   res.handLabel = handLabel(); res.lianBefore = G.lian;
-  if (res.type === 'win') { popup(res.winner, res.special || (res.selfDraw ? '自摸' : '胡'), 'hu'); beep('win'); vib([60, 40, 120]); } else { beep('lose'); say('draw', 0, '流局'); }
-  G.flipAnim = true; winFx(res);
-  if (G.kind === 'replay') { renderGame(); setTimeout(() => { if (G.result === res) showResult(); }, 1300); return; }
+  if (res.type === 'win') { beep('win'); vib([60, 40, 120]); } else { beep('lose'); say('draw', 0, '流局'); }
+  G.flipAnim = true;
+  if (G.kind === 'replay') { renderGame(); afterWinFx(res, () => { if (G.result === res) showResult(); }, 1300); return; }
   if (G.kind === 'spectate') {
     if (res.type === 'win' && res.winner !== G.dealer) { G.dealer = (G.dealer + 1) % G.n; G.dealerMoves++; G.lian = 0; } else G.lian++;
     G.status = '本局：' + handText(res) + '・3 秒後下一局'; renderGame();
-    const tk = G.token; setTimeout(() => { if (tk === G.token && G.kind === 'spectate') startHand(); }, 3200); return;
+    const tk = G.token;
+    const nextSp = () => { if (tk === G.token && G.kind === 'spectate') startHand(); };
+    afterWinFx(res, () => setTimeout(nextSp, res.type === 'win' ? 700 : 0), 3200); return;
   }
   let delta = 0;
   if (res.type === 'win') {
@@ -4960,10 +5098,21 @@ function handOver(res) {
   G.over = G.dealerMoves >= G.hands;
   if (G.over) finishMatch();
   save(); refreshWallet(); renderGame();
-  setTimeout(() => { if (G.result === res) showResult(); }, 1400);
+  afterWinFx(res, () => { if (G.result === res) showResult(); }, 1400);
 }
 // 胡牌特效：大字＋光芒；大牌（8 台以上、天胡、地胡、大四喜等）加煙火與書法牌名
 const BIG_NAMES = ['天胡', '地胡', '人胡', '大四喜', '小四喜', '大三元', '字一色', '清一色', '八仙過海', '七搶一', '十八羅漢'];
+function afterWinFx(res, then, fallbackMs) {
+  const run = () => { try { if (typeof then === 'function') then(); } catch (e) {} };
+  if (res && res.type === 'win' && typeof huPlay === 'function') {
+    try { if (huPlay(res, { ondone: run })) return; } catch (e) { console.error(e); }
+  }
+  if (res && res.type === 'win') {
+    try { popup(res.winner, res.special || (res.selfDraw ? '自摸' : '胡'), 'hu'); } catch (e) {}
+    winFx(res);
+  }
+  setTimeout(run, fallbackMs || 1400);
+}
 function winFx(res) {
   if (res.type !== 'win') return;
   try {
@@ -5305,7 +5454,7 @@ OPEN.rules = () => modal(`<h2>麻將規則說明</h2><ul class="rules">
   <div class="foot"><button class="btn mint" data-close>知道了</button></div>`, null, { cls: 'wide' });
 
 // 測試／截圖用
-window.__G = G; window.__winFx = winFx; window.__popup = popup; window.__onEvent = onEvent; window.__render = renderGame; window.__startMatch = startMatch; window.__showResult = showResult; window.__showFinal = showFinal;
+window.__G = G; window.__winFx = winFx; window.__afterWinFx = afterWinFx; window.__popup = popup; window.__onEvent = onEvent; window.__render = renderGame; window.__startMatch = startMatch; window.__showResult = showResult; window.__showFinal = showFinal;
 
 function toggleAuto() {
   G.auto = !G.auto; toast(G.auto ? '已開啟託管，系統代打' : '已取消託管');
@@ -6384,7 +6533,7 @@ renderHome = function () {
         ${sb('data-go="replays"', '🎞️', '回放')}
       </div>
       <div class="lstage">
-        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.14</span></div>
+        <div class="lplaque"><div class="hwm">${logoSVG(30)}</div><span class="hver">v5.15</span></div>
         <div class="lring"></div><div class="lped"></div>
         <button class="lchar" data-go="wardrobe">${sk ? skinSVG(sk) : avatar(myAv(), 150)}</button>
         <div class="lbubble">${LOBBY_TIPS[new Date().getMinutes() % LOBBY_TIPS.length]}</div>
@@ -6829,7 +6978,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.14</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<span class="hver">v5.15</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -6890,7 +7039,7 @@ window.__popup = popup;
   const CG = _G;
   root.CG = CG;
 
-  const BD2_VER = 'v5.14';
+  const BD2_VER = 'v5.15';
   const FACE = CG.FACE, SUIT = CG.SUIT;
   const rk = CG.rk, st = CG.st;
   const byId = (a, b) => a - b;
@@ -7177,7 +7326,7 @@ window.__popup = popup;
 // ---------- 瀏覽器 UI 補丁：必須放在 build IIFE 頂層，才能改到 cPlay／renderC 等區域變數 ----------
 if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
   const B2 = CG.B2;
-  const BD2_VER = B2.VER || 'v5.14';
+  const BD2_VER = B2.VER || 'v5.15';
   const club3 = 0, spade2 = 51;
 
   const RULES_HTML = `
@@ -7206,7 +7355,7 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
           const cur = (ver.textContent || '').trim();
           const m = cur.match(/v?(\d+)\.(\d+)/);
           const n = m ? (+m[1] * 100 + +m[2]) : 0;
-          // v5.14：沿用大老二 v5.12，疊加麻將牌面／槓印／單層牌框／photo59 ASI 修正
+          // v5.15：沿用大老二 v5.12，疊加麻將鬥雀風胡牌演出
           if (n < 512) ver.textContent = BD2_VER;
         }
         const card = h.querySelector('[data-go="gamehub"][data-arg="b2"], [data-arg="b2"].gcard');
@@ -7376,6 +7525,358 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
     if (typeof CS !== 'undefined') window.__CS = CS;
   } catch (e) {}
 }
+
+// ================= v5.15 鬥雀風胡牌／和牌演出（純 CSS/JS/canvas；不動牌面圖；尊重 CFG.anim / noanim / lite） =================
+(function () {
+  const DEMO_HAND = [0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 7, 7, 7, 8, 8, 8, 8]; // 清一色萬子 17 張（自摸九萬）
+  const DEMO_FLOWERS = [34, 35];
+  const DEMO_PLAYERS = [
+    { name: '阿霆', av: 5, me: true },
+    { name: '阿財', av: 3 },
+    { name: '美玲', av: 0 },
+    { name: '小龍', av: 1 }
+  ];
+
+  // 儘早關閉教學／簽到彈窗，避免挡住 ?demo=hu
+  try {
+    const _q = (typeof location !== 'undefined') && (new URLSearchParams(location.search).get('demo') === 'hu' || location.hash === '#demo=hu');
+    if (_q) {
+      if (typeof CFG !== 'undefined') CFG.tutorial = true;
+      if (typeof SIGN !== 'undefined' && typeof today === 'function') SIGN.last = today();
+    }
+  } catch (e) {}
+
+
+  function asset(k, fallback) {
+    try {
+      if (typeof window !== 'undefined' && window.__AI53 && window.__AI53[k]) return window.__AI53[k];
+      if (typeof fallback !== 'undefined' && fallback) return fallback;
+    } catch (e) {}
+    return '';
+  }
+  function heroSrc() { return asset('LOBBY_HERO', typeof LOBBY_HERO !== 'undefined' ? LOBBY_HERO : ''); }
+  function sealSrc() { return asset('SEAL_HU', typeof SEAL_HU !== 'undefined' ? SEAL_HU : ''); }
+  function dragonSrc() { return asset('FX_DRAGON', typeof FX_DRAGON !== 'undefined' ? FX_DRAGON : ''); }
+
+  function liteOn() { try { return !!(typeof CFG !== 'undefined' && CFG.lite) || (typeof LITE === 'function' && LITE()); } catch (e) { return false; } }
+  function canAnim() { try { return typeof ANIM === 'function' ? ANIM() : true; } catch (e) { return true; } }
+
+  function winnerName(res) {
+    try {
+      if (typeof youOr === 'function' && typeof G !== 'undefined' && G.players && G.players[res.winner]) return youOr(res.winner);
+    } catch (e) {}
+    const ps = (typeof G !== 'undefined' && G.players) || DEMO_PLAYERS;
+    return (ps[res.winner] && ps[res.winner].name) || '胡家';
+  }
+  function payerName(p) {
+    try {
+      if (typeof youOr === 'function' && typeof G !== 'undefined' && G.players && G.players[p]) return youOr(+p);
+    } catch (e) {}
+    const ps = (typeof G !== 'undefined' && G.players) || DEMO_PLAYERS;
+    return (ps[p] && ps[p].name) || ('玩家' + p);
+  }
+  function snapshotPlayer(res) {
+    try {
+      const g = typeof G !== 'undefined' && G.game;
+      if (g && g.players && g.players[res.winner]) {
+        const pl = g.players[res.winner];
+        return { hand: (pl.hand || []).slice(), flowers: (pl.flowers || []).slice(), melds: pl.melds || [] };
+      }
+    } catch (e) {}
+    return { hand: DEMO_HAND.slice(), flowers: DEMO_FLOWERS.slice(), melds: [] };
+  }
+  function tileHtml(t, w, cls) {
+    try { if (typeof tile === 'function') return tile(t, w, cls || ''); } catch (e) {}
+    return `<div class="t ${t < 0 || t == null ? 'back' : ''} ${cls || ''}" style="--w:${w}px"></div>`;
+  }
+
+  let playing = false, host = null;
+
+  function killTimers(bag) { (bag || []).forEach(id => { try { clearTimeout(id); } catch (e) {} }); bag.length = 0; }
+
+  function huPlay(res, opt) {
+    opt = opt || {};
+    if (!res || res.type !== 'win') return false;
+    try {
+      const title = res.special || (res.selfDraw ? '自摸' : '胡');
+      try { say(res.special ? 'flower' : res.selfDraw ? 'tsumo' : 'hu', res.winner || 0, res.special || (res.selfDraw ? '自摸' : '胡啦')); } catch (e) {}
+      if (!res.selfDraw && !res.special && res.from != null) setTimeout(() => { try { say('fang', res.from, '放槍'); } catch (e2) {} }, 850);
+      if (!canAnim()) { if (opt.ondone) opt.ondone(); return true; }
+    } catch (e) { if (opt.ondone) opt.ondone(); return true; }
+
+    if (playing && host) { try { host.remove(); } catch (e) {} playing = false; }
+
+    const lite = liteOn();
+    const big = (res.total | 0) >= 8 || !!(res.special);
+    const snap = opt.player || snapshotPlayer(res);
+    const winTile = res.winTile;
+    const tai = (res.tai && res.tai.length) ? res.tai.slice() : [['無台（只算底）', 0]];
+    const title = res.special || (res.selfDraw ? '自摸' : '胡');
+    const who = winnerName(res);
+    const hero = heroSrc(), seal = sealSrc(), drag = dragonSrc();
+    const tw = lite ? 36 : 40;
+
+    const el = document.createElement('div');
+    el.className = 'hu515' + (lite ? ' lite' : '') + (opt.demo ? ' demo' : '');
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-label', '胡牌演出');
+    const marked = new Set();
+    const handTiles = (snap.hand || []).map((t, i) => {
+      let isWin = false;
+      if (winTile != null && t === winTile) {
+        // 標最後一張胡牌
+        const last = snap.hand.lastIndexOf(winTile);
+        isWin = i === last;
+      }
+      return { t, isWin };
+    });
+    const flips = handTiles.map((x, i) =>
+      `<div class="hu515-flip${x.isWin ? ' win' : ''}" data-i="${i}" style="--w:${tw}px"><div class="inner">${tileHtml(-1, tw, 'back')}${tileHtml(x.t, tw, '')}</div></div>`
+    ).join('');
+    const flw = (snap.flowers || []).map(t => tileHtml(t, 22)).join('');
+    let melds = '';
+    try {
+      if (snap.melds && snap.melds.length && typeof meldHTML === 'function') melds = snap.melds.map(m => meldHTML(m, 28, true)).join('');
+    } catch (e) {}
+
+    el.innerHTML = `
+      <div class="hu515-dim"></div>
+      <div class="hu515-rays"></div>
+      <div class="hu515-vignette"></div>
+      ${opt.demo ? '<div class="hu515-demo">示範演出</div>' : ''}
+      <button class="hu515-skip" type="button">跳過</button>
+      <div class="hu515-hint">點擊畫面可跳過</div>
+      <div class="hu515-hero">${hero ? `<span class="hu515-cord"><i></i></span><img src="${hero}" alt="立繪">` : ''}</div>
+      <div class="hu515-smash">${seal ? `<img src="${seal}" alt="${title}">` : ''}<div class="hu515-word">${esc(title)}</div></div>
+      <div class="hu515-board">
+        <div class="hu515-who">${esc(who)}　${esc(title)}${res.special ? '' : (res.selfDraw ? '' : (res.from != null ? '　（' + esc(payerName(res.from)) + ' 放槍）' : ''))}</div>
+        <div class="hu515-flowers">${flw}</div>
+        <div class="hu515-melds">${melds}</div>
+        <div class="hu515-tiles">${flips}</div>
+        <div class="hu515-tai">
+          ${tai.map(([n, v]) => `<div class="hu515-row"><span>${esc(n)}</span><b>${v} 台</b></div>`).join('')}
+          <div class="hu515-total"><span class="n">0</span> 台</div>
+          <div class="hu515-sub">底 ${esc(String((typeof G !== 'undefined' && G.base) || 100))} ＋ 台數 × ${esc(String((typeof G !== 'undefined' && G.perTai) || 20))}</div>
+          <div class="hu515-pay"></div>
+        </div>
+      </div>
+      <div class="hu515-boom"></div>
+      <div class="hu515-dragon">${drag ? `<img src="${drag}" alt="金龍">` : ''}</div>`;
+    document.body.classList.add('hu515-on');
+    document.body.appendChild(el);
+    host = el; playing = true;
+
+    const bag = [];
+    const at = (ms, fn) => { const id = setTimeout(() => { try { fn(); } catch (e) { console.error(e); } }, ms); bag.push(id); };
+    let skipped = false, closed = false, complete = false;
+
+    function ding() { try { if (typeof sfx === 'function') sfx('tai'); else beep('tick'); } catch (e) {} }
+    function slam() { try { if (typeof sfx === 'function') sfx('slam'); } catch (e) {} try { if (typeof shake === 'function') shake(el, lite ? 5 : 12); } catch (e) {} }
+
+    function showComplete() {
+      if (complete) return;
+      complete = true;
+      el.querySelector('.hu515-hero')?.classList.add('in');
+      const smash = el.querySelector('.hu515-smash');
+      if (smash) { smash.classList.add('in'); smash.classList.remove('away'); }
+      el.querySelector('.hu515-board')?.classList.add('in');
+      el.querySelector('.hu515-who')?.classList.add('in');
+      el.querySelector('.hu515-tai')?.classList.add('in');
+      el.querySelectorAll('.hu515-flip').forEach(n => { n.classList.add('in', 'show'); });
+      el.querySelectorAll('.hu515-row').forEach(n => n.classList.add('in'));
+      const tot = el.querySelector('.hu515-total');
+      if (tot) { tot.classList.add('in', 'done'); const n = tot.querySelector('.n'); if (n) n.textContent = String(res.total | 0); }
+      fillPay(true);
+      if (big && !lite) {
+        el.querySelector('.hu515-dragon')?.classList.add('in');
+        el.querySelector('.hu515-boom')?.classList.add('in');
+        el.querySelector('.hu515-rays')?.classList.add('burst');
+      }
+    }
+
+    function fillPay(instant) {
+      const box = el.querySelector('.hu515-pay'); if (!box || box.dataset.ok) return;
+      box.dataset.ok = '1';
+      const pays = res.payments || {};
+      const items = Object.keys(pays).map(p => ({ p, amt: +pays[p], neg: true }));
+      const gain = items.reduce((s, x) => s + x.amt, 0);
+      items.push({ p: res.winner, amt: gain, neg: false });
+      box.innerHTML = items.map(x => `<div class="p ${x.neg ? 'neg' : 'pos'}" data-from="${x.p}">${esc(payerName(x.p))}<em>${x.neg ? '−' : '+'}${x.amt}</em></div>`).join('');
+      const nodes = [...box.querySelectorAll('.p')];
+      if (instant || lite) { nodes.forEach(n => n.classList.add('in')); if (!lite) flyCoins(nodes.filter(n => n.classList.contains('neg')), el.querySelector('.hu515-total')); return; }
+      nodes.forEach((n, i) => at(i * 120, () => n.classList.add('in')));
+      at(80, () => flyCoins(nodes.filter(n => n.classList.contains('neg')), el.querySelector('.hu515-total')));
+    }
+
+    function flyCoins(fromNodes, toEl) {
+      if (lite || !toEl) return;
+      try {
+        if (typeof coinFlow === 'function' && fromNodes.length) { coinFlow(fromNodes, toEl, 5); return; }
+      } catch (e) {}
+    }
+
+    function rollTotal() {
+      const tot = el.querySelector('.hu515-total'); if (!tot) return;
+      tot.classList.add('in');
+      const n = tot.querySelector('.n');
+      const goal = res.total | 0;
+      if (lite || !canAnim()) { n.textContent = String(goal); tot.classList.add('done'); return; }
+      const t0 = performance.now(), dur = 520 + Math.min(800, tai.length * 80);
+      const step = now => {
+        if (closed) return;
+        const k = Math.min(1, (now - t0) / dur);
+        n.textContent = String(Math.round(goal * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(step);
+        else { n.textContent = String(goal); tot.classList.add('done'); try { if (typeof sfx === 'function') sfx('coin'); } catch (e) {} }
+      };
+      requestAnimationFrame(step);
+    }
+
+    function finish() {
+      if (closed) return;
+      closed = true; playing = false;
+      killTimers(bag);
+      el.classList.add('out');
+      setTimeout(() => { try { el.remove(); } catch (e) {} if (host === el) host = null; try { document.body.classList.remove('hu515-on'); } catch (e) {} try { if (opt.ondone) opt.ondone(); } catch (e) {} }, 260);
+    }
+
+    function skip() {
+      if (closed) return;
+      if (skipped) { finish(); return; }
+      skipped = true;
+      killTimers(bag);
+      showComplete();
+      try { if (typeof sfx === 'function') sfx('tap'); } catch (e) {}
+      at(1000, finish);
+    }
+
+    el.querySelector('.hu515-skip').addEventListener('click', ev => { ev.stopPropagation(); skip(); });
+    el.addEventListener('pointerdown', ev => { if (ev.target.closest && ev.target.closest('.hu515-skip')) return; skip(); });
+
+    // ---- timeline ----
+    if (lite) {
+      at(40, () => { el.querySelector('.hu515-hero')?.classList.add('in'); el.querySelector('.hu515-smash')?.classList.add('in'); slam(); });
+      at(280, () => {
+        el.querySelector('.hu515-board')?.classList.add('in');
+        el.querySelector('.hu515-who')?.classList.add('in');
+        el.querySelectorAll('.hu515-flip').forEach(n => n.classList.add('in', 'show'));
+        el.querySelector('.hu515-tai')?.classList.add('in');
+        el.querySelectorAll('.hu515-row').forEach(n => n.classList.add('in'));
+        rollTotal(); fillPay(true); complete = true;
+      });
+      at(1600, finish);
+      return true;
+    }
+
+    at(80, () => el.querySelector('.hu515-hero')?.classList.add('in'));
+    at(280, () => {
+      el.querySelector('.hu515-smash')?.classList.add('in');
+      slam();
+      try { if (typeof particles === 'function') particles({ rays: true, n: 80, speed: 7, dur: 1200, colors: ['#ffd54a', '#fff3b0', '#ff9a2a', '#fff'] }); } catch (e) {}
+    });
+    at(1100, () => el.querySelector('.hu515-smash')?.classList.add('away'));
+    at(1180, () => {
+      el.querySelector('.hu515-board')?.classList.add('in');
+      el.querySelector('.hu515-who')?.classList.add('in');
+      const nodes = [...el.querySelectorAll('.hu515-flip')];
+      nodes.forEach((n, i) => at(i * 85, () => {
+        n.classList.add('in');
+        at(60, () => { n.classList.add('show'); try { if (typeof sfx === 'function') sfx('flick'); } catch (e) {} });
+      }));
+    });
+    const afterTiles = 1180 + handTiles.length * 85 + 420;
+    at(afterTiles, () => {
+      el.querySelector('.hu515-tai')?.classList.add('in');
+      const rows = [...el.querySelectorAll('.hu515-row')];
+      rows.forEach((n, i) => at(i * 220, () => { n.classList.add('in'); ding(); }));
+      at(rows.length * 220 + 80, () => { rollTotal(); });
+    });
+    const afterTai = afterTiles + tai.length * 220 + 720;
+    at(afterTai, () => {
+      if (big) {
+        el.querySelector('.hu515-dragon')?.classList.add('in');
+        el.querySelector('.hu515-boom')?.classList.add('in');
+        el.querySelector('.hu515-rays')?.classList.add('burst');
+        try { if (typeof sfx === 'function') sfx('boom'); } catch (e) {}
+        try { if (typeof particles === 'function') particles({ fireworks: true, n: 90, speed: 6, dur: 2000, colors: ['#ffd23a', '#ff5a3a', '#fff2b0', '#3ad08a'] }); } catch (e) {}
+        try { if (typeof coinRain === 'function') coinRain(36); } catch (e) {}
+      }
+      fillPay(false);
+    });
+    at(afterTai + (big ? 1800 : 1100), finish);
+    return true;
+  }
+
+  function demoResult() {
+    const base = 100, per = 20, total = 13;
+    const amt = base + per * total;
+    return {
+      type: 'win', winner: 0, from: null, selfDraw: true, special: null, winTile: 8,
+      tai: [['門清自摸', 3], ['清一色', 8], ['花牌', 1], ['花牌', 1]],
+      total, payments: { 1: amt, 2: amt, 3: amt }, paymentTai: { 1: total, 2: total, 3: total },
+      dealerTai: [], handLabel: '東風圈・示範局'
+    };
+  }
+  function demoPlayer() { return { hand: DEMO_HAND.slice(), flowers: DEMO_FLOWERS.slice(), melds: [] }; }
+
+  function huDemo() {
+    const res = demoResult();
+    // 讓 payerName / winnerName 在沒開局時也有名字
+    try {
+      if (typeof G !== 'undefined') {
+        if (!G.players || !G.players.length) G.players = DEMO_PLAYERS.map(p => Object.assign({}, p));
+        if (G.base == null) G.base = 100;
+        if (G.perTai == null) G.perTai = 20;
+      }
+    } catch (e) {}
+    return huPlay(res, { demo: true, player: demoPlayer(), ondone: () => { try { toast('以上是胡牌演出示範，對局胡牌時會再播一次'); } catch (e) {} } });
+  }
+
+  function demoWanted() {
+    try { const q = new URLSearchParams(location.search); if (q.get('demo') === 'hu') return true; if (location.hash === '#demo=hu') return true; } catch (e) {}
+    return false;
+  }
+
+  let demoOnce = false;
+  function checkDemo() {
+    if (demoOnce || !demoWanted()) return;
+    demoOnce = true;
+    setTimeout(() => { try { huDemo(); } catch (e) { console.error(e); } }, 280);
+  }
+  function bootDemo() {
+    if (!demoWanted()) return;
+    try { if (typeof CFG !== 'undefined') CFG.tutorial = true; } catch (e) {}
+    try { if (typeof SIGN !== 'undefined' && typeof today === 'function') SIGN.last = today(); } catch (e) {}
+    const ready = () => { try { return !!(typeof ACC !== 'undefined' && ACC && ACC.loggedIn && ACC.nick); } catch (e) { return false; } };
+    if (ready()) { checkDemo(); return; }
+    try {
+      if (typeof LS !== 'undefined') LS.set('agree', true);
+      const prev = (typeof LS !== 'undefined') ? LS.get('acc', null) : null;
+      if (prev && prev.nick) {
+        ACC = Object.assign(prev, { loggedIn: true, method: prev.method || 'guest' });
+        try { save(); } catch (e) {}
+        if (typeof afterLogin === 'function') afterLogin();
+      } else {
+        ACC = { uid: 'MJDEMO', method: 'guest', loggedIn: true, nick: '阿霆', avatar: 5, created: (typeof today === 'function' ? today() : '') };
+        try { save(); } catch (e) {}
+        if (typeof afterLogin === 'function') afterLogin();
+        else if (typeof renderHome === 'function') { try { refreshWallet(); } catch (e) {} renderHome(); show('home'); }
+      }
+    } catch (e) { console.error(e); }
+    setTimeout(checkDemo, 360);
+  }
+
+  if (typeof afterLogin === 'function') {
+    const _al = afterLogin;
+    afterLogin = function () { const r = _al.apply(this, arguments); setTimeout(checkDemo, 380); return r; };
+  }
+  setTimeout(bootDemo, 0);
+
+  window.huPlay = huPlay;
+  window.huDemo = huDemo;
+  window.__huPlay = huPlay;
+  window.__huDemo = huDemo;
+})();
 
 
 document.body.insertAdjacentHTML('afterbegin', TileArt.defs(CFG.tileClassic ? 'classic' : 'photo'));
