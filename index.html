@@ -2278,6 +2278,137 @@ body.noanim #home.l520 .mb5 > *{animation:none!important}
 #game.r520 .mq5 .meld.akan .t.back.akan-mine .akan-face{opacity:.5;filter:grayscale(.1) contrast(1.2);mix-blend-mode:multiply}
 #game.r520 .mq5 .meld.akan .t.back.akan-mine .akan-lb{font-size:calc(var(--w)*.24);bottom:8%}
 #game.r520 .mq5.q2 .meld.akan .akan-lb,#game.r520 .mq5.q1 .meld.akan .akan-lb,#game.r520 .mq5.q3 .meld.akan .akan-lb{/* 對手座位不會有 akan-mine */}
+/* ================= v5.22 精緻化：麻將／大老二牌桌、大廳、結算、選單 ================= */
+:root{--g522:#f3c55a;--g522b:#c9a45a;--g522d:#8a5a18;--ink522:#131209;--ease522:cubic-bezier(.22,1,.36,1)}
+/* 數字等寬、按鈕金邊按壓、焦點 */
+#panel,.mjseat,#game .rinfo,#home .wal52,#home .online52,.seatchip,.cinfo,.scores,.b2calc,.taigrid{font-variant-numeric:tabular-nums}
+.btn,.cbtn,#game .autotog,#cgame .cbar .btn{transition:transform .3s var(--ease522),box-shadow .3s var(--ease522),filter .3s var(--ease522),background .3s var(--ease522);will-change:transform}
+.btn:active,.cbtn:active,#game .autotog:active,#cgame .cbar .btn:active{transform:scale(.97) translateY(1px);filter:brightness(.94)}
+@media (hover:hover){.btn:hover,.cbtn:hover,#cgame .cbar .btn:hover{filter:brightness(1.07);transform:translateY(-1px)}}
+.btn:focus-visible,.cbtn:focus-visible,#home button:focus-visible,#game button:focus-visible,#cgame button:focus-visible,#panel button:focus-visible{outline:2px solid var(--g522);outline-offset:2px}
+.btn.primary{box-shadow:inset 0 1px 0 rgba(255,244,210,.55),inset 0 -2px 0 rgba(90,40,8,.28),0 3px 0 #7a5a24,0 8px 16px -8px rgba(19,18,9,.7)!important}
+.btn.ghost{box-shadow:inset 0 1px 0 rgba(255,236,190,.14),0 3px 0 #170d06,0 8px 14px -8px rgba(0,0,0,.5)!important}
+/* 模態：霧面深色玻璃＋金髮絲邊 */
+.modal{background:rgba(8,5,2,.72)}
+.modal .panel{background:linear-gradient(180deg,rgba(42,24,14,.96),rgba(18,10,6,.97))!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(243,197,90,.6)!important;border-radius:14px!important;
+  box-shadow:0 0 0 1px #2a0402,0 0 0 5px rgba(168,104,26,.4),0 24px 56px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,236,190,.22)!important}
+body:has(#modal.on) .bigfx{opacity:0!important;pointer-events:none!important;transition:opacity .25s}
+.modal.on .panel{animation:p522in .5s var(--ease522) both}
+@keyframes p522in{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.modal.on .panel .taigrid > div,.modal.on .panel .sszp,.modal.on .panel .rank,.modal.on .panel .b2calc{
+  animation:r522in .45s var(--ease522) backwards}
+.modal.on .panel .taigrid > div:nth-child(1),.modal.on .panel .sszp:nth-child(1){animation-delay:40ms}
+.modal.on .panel .taigrid > div:nth-child(2),.modal.on .panel .sszp:nth-child(2){animation-delay:90ms}
+.modal.on .panel .taigrid > div:nth-child(3),.modal.on .panel .sszp:nth-child(3){animation-delay:140ms}
+.modal.on .panel .taigrid > div:nth-child(4),.modal.on .panel .sszp:nth-child(4){animation-delay:190ms}
+.modal.on .panel .taigrid > div:nth-child(5){animation-delay:240ms}
+.modal.on .panel .taigrid > div:nth-child(6){animation-delay:290ms}
+@keyframes r522in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.modal .panel h2{letter-spacing:.08em}
+.panel .b2res .sszp,.panel .b2new .sszp{border-radius:12px;border:1px solid rgba(243,197,90,.28);padding:10px 12px;margin:8px 0;background:rgba(19,18,9,.4)}
+.panel .b2new .sszp.b2win,.panel .b2res .sszp.me{border-color:rgba(243,197,90,.7);box-shadow:0 0 0 1px rgba(243,197,90,.2),0 8px 18px -10px rgba(0,0,0,.55)}
+.panel .b2calc span{border-radius:8px}
+/* 麻將絨布：織紋、中央浮雕、聚光（不加厚框，避免雙層紅框） */
+#game.dq52 .felt{--weave522:repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),repeating-linear-gradient(0deg,rgba(0,0,0,.045) 0 1px,transparent 1px 3px)}
+#game.r520 .spot522,#cgame .spot522{position:absolute;inset:0;pointer-events:none;z-index:1;border-radius:inherit;
+  background:radial-gradient(ellipse 54% 48% at 50% 42%,rgba(255,244,214,.13),rgba(255,244,214,0) 62%),radial-gradient(ellipse 80% 70% at 50% 100%,rgba(0,0,0,.28),transparent 55%)}
+#game .logo522,#cgame .logo522{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1;
+  font:700 86px/1 var(--serif);letter-spacing:.12em;color:rgba(226,200,130,.09);text-shadow:0 1px 0 rgba(255,255,255,.06),0 -1px 0 rgba(0,0,0,.35);-webkit-text-stroke:1px rgba(226,200,130,.08)}
+#game .rim522,#cgame .rim522{position:absolute;inset:0;pointer-events:none;z-index:4;border-radius:inherit;box-shadow:
+  inset 0 0 0 1px rgba(255,220,150,.28),inset 0 0 0 2px rgba(42,4,2,.5),
+  inset 0 18px 28px -18px rgba(255,236,200,.18),inset 0 -16px 24px -14px rgba(0,0,0,.35)}
+/* 麻將座位、中控 */
+#game.dq52 .mjseat{border-radius:10px!important;padding:5px 10px 5px 5px!important;
+  background:linear-gradient(180deg,rgba(28,16,10,.9),rgba(10,6,4,.92))!important;
+  border:1px solid rgba(243,197,90,.5)!important;box-shadow:0 0 0 1px rgba(42,4,2,.7),0 8px 16px -8px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,236,190,.12)!important}
+#game.dq52 .mjseat .av,#game.dq52 .mjseat .ava{border-radius:50%;box-shadow:0 0 0 2px #f3c55a,0 0 0 3px #2a0402,0 4px 10px rgba(0,0,0,.45)}
+#game.dq52 .mjseat .nm{font:600 13px/1.2 var(--ui)!important;letter-spacing:.02em}
+#game.dq52 .mjseat .scp{font:700 14px/1.2 var(--ui)!important;color:#f6d77e!important;font-variant-numeric:tabular-nums}
+#game.dq52 .mjseat.active{border-color:#f6d77e!important;box-shadow:0 0 0 2px #f3c55a,0 0 18px rgba(243,197,90,.45),0 8px 16px -8px rgba(0,0,0,.6)!important}
+#game.dq52 .plate{box-shadow:0 0 0 2px #2a0402,0 0 0 4px #a8681a,0 0 28px color-mix(in srgb,var(--ac,#ffd23a) 50%,transparent),inset 0 1px 0 rgba(255,236,190,.3),inset 0 0 16px rgba(255,190,80,.18)!important}
+#game.r520 .pool5 .t.pt5{filter:drop-shadow(0 4px 5px rgba(0,0,0,.38))}
+#game.r520 .mq5 .meld .t{filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+#game #myhand > .t{filter:drop-shadow(0 6px 6px rgba(0,0,0,.38))}
+#game .rinfo{letter-spacing:.04em}
+/* -------- 大老二牌桌（同等優先） -------- */
+#cgame[data-game=b2]{background:radial-gradient(ellipse at 50% 24%,#3a120c,#140404 62%,#080202)!important}
+#cgame[data-game=b2] .ctable{
+  --f1:#1c6e50;--f2:#115744;--f3:#0c4032;--f4:#072820;
+  border:16px solid #4a140c!important;border-radius:28px!important;border-image:none!important;
+  background-image:
+    radial-gradient(ellipse 50% 44% at 50% 46%,rgba(255,255,220,.12),transparent 70%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.032) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 1px,transparent 1px 3px),
+    linear-gradient(180deg,#1e7354,#0c4032)!important;
+  background-color:#115744!important;
+  box-shadow:
+    inset 0 0 0 2px #f3c55a,inset 0 0 0 4px #2a0402,inset 0 0 0 6px rgba(168,104,26,.7),
+    inset 0 18px 26px -16px rgba(255,230,180,.2),inset 0 -14px 22px -12px rgba(0,0,0,.4),
+    inset 0 0 48px rgba(0,0,0,.28),
+    0 0 0 1px #f3c55a,0 0 0 3px #2a0402,0 0 0 5px #a8681a,0 16px 40px rgba(0,0,0,.55)!important;
+}
+#cgame[data-game=b2] .ctable::before{content:"";position:absolute;inset:8px;border-radius:16px;pointer-events:none;z-index:1;
+  box-shadow:inset 0 0 0 1px rgba(255,220,150,.3);background:none}
+#cgame[data-game=b2] .cinfo{border:1px solid rgba(243,197,90,.65)!important;border-radius:10px!important;
+  background:linear-gradient(180deg,rgba(42,18,10,.94),rgba(16,8,4,.94))!important;
+  box-shadow:0 0 0 1px #2a0402,inset 0 1px 0 rgba(255,236,190,.16),0 8px 16px -8px rgba(0,0,0,.55);letter-spacing:.04em}
+#cgame[data-game=b2] .cinfo b{font:700 15px/1.2 var(--serif);color:#f6d77e;letter-spacing:.1em}
+#cgame[data-game=b2] .seatchip{border-radius:12px!important;padding:5px 12px 5px 5px!important;
+  background:linear-gradient(180deg,rgba(32,16,10,.92),rgba(12,6,4,.94))!important;
+  border:1px solid rgba(243,197,90,.55)!important;
+  box-shadow:0 0 0 1px #2a0402,0 8px 16px -8px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,236,190,.12)!important}
+#cgame[data-game=b2] .seatchip .avatar{border-radius:50%;box-shadow:0 0 0 2px #f3c55a,0 0 0 3px #2a0402,0 3px 8px rgba(0,0,0,.45)}
+#cgame[data-game=b2] .seatchip .nm{font:600 13px/1.2 var(--ui)!important}
+#cgame[data-game=b2] .seatchip.active{border-color:#f6d77e!important;box-shadow:0 0 0 2px #f3c55a,0 0 18px rgba(243,197,90,.5),0 8px 16px -8px rgba(0,0,0,.55)!important}
+#cgame[data-game=b2] .ccnt{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;margin-left:4px;
+  border-radius:999px;font:700 12px/1 var(--ui);color:#2a1406;background:linear-gradient(180deg,#fff2c0,#f3c55a);border:1px solid #a8681a;
+  box-shadow:0 0 0 1px #2a0402,0 2px 6px rgba(0,0,0,.35);font-variant-numeric:tabular-nums}
+#cgame[data-game=b2] .ccnt.warn{background:linear-gradient(180deg,#ffd0c0,#e04830);color:#fff;border-color:#7a1208;animation:w522 1.2s ease-in-out infinite}
+@keyframes w522{50%{box-shadow:0 0 0 1px #2a0402,0 0 12px rgba(224,72,48,.7)}}
+/* 對手牌背扇：厚度與弧度 */
+#cgame[data-game=b2] .bfan .pc{box-shadow:0 2px 0 #d8cba5,0 3px 0 #1a4a38,0 7px 10px -3px rgba(0,0,0,.5)!important;transform-origin:50% 100%;transition:transform .4s var(--ease522)}
+#cgame[data-game=b2] .pile .cards{padding:6px 8px 8px;border-radius:10px;background:rgba(0,0,0,.16);box-shadow:inset 0 0 0 1px rgba(255,236,190,.08),0 8px 18px -8px rgba(0,0,0,.5)}
+#cgame[data-game=b2] .pile .cards .pc{filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
+#cgame[data-game=b2] .pile small{font:700 12px/1.2 var(--serif)!important;letter-spacing:.1em;color:#2a1406;
+  background:linear-gradient(180deg,#fff2c0,#f3c55a);border:1px solid #a8681a;border-radius:999px;padding:3px 10px!important;
+  box-shadow:0 0 0 1px #2a0402,0 3px 8px rgba(0,0,0,.35)}
+#cgame[data-game=b2] .bd2passed{font:700 13px/1 var(--serif);letter-spacing:.18em;padding:5px 12px;border-radius:8px;
+  color:#efe6d0;background:rgba(24,20,16,.88);border:1px solid rgba(243,197,90,.4);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+#cgame[data-game=b2] .bd2passed::before{content:"";letter-spacing:0}
+#cgame[data-game=b2] .bd2last{font:700 12px/1 var(--serif);letter-spacing:.16em;padding:3px 10px;border-radius:6px}
+#cgame[data-game=b2] .cbar .btn{min-width:88px;border-radius:10px;font:700 16px/1 var(--serif);letter-spacing:.08em}
+#cgame[data-game=b2] .chand .pc{transition:transform .28s var(--ease522),box-shadow .28s var(--ease522),filter .28s;touch-action:none}
+#cgame[data-game=b2] .chand .pc.sel{z-index:2}
+#cgame[data-game=b2] .chand .pc.autofin522{box-shadow:0 0 0 3px #f6d77e,0 0 18px rgba(246,215,126,.7),0 10px 18px rgba(0,0,0,.45)!important;transform:translateY(-22px);animation:af522 .55s var(--ease522)}
+@keyframes af522{0%{transform:translateY(0) scale(.96);filter:brightness(1)}45%{transform:translateY(-26px) scale(1.04);filter:brightness(1.12)}100%{transform:translateY(-22px)}}
+#cgame[data-game=b2] .chand .pc.shake522{animation:sk522 .48s ease}
+@keyframes sk522{0%,100%{transform:translateY(-28px)}20%{transform:translateY(-28px) translateX(-7px)}40%{transform:translateY(-28px) translateX(7px)}60%{transform:translateY(-28px) translateX(-4px)}}
+#cgame[data-game=b2].deal522 .chand .pc{animation:dc522 .5s var(--ease522) backwards}
+#cgame[data-game=b2].deal522 .chand .pc:nth-child(n){animation-delay:calc(var(--i522,0) * 18ms)}
+@keyframes dc522{from{opacity:0;transform:translateY(36px) rotate(8deg)}to{opacity:1;transform:none}}
+.combo522{position:absolute;left:50%;bottom:168px;transform:translateX(-50%);z-index:8;pointer-events:none;
+  font:700 13px/1 var(--serif);letter-spacing:.14em;color:#2a1406;padding:4px 12px;border-radius:999px;
+  background:linear-gradient(180deg,#fff2c0,#f3c55a);border:1px solid #a8681a;box-shadow:0 0 0 1px #2a0402,0 6px 14px rgba(0,0,0,.4);
+  animation:r522in .35s var(--ease522)}
+.ghost522{position:absolute;z-index:50;pointer-events:none;opacity:.92;filter:drop-shadow(0 14px 12px rgba(0,0,0,.45));transition:none}
+.hint522{position:absolute;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:rgba(8,5,2,.62);backdrop-filter:blur(6px)}
+.hint522 .box{width:min(520px,86%);padding:22px 24px 18px;border-radius:14px;background:rgba(22,14,8,.94);
+  border:1px solid rgba(243,197,90,.55);box-shadow:0 0 0 1px #2a0402,0 0 0 5px rgba(168,104,26,.3),0 24px 48px rgba(0,0,0,.55);color:#f3e3bd;font-family:var(--ui)}
+.hint522 h3{margin:0 0 10px;font:700 20px/28px var(--serif);letter-spacing:.1em;color:#f6d77e}
+.hint522 ul{margin:0 0 16px;padding:0 0 0 18px;font:500 14px/22px var(--ui)}
+.hint522 li{margin:4px 0}
+.hint522 .btn{width:100%}
+/* 大廳圖示一致：金圈、同尺寸 */
+#home .lb52b i,#home .ti{box-shadow:0 0 0 1.5px rgba(243,197,90,.4),0 4px 10px rgba(0,0,0,.35)}
+#home .profile{border:1px solid rgba(243,197,90,.45);box-shadow:0 0 0 1px rgba(42,4,2,.5),inset 0 1px 0 rgba(255,236,190,.12)}
+@media (prefers-reduced-motion:reduce){
+  .modal.on .panel,.modal.on .panel .winrow,.modal.on .panel .taigrid > div,.modal.on .panel .sszp,
+  #cgame[data-game=b2] .chand .pc,.btn,.cbtn{animation:none!important;transition:none!important}
+}
+body.noanim .modal.on .panel,body.noanim .chand .pc,body.lite .spot522{animation:none!important}
+
+.panel .b2res .sum,.panel .b2res .foot,.panel .b2new .sum,#modal .panel .sub{color:rgba(255,236,200,.82)!important}
 
 </style>
 </head>
@@ -7565,7 +7696,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.21</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.22</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -7671,7 +7802,7 @@ window.__popup = popup;
     '持梅花 3 者先出，第一手必須含梅花 3。',
     '跟牌須同牌型、同張數且更大：順子只能壓順子、葫蘆只能壓葫蘆（葫蘆不能壓順子）。鐵支與同花順是炸彈：有牌權（輪到你）時可壓任何牌，包括單張、對子、單張 ♠2 與任何五張（同花順＞鐵支，同類再比大小）；含 ♠2 的同花順只有四隻 2 的鐵支能壓。只有四隻 2 的鐵支可壓所有牌型，且沒有牌能壓它。',
     '同點對子比最大花色；葫蘆比三條點數；鐵支比四條點數；同花順先比順子大小再比花色；順子同大比最大牌花色。',
-    '不採用同花牌型；不可出三條。同一輪喊過（不出）就不能再出牌，直到這一輪結束（就算有炸彈或四張 2 也一樣，系統自動跳過）。兩家都過時，最後出牌者可「繼續上打」（出比自己上一手大的同牌型或炸彈，可一直接下去，其他兩家仍不能出），或選「自由出牌」結束這一輪、重新出任何牌型。',
+    '不採用同花牌型；不可出三條。同一輪喊過（不出）就不能再出牌，直到這一輪結束（就算有炸彈或四張 2 也一樣，系統自動跳過）。兩家都過時輪回最後出牌者（上打）：直接出牌即可，不必再按「自由出牌」。若出的是比自己上一手大的同牌型或炸彈，視為繼續上打（其他兩家這一輪仍不能出，可再接著出）；若出的是其他合法牌型，系統自動結束這一輪、當作新的自由出牌，其他兩家解鎖。',
     '計分（使用者規則）：錢全歸先出完的人。兩家輸家比剩牌張數，多的為「大頭」、少的為「小頭」；張數相同時，手上最大一張牌（先比點數再比花色，♠2 最大）較大者為大頭。大頭底 2000、小頭底 1000（可在開桌選項調整）。倍數相乘：剩 10 張 ×2、13 張 ×4、15 張 ×8、17 張 ×16；手上每張 2 再 ×2；贏家最後一手含 2，兩家輸家每張再 ×2。每家每局最多輸 25000。'
   ];
 
@@ -7780,6 +7911,18 @@ window.__popup = popup;
   // 合法出牌（含第三條強制與第五條例外）。pass 另行以 canPass 表示。
   B2.legalMoves = (S, p) => {
     const hand = S.hands[p];
+    // v5.22：上打時一次出牌——能壓過上一手＝續打；其他合法牌型＝自動開新輪。提示／智慧選牌都要列出兩種。
+    if (S.selfTop && S.lead && S.lead.by === p && S.winner == null) {
+      const raw = B2.plays(hand).filter(x => !S.first || x.cards.includes(club3));
+      const cont = raw.filter(x => B2.beats(x.c, S.lead.c)).map(x => Object.assign({}, x, { cont: true }));
+      const fake = { hands: S.hands, turn: p, lead: null, passes: 0, first: false, winner: null, selfTop: false, passed: S.hands.map(() => false), played: S.played };
+      const freeL = B2.legalMoves(fake, p);
+      const moves = cont.slice();
+      for (const x of freeL.moves) {
+        if (!moves.some(m => samePlay(m.cards, x.cards))) moves.push(Object.assign({}, x, { freeLead: true }));
+      }
+      return { moves, canPass: false, restricted: !!freeL.restricted, banner: freeL.banner || '', code: 'self-top', selfTop: true };
+    }
     const all = B2.plays(hand).filter(x => {
       if (S.first && !x.cards.includes(club3)) return false;
       if (S.lead && !B2.beats(x.c, S.lead.c)) return false;
@@ -7819,13 +7962,18 @@ window.__popup = popup;
   B2.whyIllegal = (S, p, cards) => {
     if (p !== S.turn) return '還沒輪到你出牌';
     if (S.winner != null) return '這一局已經結束';
-    if (!cards || !cards.length) return S.lead ? null : '自由出牌時不能不出';
+    if (!cards || !cards.length) {
+      if (S.selfTop && S.lead && S.lead.by === p) return '兩家都過時請直接出牌：壓過上一手即繼續上打，其他合法牌型會自動開新輪';
+      return S.lead ? null : '自由出牌時不能不出';
+    }
     if (new Set(cards).size !== cards.length) return '不能重複選同一張牌';
     if (!cards.every(c => S.hands[p].includes(c))) return '這些牌不在你的手牌裡';
     const c = B2.classify(cards);
     if (!c) return '牌型不正確（可出單張、對子、順子、葫蘆、鐵支、同花順；不採用同花，不可出三條）';
     if (S.first && !cards.includes(club3)) return '第一手必須包含梅花 3';
-    if (S.lead && !B2.beats(c, S.lead.c)) {
+    // 上打：壓不過上一手的合法牌型改為自動開新輪，不視為犯規
+    const selfTop = !!(S.selfTop && S.lead && S.lead.by === p);
+    if (S.lead && !B2.beats(c, S.lead.c) && !selfTop) {
       if (S.lead.c.top) return '四隻 2 的鐵支是最大的牌，任何牌都壓不過';
       if (S.lead.c.invincible) return '上一手是含 ♠2 的同花順（♠2 特權），只有四隻 2 的鐵支能壓（第四條）';
       if (S.lead.c.bomb && c.bomb) return '炸彈要比上一手大：同花順＞鐵支，同類再比大小';
@@ -7905,6 +8053,8 @@ window.__popup = popup;
     const why = B2.whyIllegal(S, p, cards);
     if (why) throw new Error(why);
     const c = B2.classify(cards);
+    // v5.22：上打時若不是壓過上一手（續打），自動結束本輪再開新輪（解鎖其他兩家）
+    if (S.selfTop && S.lead && S.lead.by === p && !B2.beats(c, S.lead.c)) B2.endTrick(S);
     S.hands[p] = S.hands[p].filter(x => !cards.includes(x));
     S.lead = { c, cards: cards.slice().sort(byId), by: p }; S.passes = 0; S.first = false; S.played[p]++;
     S.log.push({ p, cards: S.lead.cards, c });
@@ -7912,8 +8062,7 @@ window.__popup = popup;
     B2.advance(S, p);
     return S;
   };
-  // 輪到下一位「本輪還沒喊過」的玩家；若其他人都已喊過（兩家都過），最後出牌者贏得這一輪並自由出牌（可上打任何牌型）
-  // 兩家都過時不直接結束：輪回最後出牌者（selfTop），他可「繼續上打」（出比自己上一手大的牌，其他人仍鎖定），或選「自由出牌」結束本輪。
+  // 輪到下一位尚未喊過的玩家；兩家都過則輪回最後出牌者（selfTop）。他直接出牌：壓過上一手＝續打（對手仍鎖定），其他合法牌型＝自動開新輪。
   B2.endTrick = S => { S.turn = S.lead.by; S.lead = null; S.passes = 0; S.passed = S.hands.map(() => false); S.selfTop = false; };
   B2.advance = (S, from) => {
     const n = S.hands.length;
@@ -7927,7 +8076,26 @@ window.__popup = popup;
     S.turn = S.lead.by; S.selfTop = true;
   };
 
+  // v5.22：整手正好是一組現在就能出的合法牌（單張／對子／五張或炸彈）→ 自動出完
+  B2.autoFinish = (S, p) => {
+    if (!S || S.winner != null) return null;
+    if (p !== S.turn) return null;
+    if (S.passed && S.passed[p] && !(S.selfTop && S.lead && S.lead.by === p)) return null;
+    const hand = S.hands[p];
+    if (!hand || !hand.length) return null;
+    if (hand.length !== 1 && hand.length !== 2 && hand.length !== 5) return null;
+    const c = B2.classify(hand);
+    if (!c) return null;
+    const L = B2.legalMoves(S, p);
+    if (!L.moves.some(x => samePlay(x.cards, hand))) return null;
+    if (B2.whyIllegal(S, p, hand)) return null;
+    return hand.slice();
+  };
+
   B2.ai = (S, p) => {
+    const fin = B2.autoFinish(S, p);
+    if (fin) return fin;
+
     const L = B2.legalMoves(S, p);
     const cand = L.moves.slice();
     if (!cand.length) return null;
@@ -7970,14 +8138,24 @@ window.__popup = popup;
     return best.cards;
   };
 
-  // 上打：其他人都鎖定，繼續出牌是「白送」的出牌機會——只丟不拆牌組、不用 2、不用炸彈的牌；否則選自由出牌
+  // 上打：優先把不拆牌、不用 2、不用炸彈的牌繼續上打；否則直接出一個最便宜的自由牌型（自動開新輪），不再回傳 null。
   B2.aiSelfTop = (S, p, cand) => {
     const hand = S.hands[p];
     const breaks = x => x.cards.filter(c => { const same = hand.filter(d => rk(d) === rk(c)).length, u = x.cards.filter(d => rk(d) === rk(c)).length; return same > u && same >= 2; }).length;
-    const ok = cand.filter(x => !x.c.bomb && (hand.length <= 6 || (!x.cards.some(c => rk(c) === 12) && breaks(x) === 0)));
-    if (!ok.length) return null;
-    ok.sort((a, b) => b.cards.length - a.cards.length || Math.max(...a.cards.map(rk)) - Math.max(...b.cards.map(rk)));
-    return ok[0].cards;
+    const cont = cand.filter(x => S.lead && B2.beats(x.c, S.lead.c));
+    const dump = cont.filter(x => !x.c.bomb && (hand.length <= 6 || (!x.cards.some(c => rk(c) === 12) && breaks(x) === 0)));
+    if (dump.length) {
+      dump.sort((a, b) => b.cards.length - a.cards.length || Math.max(...a.cards.map(rk)) - Math.max(...b.cards.map(rk)));
+      return dump[0].cards;
+    }
+    const free = cand.filter(x => !cont.some(m => samePlay(m.cards, x.cards)));
+    const pool = free.length ? free : cand;
+    const cost = x => {
+      const twos = x.cards.filter(c => rk(c) === 12).length;
+      return Math.max(...x.cards.map(rk)) + twos * 6 + breaks(x) * 3 - x.cards.length * 2.2 + (x.c.bomb ? 18 : 0);
+    };
+    pool.sort((a, b) => cost(a) - cost(b));
+    return pool[0].cards;
   };
   CG.B2 = B2;
   root.BD2_VER = BD2_VER;
@@ -7998,7 +8176,7 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
     <li><b>第四條｜♠2 最高權力</b>：♠2 為最大單張，單打時任何單張都壓不過（<b>但鐵支、同花順炸彈可以壓單張 ♠2</b>）。含 ♠2 的<b>同花順</b>不能被其他牌型壓過；<b>只有四隻 2 的鐵支（四張 2 加任一張）可壓所有牌型</b>（含單張 ♠2 與 ♠2 同花順），而且沒有任何牌能壓它。此規定優先於一般大小。</li>
     <li><b>第五條｜四張 2</b>：場上有人剩 1 張時，若你同時持有四張 2，<b>可選擇只打出 ♠2</b>（不強制打對子 2）。此例外優先於第三條。</li>
     <li><b>使用者確認補充｜炸彈</b>：<b>鐵支跟同花順有牌權時都能壓</b>——輪到你時可壓任何一手牌（單張、對子、五張都可，<b>包括單張 ♠2</b>），同花順＞鐵支，同類再比大小；含 ♠2 的同花順只有四隻 2 的鐵支能壓。<b>非炸彈的五張只能壓同牌型：葫蘆不能壓順子。</b><b>只有四隻 2 的鐵支可壓所有牌型</b>，且沒有牌能壓它。</li>
-    <li><b>使用者確認補充｜喊過</b>：<b>同一輪喊過（不出）就不能再出牌</b>，直到這一輪結束；就算手上有炸彈或四張 2 也不行，系統會自動跳過並標示「已過」。<b>如果兩家都過，可上打</b>：最後出牌的人可以<b>繼續上打</b>——直接在自己那手牌上出更大的同牌型（例如自己出一對 10，兩家都過，可以再出更大的對子）或炸彈，可以一直接下去，其他兩家這一輪仍不能出；也可以按 <b>「自由出牌」</b> 結束這一輪，重新出任何牌型。</li>
+    <li><b>使用者確認補充｜喊過</b>：<b>同一輪喊過（不出）就不能再出牌</b>，直到這一輪結束；就算手上有炸彈或四張 2 也不行，系統會自動跳過並標示「已過」。<b>如果兩家都過，可上打</b>：輪到最後出牌的人時<b>直接出牌即可，不必再按「自由出牌」</b>。若出的是比自己上一手<b>更大的同牌型或炸彈</b>，視為<b>繼續上打</b>（例如自己出一對 10，可以再出更大的對子），其他兩家這一輪仍不能出，可以一直接下去；若出的是<b>其他合法牌型</b>，系統會<b>自動結束這一輪並當作新的自由出牌</b>，其他兩家解鎖。</li>
     <li><b>計分（使用者規則）</b>：錢全部給<b>先出完的人</b>。兩位輸家比剩牌：<b>剩比較多的是「大頭」、比較少的是「小頭」</b>；張數一樣時，手上最大一張牌（先比點數、再比花色，♠2 最大）比較大的是大頭。<br>
       底分：<b>大頭 2000、小頭 1000</b>（開桌時可調整）。倍數全部相乘：<b>剩 10 張 ×2、13 張 ×4、15 張 ×8、17 張 ×16</b>（只取達到的最高一級）；<b>手上每張 2 再 ×2</b>；<b>贏家最後一手牌含 2，兩家輸家每張 2 再 ×2</b>。<br>
       <b>每家每局最多輸 25000</b>（封頂，可調整）。例：大頭剩 13 張、手上 1 張 2 → 2000 × 4 × 2 ＝ 16000。</li>
@@ -8073,9 +8251,9 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
         if (S.selfTop && S.lead) {
           const mineTop = S.turn === 0 && typeof CS !== 'undefined' && CS.pending && CS.pending.kind === 'b2';
           if (mineTop) for (let i = 0; i < h.length; i++) if (typeof h[i] === 'string' && h[i].includes('class="g-abs cbar"')) {
-            h[i] = h[i].replace('data-cact="pass">不出</button>', 'data-cact="pass">自由出牌</button>').replace('>出牌</button>', '>繼續上打</button>');
+            h[i] = h[i].replace(/<button class="btn ghost" data-cact="pass">[^<]*<\/button>/, '');
           }
-          h.push(`<div class="g-abs bd2warn${mineTop ? ' on' : ''} bd2top" role="status">${mineTop ? '兩家都過：出更大的牌可<b>繼續上打</b>，或按<b>自由出牌</b>重新出任何牌型' : (typeof cname === 'function' ? cname(S.turn) : '') + ' 兩家都過，可上打'}</div>`);
+          h.push(`<div class="g-abs bd2warn${mineTop ? ' on' : ''} bd2top" role="status">${mineTop ? '兩家都過：直接出牌即可。壓過上一手是<b>繼續上打</b>；出其他合法牌型會<b>自動開新輪</b>' : (typeof cname === 'function' ? cname(S.turn) : '') + ' 兩家都過，可上打'}</div>`);
         }
         if (S.lead && S.passed) {
           const sty2 = { 0: 'left:calc(50% + 210px);top:324px', 1: 'right:76px;top:228px', 2: 'left:calc(50% + 90px);top:42px', 3: 'left:76px;top:228px' };
@@ -9016,6 +9194,356 @@ function lobby520() {
 }
 const _rh520 = renderHome;
 renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby520(); } catch (e) { console.warn('l520', e); } return r; };
+
+// ================= v5.22 精緻化＋大老二手勢／自動出完／上打直接出牌 =================
+(function () {
+  const EASE = 'cubic-bezier(.22,1,.36,1)';
+  const gestOn = () => CFG.b2gest !== false;
+  const autoOn = () => CFG.b2auto !== false;
+  const isB2 = () => typeof CS !== 'undefined' && CS.game === 'b2' && CS.st;
+  const pendingB2 = () => isB2() && CS.pending && CS.pending.kind === 'b2' && !CS.auto && !CS.result;
+
+  function decorate(root, glyph) {
+    if (!root || root.querySelector('.rim522')) return;
+    const d = document.createElement('i'); d.className = 'rim522'; root.appendChild(d);
+    const s = document.createElement('i'); s.className = 'spot522'; root.appendChild(s);
+    const l = document.createElement('b'); l.className = 'logo522'; l.textContent = glyph || '雀'; root.appendChild(l);
+  }
+  function fanArc() {
+    const fans = document.querySelectorAll('#cgame[data-game=b2] .bfan');
+    fans.forEach(f => {
+      const pcs = [...f.querySelectorAll('.pc')], n = pcs.length, top = f.classList.contains('f2');
+      pcs.forEach((el, i) => {
+        const t = n <= 1 ? 0 : (i - (n - 1) / 2);
+        el.style.transform = top
+          ? `rotate(${(t * 4.2).toFixed(1)}deg) translateY(${(Math.abs(t) * 1.1).toFixed(1)}px)`
+          : `rotate(${(t * 3.2).toFixed(1)}deg)`;
+        el.style.zIndex = String(10 + i);
+      });
+    });
+  }
+  function ver522() {
+    document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => { if (e && !/v5\.22/.test(e.textContent)) e.textContent = 'v5.22'; });
+  }
+  if (typeof renderHome === 'function') {
+    const _rh = renderHome;
+    renderHome = function () {
+      const r = _rh.apply(this, arguments);
+      try { ver522(); } catch (e) {}
+      return r;
+    };
+  }
+
+  // ---- render hooks ----
+  if (typeof renderGame === 'function') {
+    const _rg = renderGame;
+    renderGame = function () {
+      const r = _rg.apply(this, arguments);
+      try {
+        decorate(document.querySelector('#game .felt') || document.querySelector('#game .tilt3d'), '雀');
+        ver522();
+      } catch (e) {}
+      return r;
+    };
+  }
+  if (typeof renderC === 'function') {
+    const _rc = renderC;
+    renderC = function () {
+      const r = _rc.apply(this, arguments);
+      try {
+        const cg = document.querySelector('#cgame');
+        if (cg && CS.game === 'b2') {
+          decorate(cg.querySelector('.ctable'), '貳');
+          fanArc();
+          comboChip();
+          if (CS._deal522) { cg.classList.add('deal522'); [...cg.querySelectorAll('.chand .pc')].forEach((el, i) => el.style.setProperty('--i522', i)); CS._deal522 = false; }
+          maybeHint();
+        }
+        ver522();
+      } catch (e) {}
+      return r;
+    };
+  }
+  if (typeof startCRound === 'function') {
+    const _scr = startCRound;
+    startCRound = function () { CS._deal522 = true; return _scr.apply(this, arguments); };
+  }
+
+  // ---- settlement count-up ----
+  function countUp(el, ms) {
+    if (!el || !ANIM() || el.closest && el.closest('.hu515')) return;
+    if (el._final522) { el.textContent = el._final522; return; }
+    const orig = el.textContent || '';
+    const m = orig.match(/([+＋\-−]?)\s*([\d,]+)/);
+    if (!m) return;
+    const target = parseInt(m[2].replace(/,/g, ''), 10);
+    if (!isFinite(target) || Math.abs(target) < 2) return;
+    const sign = (m[1] === '-' || m[1] === '−') ? '−' : (m[1] === '+' || m[1] === '＋' || orig.includes('+') ? '+' : '');
+    const suffix = orig.slice(orig.indexOf(m[0]) + m[0].length);
+    const prefix = orig.slice(0, orig.indexOf(m[0]));
+    const abs = Math.abs(target), t0 = performance.now();
+    const fmtN = n => (typeof fmt === 'function' ? fmt(n) : String(n));
+    el._final522 = orig;
+    const tick = t => {
+      const p = Math.min(1, (t - t0) / (ms || 600));
+      const e = 1 - Math.pow(1 - p, 3);
+      const val = Math.round(abs * e);
+      el.textContent = prefix + sign + fmtN(val) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = el._final522;
+    };
+    requestAnimationFrame(tick);
+  }
+  function hookSettle(fn, sel) {
+    if (typeof fn !== 'function') return fn;
+    return function () {
+      const r = fn.apply(this, arguments);
+      try {
+        setTimeout(() => {
+          const pn = document.querySelector('#modal.on .panel');
+          if (!pn) return;
+          pn.querySelectorAll(sel || '.total .num, .total .big, .b2calc b, .scores .num, .sszp .num').forEach(e => countUp(e, 700));
+        }, 80);
+      } catch (e) {}
+      return r;
+    };
+  }
+  if (typeof showResult === 'function') showResult = hookSettle(showResult);
+  if (typeof showCResult === 'function') showCResult = hookSettle(showCResult, '.num, .b2calc b, .total .num');
+  if (typeof showCFinal === 'function') showCFinal = hookSettle(showCFinal);
+  if (typeof showFinal === 'function') showFinal = hookSettle(showFinal);
+
+  // ---- auto-finish (human) ----
+  if (typeof askHuman === 'function') {
+    const _ask = askHuman;
+    askHuman = async function (kind, data) {
+      if (kind === 'b2' && autoOn() && typeof CG !== 'undefined' && CG.B2 && CS.st) {
+        const cards = CG.B2.autoFinish(CS.st, 0);
+        if (cards && cards.length) {
+          CS.sel = new Set(cards);
+          if (typeof renderC === 'function') renderC();
+          requestAnimationFrame(() => document.querySelectorAll('#chand .pc').forEach(el => el.classList.add('autofin522')));
+          if (typeof toast === 'function') toast('自動出完');
+          if (typeof cWait === 'function') await cWait(600);
+          else await new Promise(r => setTimeout(r, 600));
+          return cards;
+        }
+      }
+      return _ask.call(this, kind, data);
+    };
+  }
+
+  // ---- smart select + combo chip ----
+  let anchor = null, altI = 0, alts = [];
+  function legalOf(card) {
+    const S = CS.st, L = CG.B2.legalMoves(S, 0);
+    const ms = L.moves.filter(x => x.cards.includes(card));
+    const leadN = S.lead && S.lead.c && !S.selfTop ? S.lead.c.n : 0;
+    ms.sort((a, b) => {
+      const pa = (leadN && a.cards.length === leadN && !a.c.bomb) ? 0 : a.c.bomb ? 2 : 1;
+      const pb = (leadN && b.cards.length === leadN && !b.c.bomb) ? 0 : b.c.bomb ? 2 : 1;
+      if (pa !== pb) return pa - pb;
+      return (a.c.key - b.c.key) || a.cards.length - b.cards.length;
+    });
+    return ms;
+  }
+  function applySel(cards) {
+    CS.sel = new Set(cards);
+    if (typeof renderC === 'function') renderC();
+    if (typeof beep === 'function') beep('tap');
+  }
+  function comboChip() {
+    document.querySelectorAll('.combo522').forEach(e => e.remove());
+    if (!pendingB2() || !CS.sel.size) return;
+    const cs = [...CS.sel], c = CG.B2.classify(cs);
+    if (!c) return;
+    const d = document.createElement('div'); d.className = 'combo522'; d.textContent = c.name;
+    document.querySelector('#ctbl').appendChild(d);
+  }
+  function smartTap(card) {
+    if (!pendingB2()) return;
+    if (anchor === card && alts.length) {
+      altI = (altI + 1) % alts.length;
+      applySel(alts[altI].cards);
+      return;
+    }
+    if (CS.sel.has(card) && anchor !== card) { applySel([]); anchor = null; alts = []; return; }
+    alts = legalOf(card);
+    if (!alts.length) {
+      CS.sel.has(card) ? CS.sel.delete(card) : CS.sel.add(card);
+      anchor = CS.sel.has(card) ? card : null;
+      if (typeof renderC === 'function') renderC();
+      if (typeof beep === 'function') beep('tap');
+      return;
+    }
+    anchor = card; altI = 0;
+    applySel(alts[0].cards);
+  }
+  function clearSel() { CS.sel = new Set(); anchor = null; alts = []; if (typeof renderC === 'function') renderC(); }
+
+  // ---- play / pass with validation ----
+  function tryPlay() {
+    if (!pendingB2()) return false;
+    const cards = [...CS.sel];
+    const err = CG.B2.whyIllegal(CS.st, 0, cards);
+    if (err) {
+      document.querySelectorAll('#chand .pc.sel').forEach(e => { e.classList.remove('shake522'); void e.offsetWidth; e.classList.add('shake522'); });
+      if (typeof toast === 'function') toast(err);
+      if (typeof beep === 'function') beep('tap');
+      return false;
+    }
+    if (typeof cPlay === 'function') cPlay();
+    else if (typeof resolveC === 'function') resolveC(cards);
+    return true;
+  }
+  function tryPass() {
+    if (!pendingB2()) return false;
+    const S = CS.st;
+    if (S.selfTop && S.lead && S.lead.by === 0) {
+      if (typeof toast === 'function') toast('直接出牌即可：壓過上一手是繼續上打，其他牌型會自動開新輪');
+      return false;
+    }
+    const err = CG.B2.whyIllegal(S, 0, null);
+    if (err) { if (typeof toast === 'function') toast(err); return false; }
+    if (typeof resolveC === 'function') resolveC(null);
+    return true;
+  }
+
+  // ---- pointer gestures (thresholds so mobile scroll is not stolen) ----
+  let ptr = null, longT = null, didGest = false, lastTap = 0;
+  function onDown(e) {
+    if (!gestOn() || !pendingB2()) return;
+    const card = e.target.closest && e.target.closest('#chand [data-c]');
+    const hand = e.target.closest && e.target.closest('#chand');
+    const onUI = e.target.closest && e.target.closest('button, .cbar, .seatchip, .cinfo, a, input');
+    if (onUI) return;
+    const x = e.clientX, y = e.clientY;
+    ptr = { x, y, t: performance.now(), card, hand, moved: false, gest: null, id: e.pointerId };
+    didGest = false;
+    if (card && CS.sel.has(+card.dataset.c)) {
+      longT = setTimeout(() => { if (ptr && !ptr.moved) { clearSel(); ptr = null; didGest = true; } }, 480);
+    }
+  }
+  function onMove(e) {
+    if (!ptr) return;
+    const dx = e.clientX - ptr.x, dy = e.clientY - ptr.y, dist = Math.hypot(dx, dy);
+    if (dist > 10) { ptr.moved = true; if (longT) { clearTimeout(longT); longT = null; } }
+    if (dist < 16) return;
+    const vert = Math.abs(dy) > Math.abs(dx) * 1.25;
+    if (vert && Math.abs(dy) > 28) {
+      ptr.gest = dy < 0 ? 'up' : 'down';
+      if (e.cancelable) e.preventDefault();
+      didGest = true;
+      ghost(e, dy);
+    } else if (!vert && ptr.card && CS.sel.size && dy < -20) {
+      ptr.gest = 'drag';
+      if (e.cancelable) e.preventDefault();
+      didGest = true;
+      ghost(e, dy);
+    }
+  }
+  function onUp(e) {
+    if (longT) { clearTimeout(longT); longT = null; }
+    ghost(null);
+    if (!ptr) return;
+    const dx = e.clientX - ptr.x, dy = e.clientY - ptr.y;
+    const vert = Math.abs(dy) > Math.abs(dx) * 1.2;
+    if (ptr.gest === 'up' || (vert && dy < -48 && CS.sel.size)) { didGest = true; tryPlay(); }
+    else if (ptr.gest === 'down' || (vert && dy > 48 && ptr.hand)) { didGest = true; tryPass(); }
+    else if (ptr.gest === 'drag' && CS.sel.size) {
+      const hand = document.querySelector('#chand');
+      const hr = hand ? hand.getBoundingClientRect() : { top: 1e9 };
+      if (e.clientY < hr.top - 8) { didGest = true; tryPlay(); }
+    } else if (!ptr.moved && ptr.card && gestOn()) {
+      didGest = true;
+      smartTap(+ptr.card.dataset.c);
+    } else if (!ptr.moved && !ptr.card) {
+      const now = performance.now();
+      if (now - lastTap < 420) { didGest = true; tryPass(); lastTap = 0; }
+      else lastTap = now;
+    }
+    ptr = null;
+    setTimeout(() => { didGest = false; }, 50);
+  }
+  function ghost(e, dy) {
+    let g = document.querySelector('.ghost522');
+    if (!e) { if (g) g.remove(); return; }
+    if (!CS.sel.size) return;
+    if (!g) {
+      g = document.createElement('div'); g.className = 'ghost522';
+      const w = 48;
+      g.innerHTML = [...CS.sel].slice(0, 5).map((c, i) => (typeof cardHTML === 'function' ? cardHTML(c, w, '', `style="--w:${w}px;display:inline-block;margin-left:${i ? -18 : 0}px"`) : '')).join('');
+      document.body.appendChild(g);
+    }
+    g.style.left = (e.clientX - 30) + 'px';
+    g.style.top = (e.clientY - 40) + 'px';
+  }
+
+  const host = () => document.getElementById('cgame') || document;
+  document.addEventListener('pointerdown', onDown, { capture: true, passive: true });
+  document.addEventListener('pointermove', onMove, { capture: true, passive: false });
+  document.addEventListener('pointerup', onUp, { capture: true });
+  document.addEventListener('pointercancel', () => { if (longT) clearTimeout(longT); ghost(null); ptr = null; });
+
+  // swallow the leftover click after a gesture so the old toggle handler doesn't fire
+  document.addEventListener('click', e => {
+    if (!gestOn() || !isB2()) return;
+    if (didGest && e.target.closest && (e.target.closest('#chand') || e.target.closest('#ctbl') || e.target.closest('.ctable'))) {
+      e.stopImmediatePropagation(); e.preventDefault();
+    }
+  }, true);
+
+  document.addEventListener('keydown', e => {
+    if (!gestOn() || !pendingB2()) return;
+    const t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.key === 'Enter') { e.preventDefault(); tryPlay(); }
+    else if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); tryPass(); }
+  });
+
+  // ---- one-time hint + settings ----
+  function maybeHint() {
+    if (!isB2() || !gestOn()) return;
+    if (typeof LS !== 'undefined' && LS.get('b2gestHint', false)) return;
+    if (document.querySelector('.hint522')) return;
+    const box = document.createElement('div');
+    box.className = 'hint522';
+    box.innerHTML = `<div class="box"><h3>大老二操作</h3><ul>
+      <li>點一張牌，會自動選上含這張、能出的最佳牌組；再點同一張可切換其他組合。</li>
+      <li>把選好的牌<b>上滑</b>或拖到牌桌上就是出牌；不合法會晃一下並說明原因。</li>
+      <li>在手牌區<b>下滑</b>，或連點桌面兩下，就是不出。</li>
+      <li>兩家都過時<b>直接出牌</b>：壓過上一手是繼續上打，其他合法牌型會自動開新輪。</li>
+      <li>鍵盤：Enter 出牌、空白鍵不出。原本的按鈕都還在。</li>
+    </ul><button class="btn primary" type="button">知道了</button></div>`;
+    box.querySelector('button').onclick = () => { if (typeof LS !== 'undefined') LS.set('b2gestHint', true); box.remove(); };
+    (document.querySelector('#cgame') || document.body).appendChild(box);
+  }
+  function injectSettings() {
+    const pn = document.querySelector('#panel'); if (!pn || pn.querySelector('[data-sw="b2gest"]')) return;
+    const td = pn.querySelector('[data-sw="anim"], [data-sw="td3"], [data-sw="real520"], .srow');
+    const host = td && td.closest && td.closest('.srow');
+    const html = `<div class="srow"><div><b>大老二手勢</b><small style="display:block;opacity:.7">上滑出牌・下滑不出・點牌智慧選組</small></div><button class="sw ${gestOn() ? 'on' : ''}" data-sw="b2gest"><i></i></button></div>
+      <div class="srow"><div><b>自動出完</b><small style="display:block;opacity:.7">整手剛好能出時自動打出</small></div><button class="sw ${autoOn() ? 'on' : ''}" data-sw="b2auto"><i></i></button></div>`;
+    if (host) host.insertAdjacentHTML('afterend', html);
+    else pn.insertAdjacentHTML('beforeend', html);
+    pn.querySelectorAll('[data-sw="b2gest"],[data-sw="b2auto"]').forEach(b => {
+      b.onclick = () => { const k = b.dataset.sw; CFG[k] = !(k === 'b2gest' ? gestOn() : autoOn()); if (typeof save === 'function') save(); injectSettingsRedo(); };
+    });
+  }
+  function injectSettingsRedo() {
+    const pn = document.querySelector('#panel'); if (!pn) return;
+    pn.querySelectorAll('[data-sw="b2gest"],[data-sw="b2auto"]').forEach(b => b.closest('.srow').remove());
+    injectSettings();
+  }
+  if (typeof gameSettings === 'function') {
+    const _gs = gameSettings;
+    gameSettings = function () { const r = _gs.apply(this, arguments); try { injectSettings(); } catch (e) {} return r; };
+  }
+  // also when settings page renders
+  const mo = new MutationObserver(() => { try { if (document.querySelector('#panel .srow')) injectSettings(); } catch (e) {} });
+  if (document.querySelector('#modal')) mo.observe(document.querySelector('#modal'), { childList: true, subtree: true });
+
+  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn };
+})();
 
 
 document.body.insertAdjacentHTML('afterbegin', TileArt.defs(CFG.tileClassic ? 'classic' : 'photo'));
