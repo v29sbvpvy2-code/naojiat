@@ -1894,6 +1894,17 @@ body.lite .shake510{animation:none}
 .bd2passed{position:absolute;z-index:6;padding:3px 10px;border-radius:10px;font-weight:900;font-size:14px;letter-spacing:2px;color:#e8e2d4;background:rgba(40,36,32,.82);border:1px solid rgba(255,255,255,.28);box-shadow:0 2px 8px rgba(0,0,0,.4);pointer-events:none}
 .bd2passed::before{content:'🔒 ';letter-spacing:0}
 .bd2warn.bd2top{top:200px;white-space:nowrap}
+/* v5.19 大頭／小頭計分明細 */
+.b2new .sszp{padding-bottom:6px}
+.b2new .tagx.b2big{background:#c8102e;color:#fff}
+.b2new .tagx.b2small{background:#2f6f8f;color:#fff}
+.b2calc{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:4px 0 4px 34px;font-size:12.5px;color:#f3e6c8}
+.b2calc span{padding:1px 7px;border-radius:7px;background:rgba(255,255,255,.08);border:1px solid rgba(243,197,90,.35)}
+.b2calc .b2b{background:rgba(243,197,90,.18)}
+.b2calc i{font-style:normal;opacity:.7}
+.b2calc b{color:#ffd76a;font-size:14px}
+.b2calc .b2cap{font-style:normal;margin-left:4px;padding:1px 7px;border-radius:7px;background:#7a1a12;color:#fff;border:1px solid #f3c55a}
+.b2note{margin-top:6px;font-size:12px;opacity:.75;text-align:center}
 /* WSD look-alike card atlases (original artwork, no trademarks). */
 .pc.wsd{
   background-color:#fcfaf0;
@@ -4402,17 +4413,17 @@ PAGES.gamehub = { title: '遊戲', sub: '', render(el, g) {
   el.querySelector('#hr').onclick = () => createRoomModal(g);
 } };
 PAGES.cquick = { title: '快速開始', sub: '選擇設定，系統自動配對', render(el, g) {
-  const G0 = GAMES[g]; const Q = QS.c[g] = Object.assign({ rounds: G0.rounds[0][0], base: G0.bases[0] }, QS.c[g] || {});
+  const G0 = GAMES[g]; const Q = QS.c[g] = Object.assign({ rounds: G0.rounds[0][0], base: G0.bases[0] }, g === 'b2' ? { b2big: 2000, b2small: 1000, b2cap: 25000 } : {}, QS.c[g] || {});
   $('#page h1').textContent = G0.name + '・快速開始';
   const ch = (key, opts) => `<div class="chips">${opts.map(([v, l]) => `<button class="chip ${Q[key] === v ? 'on' : ''}" data-k="${key}" data-v="${v}">${l}</button>`).join('')}</div>`;
   el.innerHTML = `<div class="qsw"><div class="glass qs2">
       <div class="opt"><div class="lb">局數</div>${ch('rounds', G0.rounds)}</div>
-      <div class="opt"><div class="lb">底分</div>${ch('base', G0.bases.map(b => [b, `每${G0.unit} ${b}`]))}</div>
+      ${g === 'b2' ? `<div class="opt"><div class="lb">大頭底</div>${ch('b2big', [[1000, '1000'], [2000, '2000'], [3000, '3000'], [5000, '5000']])}</div><div class="opt"><div class="lb">小頭底</div>${ch('b2small', [[500, '500'], [1000, '1000'], [1500, '1500'], [2500, '2500']])}</div><div class="opt"><div class="lb">每家封頂</div>${ch('b2cap', [[10000, '10000'], [25000, '25000'], [50000, '50000']])}</div>` : `<div class="opt"><div class="lb">底分</div>${ch('base', G0.bases.map(b => [b, `每${G0.unit} ${b}`]))}</div>`}
       <div class="opt"><div class="lb">人數</div><div class="chips"><span class="chip on">${G0.n} 人（你＋${G0.n - 1} 位牌友）</span></div></div>
-      <div class="ds">${g === 'ssz' ? '頭 3／中 5／尾 5・打槍 ×2・全壘打再 ×2・報到特殊牌型' : g === 'b2' ? '梅花 3 先出・剩牌 8 張以上加倍・每張 2 再 ×2' : g === 'ddz' ? '叫分 1–3・炸彈／王炸 ×2・春天 ×2' : '翻棋定色・兵卒吃帥將・炮隔子打'}・入場需 ${fmt(Q.base * 20)} 金幣</div></div>
+      <div class="ds">${g === 'ssz' ? '頭 3／中 5／尾 5・打槍 ×2・全壘打再 ×2・報到特殊牌型' : g === 'b2' ? '梅花 3 先出・錢全歸先出完者・大頭／小頭・剩 10/13/15/17 張加倍・每張 2 ×2' : g === 'ddz' ? '叫分 1–3・炸彈／王炸 ×2・春天 ×2' : '翻棋定色・兵卒吃帥將・炮隔子打'}・入場需 ${fmt(g === 'b2' ? (Q.b2cap || 25000) : Q.base * 20)} 金幣</div></div>
     <div class="qsfoot"><button class="btn ghost" data-open="crules" data-arg="${g}">規則</button><button class="btn ghost" data-go="back">返回</button><button class="btn primary" id="qGo">開始配桌</button></div></div>`;
   el.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { Q[b.dataset.k] = +b.dataset.v; save(); beep('tap'); rerender(); });
-  el.querySelector('#qGo').onclick = () => { if (lowCoins(Q.base * 4)) return; matching({ game: g, n: G0.n, rounds: Q.rounds, base: Q.base, mode: '快速開始' }, pickBots(G0.n - 1)); };
+  el.querySelector('#qGo').onclick = () => { if (lowCoins(g === 'b2' ? (Q.b2cap || 25000) / 5 : Q.base * 4)) return; matching(Object.assign({ game: g, n: G0.n, rounds: Q.rounds, base: Q.base, mode: '快速開始' }, g === 'b2' ? { b2big: Q.b2big || 2000, b2small: Q.b2small || 1000, b2cap: Q.b2cap || 25000 } : {}), pickBots(G0.n - 1)); };
 } };
 
 // ---------- 每日簽到 ----------
@@ -4677,6 +4688,7 @@ PAGES.quick = { title: '快速開始', sub: '選擇牌局設定，系統自動�
 } };
 const CAPS = [[0, '無上限'], [4, '4 台滿'], [8, '8 台滿']];
 function cfgDesc(c) {
+  if (c.game === 'b2' && c.b2big) return `${GAMES.b2.name}・3 人・${c.rounds} 局・大頭 ${c.b2big}／小頭 ${c.b2small}・封頂 ${c.b2cap}`;
   if (c.game && c.game !== 'mj') return `${GAMES[c.game].name}・${GAMES[c.game].n} 人・${c.rounds} 局・底 ${c.base}`;
   return `${c.n} 人・${quanName(c.hands)}・底 ${c.base}／${c.perTai}・${c.hz ? '紅中麻將' : MJ.PRESETS[c.preset || 'std'].name}${c.cap ? '・' + c.cap + '台滿' : ''}`;
 }
@@ -4725,7 +4737,9 @@ function roomSettingsForm(R) {
   const ch = (k, opts) => `<div class="chips">${opts.map(([v, l]) => `<button class="chip ${R[k] === v ? 'on' : ''}" data-rk="${k}" data-v="${v}">${l}</button>`).join('')}</div>`;
   const gps = R.gps != null ? `<div class="opt"><div class="lb">防作弊</div><div class="chips"><button class="chip ${R.gps ? 'on' : ''}" data-rgps>📍 定位檢查（模擬）</button></div></div>` : '';
   if (R.game && R.game !== 'mj') { const G0 = GAMES[R.game];
-    return `<div class="opt"><div class="lb">局數</div>${ch('rounds', G0.rounds.map(([v, l], i) => [v, `${l}（${i + 1} 張房卡）`]))}</div><div class="opt"><div class="lb">底分</div>${ch('base', G0.bases.map(b => [b, `每${G0.unit} ${b}`]))}</div>${gps}`; }
+    if (R.game === 'b2') { if (R.b2big == null) R.b2big = 2000; if (R.b2small == null) R.b2small = 1000; if (R.b2cap == null) R.b2cap = 25000; }
+    const b2o = R.game === 'b2' ? `<div class="opt"><div class="lb">大頭底</div>${ch('b2big', [[1000, '1000'], [2000, '2000'], [3000, '3000'], [5000, '5000']])}</div><div class="opt"><div class="lb">小頭底</div>${ch('b2small', [[500, '500'], [1000, '1000'], [1500, '1500'], [2500, '2500']])}</div><div class="opt"><div class="lb">每家封頂</div>${ch('b2cap', [[10000, '10000'], [25000, '25000'], [50000, '50000']])}</div>` : `<div class="opt"><div class="lb">底分</div>${ch('base', G0.bases.map(b => [b, `每${G0.unit} ${b}`]))}</div>`;
+    return `<div class="opt"><div class="lb">局數</div>${ch('rounds', G0.rounds.map(([v, l], i) => [v, `${l}（${i + 1} 張房卡）`]))}</div>${b2o}${gps}`; }
   return (R.hz ? `<div class="opt"><div class="lb">玩法</div><div class="chips"><button class="chip on">🀄 紅中麻將（四人・紅中癩子）</button></div></div>` : '') + `<div class="opt" ${R.hz ? 'style="display:none"' : ''}><div class="lb">人數</div>${ch('n', [[4, '四人'], [2, '兩人']])}<div class="chips"><button class="chip ${R.lf ? 'on' : ''}" data-rlf>🐉 龍鳳對決（2v2）</button></div></div><div class="opt"><div class="lb">場次</div>${ch('hands', QUANS.map(([v, l]) => [v, `${l}（${Math.max(1, v / 4)} 張）`]))}</div>
     <div class="opt" ${R.hz ? 'style="display:none"' : ''}><div class="lb">規則預設</div>${ch('preset', Object.entries(MJ.PRESETS).map(([k, v]) => [k, v.name]))}</div><div class="opt" ${R.hz ? 'style="display:none"' : ''}><div class="lb">台數上限</div>${ch('cap', CAPS)}</div>
     <div class="opt"><div class="lb">底分</div>${ch('base', [[100, '100'], [300, '300'], [500, '500']])}</div><div class="opt"><div class="lb">每台</div>${ch('perTai', [[20, '20'], [50, '50'], [100, '100']])}</div>
@@ -4825,7 +4839,7 @@ PAGES.room = { title: '房間', sub: '等待玩家加入', render(el) {
   el.querySelector('#lv').onclick = () => confirmBox('離開房間', isHost && R.paid && !R.started ? `尚未開打，解散房間會退回 ${R.paid} 張房卡。` : '確定要離開房間嗎？', '離開', () => { if (isHost && R.paid && !R.started) { WAL.cards += R.paid; save(); refreshWallet(); toast(`已退回 ${R.paid} 張房卡`); } ROOM = null; pageStack.pop(); if (!pageStack.length) { renderHome(); show('home'); } else rerender(); });
   el.querySelector('#st').onclick = () => {
     if (lowCoins(R.game === 'mj' ? R.base : R.base * 4)) return;
-    const startNow = () => { const cfg = { game: R.game, n: R.n, hands: R.hands, rounds: R.rounds, base: R.base, perTai: R.perTai, preset: R.preset, cap: R.cap, rules: R.rules, lf: R.lf && R.n === 4, hz: !!R.hz, mode: R.lf ? '好友房・龍鳳對決' : R.hz ? '好友房・紅中麻將' : '好友房', room: R.code, players: R.seats.slice() };
+    const startNow = () => { const cfg = { game: R.game, n: R.n, hands: R.hands, rounds: R.rounds, base: R.base, perTai: R.perTai, preset: R.preset, cap: R.cap, rules: R.rules, lf: R.lf && R.n === 4, hz: !!R.hz, b2big: R.b2big, b2small: R.b2small, b2cap: R.b2cap, mode: R.lf ? '好友房・龍鳳對決' : R.hz ? '好友房・紅中麻將' : '好友房', room: R.code, players: R.seats.slice() };
       const myIdx = cfg.players.findIndex(p => p.me); cfg.players = cfg.players.slice(myIdx).concat(cfg.players.slice(0, myIdx));
       R.started = true; notify('start', '牌局開始！'); startAny(cfg); };
     if (!R.seats.every(Boolean)) {
@@ -5648,7 +5662,7 @@ function sszDetail(plays, r) {
 
 // ---------- 大老二 ----------
 async function runB2(tk) {
-  const B2 = CG.B2, S = B2.newRound(CS.rng); CS.st = S; CS.acts = {}; crecStart();
+  const B2 = CG.B2, S = B2.newRound(CS.rng); if (B2.scoreCfg) S.scoreCfg = B2.scoreCfg(CS.cfg); CS.st = S; CS.acts = {}; crecStart();
   beep('riffle'); renderC();
   CS.msg = `${cname(S.turn)}有梅花 3，先出牌`; renderC(); await cWait(800); chk(tk);
   while (S.winner == null) {
@@ -5667,7 +5681,7 @@ async function runB2(tk) {
     renderC();
   }
   const w = S.winner, r = S.result;
-  const detail = `<div class="b2res">${S.hands.map((h, p) => `<div class="sszp ${p === 0 ? 'me' : ''}"><div class="who">${avatar(CS.players[p].av, 26)}<b>${esc(cname(p))}</b>${p === w ? '<span class="tagx hu">出完</span>' : `<small>剩 ${h.length} 張${r.detail[p].twos ? `・含 2 ×${r.detail[p].twos}` : ''}・×${r.detail[p].mul}</small>`}<span class="num ${r.pts[p] > 0 ? 'pos' : 'neg'}">${r.pts[p] > 0 ? '+' : ''}${r.pts[p]}</span></div><div class="sszr">${h.map(c => cardHTML(c, 24)).join('')}</div></div>`).join('')}</div>`;
+  const detail = (typeof b2DetailHTML === 'function' && r.abs) ? b2DetailHTML(S, r, w) : `<div class="b2res">${S.hands.map((h, p) => `<div class="sszp ${p === 0 ? 'me' : ''}"><div class="who">${avatar(CS.players[p].av, 26)}<b>${esc(cname(p))}</b>${p === w ? '<span class="tagx hu">出完</span>' : `<small>剩 ${h.length} 張・×${r.detail[p].mul}</small>`}<span class="num ${r.pts[p] > 0 ? 'pos' : 'neg'}">${r.pts[p] > 0 ? '+' : ''}${r.pts[p]}</span></div><div class="sszr">${h.map(c => cardHTML(c, 24)).join('')}</div></div>`).join('')}</div>`;
   await cWait(900); chk(tk);
   cRoundOver(r.pts, detail, `${cname(w)} 先出完`, r.pts[w]);
 }
@@ -5738,7 +5752,7 @@ async function runAQ(tk) {
 // ---------- 結算 ----------
 function cRoundOver(pts, detail, text, mag) {
   if (CS.rec) crecEnd(text);
-  const base = CS.base, delta = pts[0] * base;
+  const base = (CS.game === 'b2' && CS.st && CS.st.result && CS.st.result.abs) ? 1 : CS.base, delta = pts[0] * base; // v5.19 大老二新計分直接是金幣
   pts.forEach((v, i) => CS.scores[i] += v * base);
   WAL.coins += delta;
   const g = CS.game; CST[g] = CST[g] || { rounds: 0, wins: 0, matches: 0, firsts: 0, net: 0 };
@@ -5768,7 +5782,7 @@ function cRoundFx(pts) { try { const v = pts && pts[0]; if (v > 0) { beep('win')
 function showCResult() {
   const r = CS.result; if (!r) return;
   const win = r.pts[0] > 0, ttl = r.pts[0] > 0 ? '你贏了！' : r.pts[0] < 0 ? '這局輸了' : '平手';
-  modal(`<h2 class="grad">${ttl}</h2><div class="sub">${GAMES[CS.game].name}・第 ${CS.roundNo} / ${CS.rounds} 局・${esc(r.text)}・每${GAMES[CS.game].unit} ${CS.base} 金幣</div>
+  modal(`<h2 class="grad">${ttl}</h2><div class="sub">${GAMES[CS.game].name}・第 ${CS.roundNo} / ${CS.rounds} 局・${esc(r.text)}・${CS.game === 'b2' && CS.st && CS.st.result && CS.st.result.abs ? `大頭 ${fmt(CS.st.result.cfg.big)}／小頭 ${fmt(CS.st.result.cfg.small)}・封頂 ${fmt(CS.st.result.cfg.cap)}` : `每${GAMES[CS.game].unit} ${CS.base} 金幣`}</div>
     ${r.detail}
     <div class="sub" style="margin-top:8px">本局金幣 <b class="num ${r.delta > 0 ? 'pos' : r.delta < 0 ? 'neg' : ''}">${r.delta > 0 ? '+' : ''}${fmt(r.delta)}</b>・累計 ${CS.players.map((P, i) => `${esc(cname(i))} <b class="num">${fmt(CS.scores[i])}</b>`).join('・')}</div>
     <div class="foot"><button class="btn ghost" id="mView">看牌桌</button><button class="btn primary" id="mNext">${CS.over ? '最終結算' : '下一局'}</button></div>`, pn => {
@@ -7138,7 +7152,7 @@ window.__popup = popup;
     '跟牌須同牌型、同張數且更大。鐵支與同花順是炸彈：有牌權（輪到你）時可壓任何牌，包括單張與對子（同花順＞鐵支，同類再比大小）；但壓不過單張 ♠2 與含 ♠2 的同花順。只有四隻 2 的鐵支可壓所有牌型（含單張 ♠2），且沒有牌能壓它。',
     '同點對子比最大花色；葫蘆比三條點數；鐵支比四條點數；同花順先比順子大小再比花色；順子同大比最大牌花色。',
     '不採用同花牌型；不可出三條。同一輪喊過（不出）就不能再出牌，直到這一輪結束（就算有炸彈或四張 2 也一樣，系統自動跳過）。兩家都過時，最後出牌者可「繼續上打」（出比自己上一手大的同牌型或炸彈，可一直接下去，其他兩家仍不能出），或選「自由出牌」結束這一輪、重新出任何牌型。',
-    '計分（規章未載明，沿用本站既有台灣常見算法）：先出完者勝，其餘依剩牌張數付分：1–7 張 ×1、8–9 張 ×2、10–12 張 ×3、13 張以上 ×4；手上每張 2 再 ×2。'
+    '計分（使用者規則）：錢全歸先出完的人。兩家輸家比剩牌張數，多的為「大頭」、少的為「小頭」；張數相同時，手上最大一張牌（先比點數再比花色，♠2 最大）較大者為大頭。大頭底 2000、小頭底 1000（可在開桌選項調整）。倍數相乘：剩 10 張 ×2、13 張 ×4、15 張 ×8、17 張 ×16；手上每張 2 再 ×2；贏家最後一手含 2，兩家輸家每張再 ×2。每家每局最多輸 25000。'
   ];
 
   B2.classify = (cards) => {
@@ -7312,16 +7326,39 @@ window.__popup = popup;
     return '這手牌依三家大老二規章不能出';
   };
 
-  B2.multiplier = (left, twos) => (left >= 13 ? 4 : left >= 10 ? 3 : left >= 8 ? 2 : 1) * Math.pow(2, twos);
-  B2.settle = (hands, winner) => {
+  // ---------- v5.19 新計分：大頭／小頭 ----------
+  B2.SCORE_DEFAULT = { big: 2000, small: 1000, cap: 25000 };
+  B2.scoreCfg = cfg => ({ big: (cfg && cfg.b2big) || 2000, small: (cfg && cfg.b2small) || 1000, cap: (cfg && cfg.b2cap) || 25000 });
+  B2.leftMul = left => left >= 17 ? 16 : left >= 15 ? 8 : left >= 13 ? 4 : left >= 10 ? 2 : 1;
+  // 回傳 [大頭 index, 小頭 index]
+  B2.bigSmall = (hands, winner) => {
+    const L = hands.map((h, i) => i).filter(i => i !== winner);
+    if (L.length < 2) return [L[0], null];
+    const [a, b] = L, ha = hands[a], hb = hands[b];
+    if (ha.length !== hb.length) return ha.length > hb.length ? [a, b] : [b, a];
+    const ma = ha.length ? Math.max(...ha) : -1, mb = hb.length ? Math.max(...hb) : -1; // 牌 id：點數×4＋花色，♠2=51 最大
+    return ma > mb ? [a, b] : [b, a];
+  };
+  B2.settle = (hands, winner, opt = {}) => {
+    const C0 = Object.assign({}, B2.SCORE_DEFAULT, opt.cfg || {});
+    const last = opt.lastPlay || [], last2 = last.filter(c => rk(c) === 12).length;
+    const [bigI, smallI] = B2.bigSmall(hands, winner);
     const pts = Array(hands.length).fill(0), detail = [];
     hands.forEach((h, i) => {
       if (i === winner) { detail.push(null); return; }
-      const twos = h.filter(c => rk(c) === 12).length, mul = B2.multiplier(h.length, twos), v = h.length * mul;
-      pts[i] -= v; pts[winner] += v; detail.push({ left: h.length, twos, mul, v });
+      const role = i === bigI ? '大頭' : '小頭', base = role === '大頭' ? C0.big : C0.small;
+      const twos = h.filter(c => rk(c) === 12).length, lm = B2.leftMul(h.length);
+      const mults = [];
+      if (lm > 1) mults.push([`剩 ${h.length} 張`, lm]);
+      if (twos) mults.push([`手上 2 ×${twos} 張`, Math.pow(2, twos)]);
+      if (last2) mults.push([`贏家最後一手含 2 ×${last2}`, Math.pow(2, last2)]);
+      const mul = mults.reduce((a, x) => a * x[1], 1), raw = base * mul, v = Math.min(raw, C0.cap);
+      pts[i] -= v; pts[winner] += v;
+      detail.push({ left: h.length, role, base, twos, last2, mults, mul, raw, capped: raw > C0.cap, cap: C0.cap, v });
     });
-    return { pts, detail };
+    return { pts, detail, abs: true, cfg: C0 };
   };
+  B2.multiplier = (left, twos) => (left >= 13 ? 4 : left >= 10 ? 3 : left >= 8 ? 2 : 1) * Math.pow(2, twos);
 
   B2.newRound = rng => {
     const hands = B2.deal(rng);
@@ -7350,7 +7387,7 @@ window.__popup = popup;
     S.hands[p] = S.hands[p].filter(x => !cards.includes(x));
     S.lead = { c, cards: cards.slice().sort(byId), by: p }; S.passes = 0; S.first = false; S.played[p]++;
     S.log.push({ p, cards: S.lead.cards, c });
-    if (!S.hands[p].length) { S.winner = p; S.result = B2.settle(S.hands, p); return S; }
+    if (!S.hands[p].length) { S.winner = p; S.result = B2.settle(S.hands, p, { lastPlay: cards, cfg: S.scoreCfg }); return S; }
     B2.advance(S, p);
     return S;
   };
@@ -7441,8 +7478,23 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
     <li><b>第五條｜四張 2</b>：場上有人剩 1 張時，若你同時持有四張 2，<b>可選擇只打出 ♠2</b>（不強制打對子 2）。此例外優先於第三條。</li>
     <li><b>使用者確認補充｜炸彈</b>：<b>鐵支跟同花順有牌權時都能壓</b>——輪到你時可壓任何一手牌（單張、對子、五張都可），同花順＞鐵支，同類再比大小；一般炸彈壓不過單張 ♠2 與含 ♠2 的同花順。<b>只有四隻 2 的鐵支可壓所有牌型</b>，且沒有牌能壓它。</li>
     <li><b>使用者確認補充｜喊過</b>：<b>同一輪喊過（不出）就不能再出牌</b>，直到這一輪結束；就算手上有炸彈或四張 2 也不行，系統會自動跳過並標示「已過」。<b>如果兩家都過，可上打</b>：最後出牌的人可以<b>繼續上打</b>——直接在自己那手牌上出更大的同牌型（例如自己出一對 10，兩家都過，可以再出更大的對子）或炸彈，可以一直接下去，其他兩家這一輪仍不能出；也可以按 <b>「自由出牌」</b> 結束這一輪，重新出任何牌型。</li>
-    <li><b>補充（規章未載明，本遊戲採用）</b>：${B2.NOTES.map(x => x).join(' ')}</li>`;
+    <li><b>計分（使用者規則）</b>：錢全部給<b>先出完的人</b>。兩位輸家比剩牌：<b>剩比較多的是「大頭」、比較少的是「小頭」</b>；張數一樣時，手上最大一張牌（先比點數、再比花色，♠2 最大）比較大的是大頭。<br>
+      底分：<b>大頭 2000、小頭 1000</b>（開桌時可調整）。倍數全部相乘：<b>剩 10 張 ×2、13 張 ×4、15 張 ×8、17 張 ×16</b>（只取達到的最高一級）；<b>手上每張 2 再 ×2</b>；<b>贏家最後一手牌含 2，兩家輸家每張 2 再 ×2</b>。<br>
+      <b>每家每局最多輸 25000</b>（封頂，可調整）。例：大頭剩 13 張、手上 1 張 2 → 2000 × 4 × 2 ＝ 16000。</li>
+    <li><b>補充（規章未載明，本遊戲採用）</b>：${B2.NOTES.filter(x => !/^計分/.test(x)).join(' ')}</li>`;
 
+  window.b2DetailHTML = function (S, r, w) {
+    const nm = p => (typeof cname === 'function' ? cname(p) : '玩家' + p);
+    const row = (h, p) => {
+      const d = r.detail[p];
+      if (p === w) return `<div class="sszp ${p === 0 ? 'me' : ''} b2win"><div class="who">${avatar(CS.players[p].av, 26)}<b>${esc(nm(p))}</b><span class="tagx hu">出完・全拿</span><span class="num pos">+${fmt(r.pts[p])}</span></div></div>`;
+      const steps = [`<span class="b2b">底 ${fmt(d.base)}</span>`].concat(d.mults.map(([l, f]) => `<span class="b2m">${l} ×${f}</span>`));
+      return `<div class="sszp ${p === 0 ? 'me' : ''}"><div class="who">${avatar(CS.players[p].av, 26)}<b>${esc(nm(p))}</b><span class="tagx ${d.role === '大頭' ? 'b2big' : 'b2small'}">${d.role}</span><small>剩 ${d.left} 張</small><span class="num neg">−${fmt(d.v)}</span></div>
+        <div class="b2calc">${steps.join('<i>×</i>')}<i>＝</i><b>${fmt(d.raw)}</b>${d.capped ? `<em class="b2cap">封頂 ${fmt(d.cap)}</em>` : ''}</div>
+        <div class="sszr">${h.map(c => cardHTML(c, 24)).join('')}</div></div>`;
+    };
+    return `<div class="b2res b2new">${S.hands.map(row).join('')}<div class="b2note">大頭 ${fmt(r.cfg.big)}／小頭 ${fmt(r.cfg.small)}・每家封頂 ${fmt(r.cfg.cap)}・錢全歸先出完者</div></div>`;
+  };
   function patchLobby() {
     try {
       if (typeof GAMES !== 'undefined' && GAMES.b2) GAMES.b2.tag = '三家規章・梅花 3 先出';
