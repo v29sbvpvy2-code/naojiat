@@ -2484,7 +2484,7 @@ body.noanim #cpops .pop.pop-b2.pop-b2-side-left{transform:translate(-108%,-50%)}
 /* 持久牌型標籤：確保在牌組下方、不疊到牌面上 */
 #cgame[data-game=b2] .pile{align-items:center}
 #cgame[data-game=b2] .pile small{position:relative;z-index:2;margin-top:5px;flex-shrink:0}
-/* ================= v5.25 台灣實體撲克牌面：不透明純白、粗角標、飽滿花色（預設）；萬盛達圖集仍為設定選用 ================= */
+/* ================= v5.25.1 台灣實體撲克牌面：不透明純白、粗角標、飽滿花色（預設）；萬盛達圖集仍為設定選用 ================= */
 @font-face{
   font-family:CardFace;
   font-weight:900;
@@ -7838,7 +7838,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.25</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.25.1</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9808,7 +9808,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   try { window.__p523 = { reserveFoot, ver523, b2PopPos }; } catch (e) {}
 })();
 
-// ================= v5.25 台灣實體撲克牌面（不透明純白、粗角標、飽滿花色）；CFG.b2wsd 可切回萬盛達圖集 =================
+// ================= v5.25.1 台灣實體撲克牌面（不透明純白、粗角標、飽滿花色）；CFG.b2wsd 可切回萬盛達圖集 =================
 (function () {
   const FACE = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
   const rk = c => (typeof CG !== 'undefined' ? CG.rk(c) : (c >> 2));
@@ -9851,14 +9851,24 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   }
 
   // Standard pip layouts. Top-left cleared for the large corner index.
+  // Standard physical-deck pip grid. Two columns sit near the left/right inner
+  // edges of the face (just inside the index margin); rows are evenly spread
+  // over the full pip area (top→bottom, symmetric about the centre). Extra
+  // pips for 7/8/9/10 sit in the middle column at the standard gap positions.
+  // Bottom-half pips are inverted. `mid` marks centre-column extras (drawn smaller).
   function pipLayout(n) {
-    const xL = 200, xC = 285, xR = 370;
-    const yT = 282, yB = 588, yM = 435;
-    const y7 = 348;
-    const y8 = 522;
-    const y9a = 372, y9b = 498;
-    const y10u = 318, y10l = 552;
-    const L = (x, y, inv) => ({ x, y, inv: !!inv });
+    const xL = 186, xC = 285, xR = 384;
+    const yT = 246, yB = 624, yM = 435;
+    // 3-row mid-gaps (7 sits between top & mid; 8 adds the lower gap, inverted)
+    const y7 = (yT + yM) / 2;
+    const y8 = (yM + yB) / 2;
+    // 4-row even (9, 10). Centre extras of 10 sit in the 1–2 and 3–4 gaps.
+    const d4 = (yB - yT) / 3;
+    const y9a = yT + d4;
+    const y9b = yT + 2 * d4;
+    const y10u = yT + d4 / 2;
+    const y10l = yB - d4 / 2;
+    const L = (x, y, inv, mid) => ({ x, y, inv: !!inv, mid: !!mid });
     switch (n) {
       case 1: return [L(xC, yM)];
       case 2: return [L(xC, yT), L(xC, yB, 1)];
@@ -9866,10 +9876,10 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
       case 4: return [L(xL, yT), L(xR, yT), L(xL, yB, 1), L(xR, yB, 1)];
       case 5: return [L(xL, yT), L(xR, yT), L(xC, yM), L(xL, yB, 1), L(xR, yB, 1)];
       case 6: return [L(xL, yT), L(xR, yT), L(xL, yM), L(xR, yM), L(xL, yB, 1), L(xR, yB, 1)];
-      case 7: return [L(xL, yT), L(xR, yT), L(xC, y7), L(xL, yM), L(xR, yM), L(xL, yB, 1), L(xR, yB, 1)];
-      case 8: return [L(xL, yT), L(xR, yT), L(xC, y7), L(xL, yM), L(xR, yM), L(xC, y8, 1), L(xL, yB, 1), L(xR, yB, 1)];
-      case 9: return [L(xL, yT), L(xR, yT), L(xL, y9a), L(xR, y9a), L(xC, yM), L(xL, y9b, 1), L(xR, y9b, 1), L(xL, yB, 1), L(xR, yB, 1)];
-      case 10: return [L(xL, yT), L(xR, yT), L(xC, y10u), L(xL, y9a), L(xR, y9a), L(xL, y9b, 1), L(xR, y9b, 1), L(xC, y10l, 1), L(xL, yB, 1), L(xR, yB, 1)];
+      case 7: return [L(xL, yT), L(xR, yT), L(xC, y7, 0, 1), L(xL, yM), L(xR, yM), L(xL, yB, 1), L(xR, yB, 1)];
+      case 8: return [L(xL, yT), L(xR, yT), L(xC, y7, 0, 1), L(xL, yM), L(xR, yM), L(xC, y8, 1, 1), L(xL, yB, 1), L(xR, yB, 1)];
+      case 9: return [L(xL, yT), L(xR, yT), L(xL, y9a), L(xR, y9a), L(xC, yM, 0, 1), L(xL, y9b, 1), L(xR, y9b, 1), L(xL, yB, 1), L(xR, yB, 1)];
+      case 10: return [L(xL, yT), L(xR, yT), L(xC, y10u, 0, 1), L(xL, y9a), L(xR, y9a), L(xL, y9b, 1), L(xR, y9b, 1), L(xC, y10l, 1, 1), L(xL, yB, 1), L(xR, yB, 1)];
       default: return [];
     }
   }
@@ -9983,8 +9993,17 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     let body = '';
     if (fv === 1) body = aceArt(si, fill, red, si === 3);
     else if (fv >= 2) {
-      const sc = fv >= 9 ? 0.92 : (fv === 8 ? 0.98 : (fv === 7 ? 1.02 : (fv === 2 ? 1.38 : 1.16)));
-      body = pipLayout(fv).map(p => pipAt(si, p.x, p.y, sc, p.inv, fill)).join('');
+      // 7–10: slightly smaller side pips, and still-smaller centre extras, so
+      // every pip sits on the standard grid with a visible gap (none may touch).
+      let side, mid;
+      if (fv === 2) { side = mid = 1.36; }
+      else if (fv === 3) { side = mid = 1.22; }
+      else if (fv <= 6) { side = mid = 1.06; }
+      else if (fv === 7) { side = 0.82; mid = 0.66; }
+      else if (fv === 8) { side = 0.80; mid = 0.64; }
+      else if (fv === 9) { side = 0.76; mid = 0.62; }
+      else { side = 0.72; mid = 0.60; } // 10
+      body = pipLayout(fv).map(p => pipAt(si, p.x, p.y, p.mid ? mid : side, p.inv, fill)).join('');
     } else {
       body = courtArt(rank, si, fill, red);
     }
@@ -10159,7 +10178,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      if (e && !/v5\.25/.test(e.textContent)) e.textContent = 'v5.25';
+      if (e && !/v5\.25\.1/.test(e.textContent)) e.textContent = 'v5.25.1';
     });
   }
   if (typeof renderHome === 'function') {
