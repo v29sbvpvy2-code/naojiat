@@ -2409,6 +2409,100 @@ body:has(#modal.on) .bigfx{opacity:0!important;pointer-events:none!important;tra
 body.noanim .modal.on .panel,body.noanim .chand .pc,body.lite .spot522{animation:none!important}
 
 .panel .b2res .sum,.panel .b2res .foot,.panel .b2new .sum,#modal .panel .sub{color:rgba(255,236,200,.82)!important}
+/* ================= v5.23：結算分數不被按鈕擋住、大老二結算底欄對比、牌型喊牌不蓋牌 ================= */
+/* 結算：內容區可捲、按鈕列佔固定空間，絕不蓋住分數格 */
+#modal .panel.panel523{
+  display:flex!important;flex-direction:column!important;
+  overflow:hidden!important;padding:12px 26px 0!important;
+  max-height:536px;
+}
+#modal .panel.panel523.wide{max-height:536px}
+#modal .panel.panel523 .body523{
+  flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;
+  padding-bottom:4px;-webkit-overflow-scrolling:touch;
+}
+#modal .panel.panel523 .foot{
+  position:relative!important;bottom:auto!important;top:auto!important;
+  flex:0 0 auto;z-index:5;
+  margin:0 -26px 0!important;
+  padding:8px 26px 12px!important;
+  background:#160e08!important;
+  box-shadow:0 -8px 18px rgba(0,0,0,.28);
+  border-top:1px solid rgba(243,197,90,.32);
+}
+#modal .panel.panel523 h2{font-size:26px!important;margin:0 0 2px!important}
+#modal .panel.panel523 h4{margin:5px 0 3px;font-size:13px}
+#modal .panel.panel523 .rcols{gap:10px 16px}
+#modal .panel.panel523 .winrow{margin:4px 0 2px}
+#modal .panel.panel523 .taigrid > div{padding:4px 8px}
+#modal .panel.panel523 .total{margin-top:6px}
+#modal .panel.panel523 .total .big{font-size:32px}
+#modal .panel.panel523 .scores{margin-bottom:4px}
+#modal .panel.panel523 .scores > div{position:relative;z-index:1;padding:5px 8px}
+#modal .panel.panel523 .scores > div b{font-size:17px;margin-top:0}
+#modal .panel.panel523 .sszp{margin:4px 0!important;padding:7px 10px!important}
+#modal .panel.panel523 .b2note{margin-top:6px!important;margin-bottom:2px}
+#modal .panel.panel523 .body523 > .sub:last-child{margin-bottom:4px;padding-bottom:2px}
+
+/* 大老二結算底欄：提高對比，不被按鈕漸層蓋暗 */
+#modal .panel .b2note{
+  opacity:1!important;color:#f8eed6!important;font-size:13px!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.7);margin-top:8px!important;letter-spacing:.04em;
+}
+#modal .panel .body523 > .sub,
+#modal .panel.panel523 > .sub,
+#modal .panel .b2res ~ .sub,
+#modal .panel .b2new ~ .sub{
+  opacity:1!important;color:#f6ebd2!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.65);font-size:14px;
+}
+#modal .panel .body523 > .sub b,
+#modal .panel .b2res ~ .sub b,
+#modal .panel .b2new ~ .sub b{font-weight:800}
+
+/* 大老二牌型喊牌：縮小、錨在出牌區上方／側邊，不覆蓋牌面，較快淡出 */
+#cgame[data-game=b2] #cpops .pop.pop-b2,
+#cpops .pop.pop-b2{
+  font-size:34px!important;letter-spacing:3px;
+  -webkit-text-stroke:2px #1a0c04;
+  transform:translate(-50%,-110%);
+  transform-origin:50% 100%;
+  animation:popin523 .85s cubic-bezier(.22,1,.36,1) forwards!important;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.55));
+  pointer-events:none;z-index:12;white-space:nowrap;
+}
+#cpops .pop.pop-b2.pop-b2-side-right{
+  transform:translate(8%,-50%);transform-origin:0 50%;
+  animation:popin523sr .85s cubic-bezier(.22,1,.36,1) forwards!important;
+}
+#cpops .pop.pop-b2.pop-b2-side-left{
+  transform:translate(-108%,-50%);transform-origin:100% 50%;
+  animation:popin523sl .85s cubic-bezier(.22,1,.36,1) forwards!important;
+}
+@keyframes popin523{
+  0%{transform:translate(-50%,-110%) scale(.45);opacity:0}
+  22%{transform:translate(-50%,-110%) scale(1.08);opacity:1}
+  62%{transform:translate(-50%,-110%) scale(1);opacity:1}
+  100%{transform:translate(-50%,-118%) scale(.96);opacity:0}
+}
+@keyframes popin523sr{
+  0%{transform:translate(8%,-50%) scale(.45);opacity:0}
+  22%{transform:translate(8%,-50%) scale(1.08);opacity:1}
+  62%{transform:translate(8%,-50%) scale(1);opacity:1}
+  100%{transform:translate(12%,-50%) scale(.96);opacity:0}
+}
+@keyframes popin523sl{
+  0%{transform:translate(-108%,-50%) scale(.45);opacity:0}
+  22%{transform:translate(-108%,-50%) scale(1.08);opacity:1}
+  62%{transform:translate(-108%,-50%) scale(1);opacity:1}
+  100%{transform:translate(-116%,-50%) scale(.96);opacity:0}
+}
+body.noanim #cpops .pop.pop-b2{animation:none!important;transform:translate(-50%,-110%);opacity:1}
+body.noanim #cpops .pop.pop-b2.pop-b2-side-right{transform:translate(8%,-50%)}
+body.noanim #cpops .pop.pop-b2.pop-b2-side-left{transform:translate(-108%,-50%)}
+/* 持久牌型標籤：確保在牌組下方、不疊到牌面上 */
+#cgame[data-game=b2] .pile{align-items:center}
+#cgame[data-game=b2] .pile small{position:relative;z-index:2;margin-top:5px;flex-shrink:0}
 
 </style>
 </head>
@@ -7696,7 +7790,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.22</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.23</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9543,6 +9637,127 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   if (document.querySelector('#modal')) mo.observe(document.querySelector('#modal'), { childList: true, subtree: true });
 
   window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn };
+})();
+
+// ================= v5.23：結算按鈕不擋分數、大老二底欄對比、牌型喊牌避開牌面 =================
+(function () {
+  function ver523() {
+    document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
+      if (e && !/v5\.23/.test(e.textContent)) e.textContent = 'v5.23';
+    });
+  }
+  if (typeof renderHome === 'function') {
+    const _rh = renderHome;
+    renderHome = function () {
+      const r = _rh.apply(this, arguments);
+      try { ver523(); } catch (e) {}
+      return r;
+    };
+  }
+  if (typeof renderGame === 'function') {
+    const _rg = renderGame;
+    renderGame = function () {
+      const r = _rg.apply(this, arguments);
+      try { ver523(); } catch (e) {}
+      return r;
+    };
+  }
+  ver523();
+  setTimeout(ver523, 0);
+
+  function reserveFoot(pn) {
+    if (!pn || pn.querySelector('.body523')) return;
+    const foot = pn.querySelector(':scope > .foot');
+    if (!foot) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'body523';
+    const nodes = [...pn.childNodes].filter(n => n !== foot);
+    nodes.forEach(n => wrap.appendChild(n));
+    pn.insertBefore(wrap, foot);
+    pn.classList.add('panel523');
+  }
+  function hookPanel(fn) {
+    if (typeof fn !== 'function') return fn;
+    return function () {
+      const r = fn.apply(this, arguments);
+      try {
+        const apply = () => {
+          const pn = document.querySelector('#modal.on .panel') || document.querySelector('#modal .panel');
+          reserveFoot(pn);
+        };
+        apply();
+        requestAnimationFrame(apply);
+        setTimeout(apply, 50);
+      } catch (e) {}
+      return r;
+    };
+  }
+  if (typeof showResult === 'function') showResult = hookPanel(showResult);
+  if (typeof showCResult === 'function') showCResult = hookPanel(showCResult);
+  if (typeof showFinal === 'function') showFinal = hookPanel(showFinal);
+  if (typeof showCFinal === 'function') showCFinal = hookPanel(showCFinal);
+  try {
+    if (window.__showResult) window.__showResult = showResult;
+    if (window.__showCResult) window.__showCResult = showCResult;
+    if (window.__showFinal) window.__showFinal = showFinal;
+    if (window.__showCFinal) window.__showCFinal = showCFinal;
+  } catch (e) {}
+
+  // 大老二喊牌：錨在出牌區上方（空間不夠則放側邊），絕不蓋住牌面
+  function stageK() {
+    try {
+      if (typeof window.stageK === 'function') return window.stageK();
+      const st = document.getElementById('stage');
+      if (!st) return 1;
+      const t = getComputedStyle(st).transform;
+      const m = t && t.match(/matrix\(([^,]+)/);
+      return m ? parseFloat(m[1]) || 1 : 1;
+    } catch (e) { return 1; }
+  }
+  function stageXY(el) {
+    const st = document.getElementById('stage');
+    if (!el || !st) return null;
+    const k = stageK();
+    const sr = st.getBoundingClientRect(), r = el.getBoundingClientRect();
+    return { x: (r.left - sr.left) / k, y: (r.top - sr.top) / k, w: r.width / k, h: r.height / k, right: (r.right - sr.left) / k };
+  }
+  function b2PopPos(p) {
+    const pos = (typeof cpos === 'function') ? cpos(p) : p;
+    const pile = document.querySelector('#cgame .pile.p' + pos);
+    const cards = pile && pile.querySelector('.cards');
+    const box = stageXY(cards || pile);
+    const ST = (typeof STW === 'number' && STW) || 1169;
+    if (box) {
+      const above = box.y;
+      // 上方至少留 44px 才把喊牌放在牌組之上；否則改放向桌心的側邊
+      if (above >= 44) {
+        return { x: box.x + box.w / 2, y: box.y - 2, side: false };
+      }
+      const towardCenter = pos === 1 ? box.x - 8 : box.x + box.w + 8;
+      return { x: towardCenter, y: box.y + box.h / 2, side: pos === 1 ? 'left' : 'right' };
+    }
+    const fb = { 0: [ST / 2, 180], 1: [ST - 290, 128], 2: [ST / 2, 56], 3: [290, 128] }[pos] || [ST / 2, 180];
+    return { x: fb[0], y: fb[1], side: false };
+  }
+  if (typeof cpop === 'function') {
+    const _cpop = cpop;
+    cpop = function (p, text, kind) {
+      const isB2 = typeof CS !== 'undefined' && CS && CS.game === 'b2';
+      if (!isB2) return _cpop.apply(this, arguments);
+      const d = document.createElement('div');
+      const place = b2PopPos(p);
+      d.className = 'pop k-' + (kind || 'chi') + ' pop-b2' + (place.side ? ' pop-b2-side-' + place.side : '');
+      d.style.left = place.x + 'px';
+      d.style.top = place.y + 'px';
+      d.innerHTML = '<span>' + (typeof esc === 'function' ? esc(text) : String(text)) + '</span>';
+      const host = document.getElementById('cpops') || document.getElementById('cgame');
+      host.appendChild(d);
+      setTimeout(() => { try { d.remove(); } catch (e) {} }, 880);
+    };
+    try { window.__cpop = cpop; } catch (e) {}
+  }
+
+  try { window.__p523 = { reserveFoot, ver523, b2PopPos }; } catch (e) {}
 })();
 
 
