@@ -2484,42 +2484,72 @@ body.noanim #cpops .pop.pop-b2.pop-b2-side-left{transform:translate(-108%,-50%)}
 /* 持久牌型標籤：確保在牌組下方、不疊到牌面上 */
 #cgame[data-game=b2] .pile{align-items:center}
 #cgame[data-game=b2] .pile small{position:relative;z-index:2;margin-top:5px;flex-shrink:0}
-/* ================= v5.24 經典向量撲克牌面（預設）；萬盛達圖集改為設定選用、延遲載入 ================= */
+/* ================= v5.25 台灣實體撲克牌面：不透明純白、粗角標、飽滿花色（預設）；萬盛達圖集仍為設定選用 ================= */
 @font-face{
-  font-family:CardSerif;
-  font-weight:700;
+  font-family:CardFace;
+  font-weight:900;
   font-style:normal;
   font-display:swap;
-  src:url(data:font/woff;base64,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) format("woff");
+  src:url(data:font/woff;base64,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) format('woff');
 }
+
+/* Solid physical stock: bright white, no gradient, no gloss, no alpha */
 .pc.vec{
-  --ink:#161616;--red:#c4102e;--ivory0:#fffdf6;--ivory1:#f3ead6;--gold:#c9a45a;--line:#8a7350;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,255,255,.55),transparent 60%),
-    linear-gradient(180deg,var(--ivory0),#f7f0e0 48%,var(--ivory1));
-  border:1px solid #a8946e;
-  box-shadow:0 1px 2px rgba(0,0,0,.32),0 3px 8px rgba(0,0,0,.18),inset 0 0 0 1.15px rgba(201,164,90,.55),inset 0 0 0 2.35px rgba(42,28,14,.28);
+  --ink:#111111;--red:#d0021b;--stock:#ffffff;--edge:#1a1a1a;
+  background:#ffffff !important;
+  background-image:none !important;
+  border:1.35px solid #1a1a1a;
+  box-shadow:
+    0 1px 0 #2c2c2c,
+    0 2px 3px rgba(0,0,0,.50),
+    0 6px 14px rgba(0,0,0,.38);
+  opacity:1 !important;
+  mix-blend-mode:normal !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  filter:none;
   overflow:hidden;
 }
-.pc.vec svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;pointer-events:none}
-.pc.vec::after{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;
-  background:linear-gradient(155deg,rgba(255,255,255,.38) 0 18%,rgba(255,255,255,.08) 36%,transparent 52%,rgba(40,24,8,.05) 100%);
+.pc.vec svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;pointer-events:none}
+.pc.vec::after,
+.pc.vec::before{
+  content:none !important;display:none !important;background:none !important;opacity:0 !important;
 }
-.pc.vec.red{color:var(--red)}
-.pc.vec.blk{color:var(--ink)}
-/* 牌背：酒紅織紋＋金框＋中央紋章 */
+.pc.vec.red{color:#d0021b}
+.pc.vec.blk{color:#111111}
+
+/* 牌背：不透明酒紅＋實心金框（花紋也全不透明） */
 .pc.vec.back{
-  background:
-    linear-gradient(180deg,rgba(255,220,160,.1),transparent 40%),
-    repeating-linear-gradient(45deg,rgba(180,120,40,.14) 0 2px,transparent 2px 7px),
-    repeating-linear-gradient(-45deg,rgba(0,0,0,.12) 0 2px,transparent 2px 7px),
-    linear-gradient(180deg,#6e1520,#4a0e16 50%,#3a0b12);
-  border:1px solid #7a5a28;
-  box-shadow:0 1px 2px rgba(0,0,0,.4),0 4px 10px rgba(0,0,0,.28),inset 0 0 0 1.2px #e0c070,inset 0 0 0 2.6px #3a0b12,inset 0 0 0 3.5px rgba(224,192,112,.55);
+  background:#6b1520 !important;
+  background-image:none !important;
+  border:1.35px solid #1a1a1a;
+  box-shadow:
+    0 1px 0 #2c2c2c,
+    0 2px 3px rgba(0,0,0,.50),
+    0 6px 14px rgba(0,0,0,.38);
 }
-.pc.vec.back::after{
-  background:linear-gradient(155deg,rgba(255,230,180,.2) 0 16%,transparent 42%,rgba(0,0,0,.15) 100%);
+.pc.vec.back::after,.pc.vec.back::before{content:none !important;display:none !important}
+
+/* Hand / played / dimmed cards: never see-through. Darken old tricks, don't fade them. */
+#cgame .pc,
+#cgame .pc.vec,
+#cgame .pc.wsd,
+#cgame .chand .pc,
+#cgame .pile .pc,
+#cgame .bfan .pc,
+#cgame .cards .pc{
+  opacity:1 !important;
+  mix-blend-mode:normal !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+#cgame .pc.dim,
+#cgame .pile.old .pc,
+#cgame .pile.prev .pc,
+#cgame .pile .pc.dim{
+  opacity:1 !important;
+  filter:brightness(.7) saturate(.95);
+  mix-blend-mode:normal !important;
 }
 
 </style>
@@ -7808,7 +7838,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.24</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.25</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9778,73 +9808,56 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   try { window.__p523 = { reserveFoot, ver523, b2PopPos }; } catch (e) {}
 })();
 
-// ================= v5.24 經典向量撲克牌面（預設）；CFG.b2wsd 可切回萬盛達圖集 =================
+// ================= v5.25 台灣實體撲克牌面（不透明純白、粗角標、飽滿花色）；CFG.b2wsd 可切回萬盛達圖集 =================
 (function () {
   const FACE = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
   const rk = c => (typeof CG !== 'undefined' ? CG.rk(c) : (c >> 2));
   const st = c => (typeof CG !== 'undefined' ? CG.st(c) : (c & 3));
   const RED = { 0: false, 1: true, 2: true, 3: false };
-  const COL = { ink: '#161616', red: '#c4102e', gold: '#c9a45a', gold2: '#8a6a28', ivory: '#fbf6e8' };
-  const FONT = "CardSerif, 'Cormorant Garamond', Palatino, 'Noto Serif', Georgia, 'Times New Roman', serif";
+  const COL = { ink: '#111111', red: '#d0021b', gold: '#c9a45a', gold2: '#8a6a28', stock: '#ffffff' };
+  const FONT = "CardFace, 'Source Serif Pro', 'Times New Roman', Georgia, 'Noto Serif', serif";
   let uid = 0;
-  const nid = () => 'v524-' + (++uid);
+  const nid = () => 'v525-' + (++uid);
 
   function wsdOn() { try { return typeof CFG !== 'undefined' && CFG.b2wsd === true; } catch (e) { return false; } }
 
-  // ---- well-proportioned original pips (unit box centred at 0,0; tip toward -Y) ----
-  function pipG(suit, fill, stroke) {
-    const st = stroke ? ` stroke="${stroke}" stroke-width="1.6" stroke-linejoin="round"` : '';
-    if (suit === 2) { // heart — dent at -Y, point at +Y when drawn, we rotate so tip faces "up" of local (then inv flips)
-      // Standard heart: cleft at top, point at bottom. For upper-card pips, cleft toward top of card (no rotate).
-      return `<path fill="${fill}"${st} d="M0 48C-38 22-50 4-50-16C-50-36-36-48-20-48C-10-48-4-42 0-32C4-42 10-48 20-48C36-48 50-36 50-16C50 4 38 22 0 48Z"/>`;
+  // Chunky, fully-saturated classic pips (unit box centred at 0,0). Solid fill only — no alpha, no shine.
+  function pipG(suit, fill) {
+    if (suit === 2) { // heart — cleft at top, point at bottom; full lobes
+      return `<path fill="${fill}" d="M0 56C-38 26-54 8-54-18C-54-40-38-56-21-56C-10-56-4-46 0-30C4-46 10-56 21-56C38-56 54-40 54-18C54 8 38 26 0 56Z"/>`;
     }
-    if (suit === 1) { // diamond — slightly elongated, gently curved sides
-      return `<path fill="${fill}"${st} d="M0-54Q18-6 50 0Q18 6 0 54Q-18 6-50 0Q-18-6 0-54Z"/>`;
+    if (suit === 1) { // diamond — wide, chunky rhombus
+      return `<path fill="${fill}" d="M0-60L52 0L0 60L-52 0Z"/>`;
     }
-    if (suit === 3) { // spade — tip at top, stem at bottom
-      return `<g fill="${fill}"${st}>
-        <path d="M0-66C6-28 28-10 42 8C54 26 46 42 28 40C14 38 6 30 0 12C-6 30-14 38-28 40C-46 42-54 26-42 8C-28-10-6-28 0-66Z"/>
-        <path d="M-3 16L-20 66L0 55L20 66L3 16C2 28 0 30 0 30C0 30-2 28-3 16Z"/>
+    if (suit === 3) { // spade — sharp tip, thick body and stem (still reads as a spade when inverted)
+      return `<g fill="${fill}">
+        <path d="M0-68C8-30 32-10 48 10C60 30 50 46 30 44C14 42 6 32 0 12C-6 32-14 42-30 44C-50 46-60 30-48 10C-32-10-8-30 0-68Z"/>
+        <path d="M-4 16L-22 70L0 56L22 70L4 16C3 32 0 34 0 34C0 34-3 32-4 16Z"/>
       </g>`;
     }
-    // club — three lobes + stem
-    return `<g fill="${fill}"${st}>
-      <circle cx="0" cy="-26" r="22.5"/>
-      <circle cx="-23" cy="10" r="22.5"/>
-      <circle cx="23" cy="10" r="22.5"/>
-      <circle cx="0" cy="6" r="14"/>
-      <path d="M0 18C1 34 12 50 16 58L0 50L-16 58C-12 50-1 34 0 18Z"/>
+    // club — three thick lobes + stout stem
+    return `<g fill="${fill}">
+      <circle cx="0" cy="-26" r="23"/>
+      <circle cx="-24" cy="11" r="23"/>
+      <circle cx="24" cy="11" r="23"/>
+      <circle cx="0" cy="7" r="14"/>
+      <path d="M-3 18L-18 64L0 52L18 64L3 18C2 34 0 36 0 36C0 36-2 34-3 18Z"/>
     </g>`;
   }
 
-  function pipAt(suit, x, y, sc, inv, fill, hi) {
+  function pipAt(suit, x, y, sc, inv, fill) {
     const rot = inv ? ' rotate(180)' : '';
-    const id = nid();
-    let fillUse = fill, defs = '', spark = '';
-    if (hi && sc >= 1.8) {
-      const lite = (fill === COL.red) ? '#ea4a5c' : '#3e3e3e';
-      const dark = (fill === COL.red) ? '#8a0c1c' : '#080808';
-      defs = `<defs><linearGradient id="${id}" x1="-0.4" y1="-0.6" x2="0.7" y2="0.9">
-        <stop offset="0" stop-color="${lite}"/><stop offset=".42" stop-color="${fill}"/><stop offset="1" stop-color="${dark}"/>
-      </linearGradient></defs>`;
-      fillUse = `url(#${id})`;
-      spark = `<ellipse cx="-12" cy="-16" rx="14" ry="18" fill="#fff" opacity=".28"/>`;
-    } else if (hi) {
-      spark = `<ellipse cx="-10" cy="-13" rx="11" ry="13" fill="#fff" opacity=".2"/>`;
-    }
-    return `<g transform="translate(${x},${y}) scale(${sc})${rot}">${defs}${pipG(suit, fillUse)}${spark}</g>`;
+    return `<g transform="translate(${x},${y}) scale(${sc})${rot}">${pipG(suit, fill)}</g>`;
   }
 
-  // Standard pip layouts (upper pips upright, lower inverted)
+  // Standard pip layouts. Top-left cleared for the large corner index.
   function pipLayout(n) {
-    // returns [{x,y,inv}] in 570×870 space.  n = 1..10 (face value, A=1, 2=2, … 10=10)
-    const xL = 176, xC = 285, xR = 394;
-    // 3-row (2–8): top / mid / bot.  4-row (9–10): even. Centre extras sit in the gaps, never on a row.
-    const yT = 202, yB = 668, yM = 435;
-    const y7 = 318;             // gap between top & mid (for 7, 8)
-    const y8 = 552;             // gap between mid & bot (for 8)
-    const y9a = 357, y9b = 513; // 4-row inner (for 9, 10)
-    const y10u = 278, y10l = 592; // 10's centre pips in 4-row gaps
+    const xL = 200, xC = 285, xR = 370;
+    const yT = 282, yB = 588, yM = 435;
+    const y7 = 348;
+    const y8 = 522;
+    const y9a = 372, y9b = 498;
+    const y10u = 318, y10l = 552;
     const L = (x, y, inv) => ({ x, y, inv: !!inv });
     switch (n) {
       case 1: return [L(xC, yM)];
@@ -9861,7 +9874,6 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     }
   }
 
-  // Face value for pip count: FACE index 0=3 … 7=10, 11=A, 12=2. J/Q/K have no number pips.
   function faceVal(ri) {
     if (ri === 11) return 1; // A
     if (ri === 12) return 2;
@@ -9869,157 +9881,114 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     return 0; // JQK
   }
 
+  // Very large, heavy corner rank + suit — 台灣實體撲克牌風格
   function indexGroup(rank, suit, fill, x, y) {
     const ten = rank === '10';
-    const fs = ten ? 86 : 118;
-    const pipY = ten ? 148 : 168;
-    const pipS = 0.58;
+    const fs = ten ? 128 : 178;
+    const pipY = ten ? 200 : 226;
+    const pipS = 0.78;
+    const sw = ten ? 5.5 : 7;
     const label = ten
-      ? `<text x="-18" y="86" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="86" fill="${fill}" stroke="${fill}" stroke-width="1.4" paint-order="stroke fill">1</text>
-         <text x="18" y="86" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="86" fill="${fill}" stroke="${fill}" stroke-width="1.4" paint-order="stroke fill">0</text>`
-      : `<text x="0" y="102" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="1.5" paint-order="stroke fill">${rank}</text>`;
-    return `<g transform="translate(${x},${y})">${label}
-      ${pipAt(suit, 0, pipY, pipS, false, fill, true)}
-    </g>`;
+      ? `<text x="-36" y="118" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="${sw}" paint-order="stroke fill">1</text>
+         <text x="36" y="118" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="${sw}" paint-order="stroke fill">0</text>`
+      : `<text x="0" y="150" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="${sw}" paint-order="stroke fill">${rank}</text>`;
+    return `<g transform="translate(${x},${y})">${label}${pipAt(suit, 0, pipY, pipS, false, fill)}</g>`;
   }
 
-  function flourish(cx, cy, s, col, flip) {
-    const t = flip ? `translate(${cx},${cy}) scale(1,-1)` : `translate(${cx},${cy})`;
-    return `<g transform="${t}" fill="none" stroke="${col}" stroke-width="2.8" stroke-linecap="round" opacity=".85">
-      <path d="M${-s} 0 C${-s * .35} ${-s * .75},${s * .35} ${-s * .75},${s} 0"/>
-      <path d="M${-s * .72} ${s * .18} C0 ${-s * .48},0 ${-s * .48},${s * .72} ${s * .18}"/>
-      <path d="M${-s * .2} ${-s * .08} C${-s * .55} ${s * .45},${-s * .95} ${s * .15},${-s * .85} ${-s * .05}"/>
-      <path d="M${s * .2} ${-s * .08} C${s * .55} ${s * .45},${s * .95} ${s * .15},${s * .85} ${-s * .05}"/>
-    </g>`;
-  }
-
-  function crown(cx, cy, s, gold, ink) {
+  function crown(cx, cy, s, fill) {
     return `<g transform="translate(${cx},${cy}) scale(${s / 60})">
-      <path d="M-48 22 L-44-18 L-22 6 L0-28 L22 6 L44-18 L48 22 Z" fill="${gold}" stroke="${ink}" stroke-width="2.2" stroke-linejoin="round"/>
-      <rect x="-48" y="22" width="96" height="9" rx="2" fill="${gold}" stroke="${ink}" stroke-width="1.6"/>
-      <circle cx="-44" cy="-20" r="5.5" fill="${ink}"/>
-      <circle cx="0" cy="-30" r="6.5" fill="${ink}"/>
-      <circle cx="44" cy="-20" r="5.5" fill="${ink}"/>
+      <path d="M-52 26 L-48-22 L-24 8 L0-34 L24 8 L48-22 L52 26 Z" fill="${fill}"/>
+      <rect x="-52" y="26" width="104" height="14" fill="${fill}"/>
+      <circle cx="-48" cy="-24" r="8" fill="${fill}"/>
+      <circle cx="0" cy="-36" r="9" fill="${fill}"/>
+      <circle cx="48" cy="-24" r="8" fill="${fill}"/>
     </g>`;
   }
 
-  function pearls(cx, cy, s, gold) {
-    let h = `<g transform="translate(${cx},${cy})" fill="${gold}">`;
+  function pearls(cx, cy, s, fill) {
+    let h = `<g transform="translate(${cx},${cy})" fill="${fill}">`;
     for (let i = -4; i <= 4; i++) {
-      const a = (i / 4) * Math.PI * .85;
-      const x = Math.sin(a) * s, y = -Math.cos(a) * s * .42;
-      h += `<circle cx="${x}" cy="${y}" r="${i === 0 ? 6.2 : 4.6}" />`;
+      const a = (i / 4) * Math.PI * .88;
+      const x = Math.sin(a) * s, y = -Math.cos(a) * s * .44;
+      h += `<circle cx="${x}" cy="${y}" r="${i === 0 ? 8 : 6}"/>`;
     }
+    h += `<rect x="${-s * .85}" y="${s * .08}" width="${s * 1.7}" height="10" rx="3" fill="${fill}"/>`;
     h += '</g>';
     return h;
   }
 
-  function sash(cx, cy, s, col) {
-    return `<g transform="translate(${cx},${cy})" fill="none" stroke="${col}" stroke-width="3.2" opacity=".9">
-      <path d="M${-s} 12 Q0 ${-s*.35} ${s} 12"/>
-      <path d="M${-s*.7} 22 Q0 ${-s*.12} ${s*.7} 22"/>
+  function jackCap(cx, cy, s, fill) {
+    return `<g transform="translate(${cx},${cy})" fill="none" stroke="${fill}" stroke-width="14" stroke-linecap="round">
+      <path d="M${-s} 18 Q0 ${-s*.55} ${s} 18"/>
+      <path d="M${-s*.62} 36 Q0 ${-s*.18} ${s*.62} 36"/>
     </g>`;
   }
 
-  function ornateSpade(cx, cy, sc, fill, gold, ink, id) {
-    // Ace of spades: large decorated spade with filigree and a gold inner line
-    return `<g transform="translate(${cx},${cy}) scale(${sc})">
-      <g opacity=".18" fill="${gold}">
-        ${[0, 45, 90, 135, 180, 225, 270, 315].map(a =>
-          `<path transform="rotate(${a})" d="M0-70 L4-42 L0-48 L-4-42 Z"/>`).join('')}
-      </g>
-      ${pipG(3, fill)}
-      <g fill="none" stroke="${gold}" stroke-width="2.6" opacity=".92" transform="scale(.82)">
-        <path d="M0-66C6-28 28-10 42 8C54 26 46 42 28 40C14 38 6 30 0 12C-6 30-14 38-28 40C-46 42-54 26-42 8C-28-10-6-28 0-66Z"/>
-      </g>
-      <circle cx="0" cy="0" r="11" fill="${gold}" stroke="${ink}" stroke-width="1.4"/>
-      <text x="0" y="4" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="14" fill="${ink}">A</text>
-    </g>`;
-  }
-
+  // Original, thicker monogram courts — classic two-ended panel, solid colours only.
   function courtArt(rank, suit, fill, red) {
-    const gold = COL.gold, ink = red ? '#6a0e1a' : '#1a1a1a';
-    const id = nid();
-    const panelFill = red
-      ? `url(#${id}pr)`
-      : `url(#${id}pb)`;
-    const defs = `<defs>
-      <linearGradient id="${id}pr" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#fff8ee"/><stop offset="1" stop-color="#f0d4c4"/>
-      </linearGradient>
-      <linearGradient id="${id}pb" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e4ddd0"/>
-      </linearGradient>
-      <linearGradient id="${id}lt" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="${red ? '#e8384e' : '#3a3a3a'}"/>
-        <stop offset=".45" stop-color="${fill}"/>
-        <stop offset="1" stop-color="${red ? '#7a0c1c' : '#0a0a0a'}"/>
-      </linearGradient>
-    </defs>`;
-    let extra = '';
-    if (rank === 'K') extra = crown(285, 248, 58, gold, ink);
-    else if (rank === 'Q') extra = pearls(285, 250, 86, gold);
-    else if (rank === 'J') extra = sash(285, 250, 88, gold);
-    const letterY = rank === 'J' ? 500 : 488;
-    return `${defs}
-      <rect x="124" y="198" width="322" height="474" rx="18" fill="${panelFill}" stroke="${gold}" stroke-width="3.6"/>
-      <rect x="136" y="210" width="298" height="450" rx="12" fill="none" stroke="${ink}" stroke-width="1.5" opacity=".4"/>
-      ${flourish(285, 236, 96, gold, false)}
-      ${flourish(285, 634, 96, gold, true)}
-      ${extra}
-      <text x="285" y="${letterY}" text-anchor="middle" font-family="${FONT}" font-weight="700"
-        font-size="318" fill="url(#${id}lt)" stroke="${gold}" stroke-width="4.5" paint-order="stroke fill"
-        style="letter-spacing:-8px">${rank}</text>
-      ${pipAt(suit, 188, 530, 0.62, false, fill, true)}
-      ${pipAt(suit, 382, 530, 0.62, false, fill, true)}
-    `;
+    const bg = red ? '#fde8e6' : '#ececec';
+    const ink = red ? '#7a0a14' : '#111111';
+    const x = 148, y = 198, w = 274, h = 474, r = 16;
+    const letter = rank;
+    let ornament = '';
+    if (rank === 'K') ornament = crown(285, 268, 78, fill);
+    else if (rank === 'Q') ornament = pearls(285, 278, 78, fill);
+    else ornament = jackCap(285, 278, 78, fill);
+    const sideL = pipAt(suit, 186, 435, 0.72, false, fill);
+    const sideR = pipAt(suit, 384, 435, 0.72, true, fill);
+    // Upper half decorations; lower half is the same group rotated 180 around card centre.
+    const upper = `
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${bg}" stroke="${fill}" stroke-width="10"/>
+      <rect x="${x + 16}" y="${y + 16}" width="${w - 32}" height="${h - 32}" rx="10" fill="none" stroke="${fill}" stroke-width="3.5"/>
+      ${ornament}
+      <text x="285" y="500" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="268" fill="${fill}" stroke="${ink}" stroke-width="8" paint-order="stroke fill">${letter}</text>
+      ${sideL}${sideR}`;
+    return `<g>${upper}</g>`;
   }
 
   function aceArt(suit, fill, red, specialSpade) {
     if (specialSpade) {
-      const gold = COL.gold, ink = '#1a1a1a';
-      return `${ornateSpade(285, 420, 3.05, fill, gold, ink)}
-        ${flourish(285, 230, 110, gold, false)}
-        ${flourish(285, 640, 110, gold, true)}`;
+      // Solid, bold ♠A — large spade, solid gold ring and A, no filigree alpha
+      return `<g transform="translate(285,435) scale(3.15)">
+        ${pipG(3, fill)}
+        <circle cx="0" cy="2" r="13" fill="${COL.gold}" stroke="${fill}" stroke-width="2"/>
+        <text x="0" y="9" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="16" fill="${fill}">A</text>
+      </g>`;
     }
-    const sc = suit === 3 ? 2.75 : 2.65;
-    return pipAt(suit, 285, 435, sc, false, fill, true);
-  }
-
-  function twoAccent(suit, fill) {
-    // ♠2 modest extra: a thin gold oval around the two pips' axis — kept subtle, applied only as a center ornament
-    if (suit !== 3) return '';
-    return `<ellipse cx="285" cy="435" rx="52" ry="168" fill="none" stroke="${COL.gold}" stroke-width="2" opacity=".45"/>`;
+    return pipAt(suit, 285, 435, 2.85, false, fill);
   }
 
   function innerFrame() {
-    return `<g fill="none">
-      <rect x="16" y="16" width="538" height="838" rx="28" stroke="${COL.gold}" stroke-width="3.2" opacity=".95"/>
-      <rect x="24" y="24" width="522" height="822" rx="22" stroke="#2a1c10" stroke-width="1.35" opacity=".42"/>
+    // Opaque white stock + a thin solid inner hairline (no alpha, no gold wash)
+    return `<g>
+      <rect x="0" y="0" width="570" height="870" rx="30" fill="#ffffff"/>
+      <rect x="12" y="12" width="546" height="846" rx="22" fill="none" stroke="#222222" stroke-width="3"/>
     </g>`;
   }
 
   function vecFace(c, mini) {
-    const ri = rk(c), si = st(c), rank = FACE[ri], red = !!RED[si];
+    const ri = rk(c), si = st(c), red = !!RED[si];
     const fill = red ? COL.red : COL.ink;
+    const rank = FACE[ri];
     const fv = faceVal(ri);
-    const specialA = (si === 3 && ri === 11);
-    const special2 = (si === 3 && ri === 12);
-    let body = '';
     if (mini) {
-      // large centre rank + pip, still two corner indices (smaller)
-      body += `<text x="285" y="${fv ? 400 : 470}" text-anchor="middle" font-family="${FONT}" font-weight="700"
-        font-size="${rank === '10' ? 200 : 260}" fill="${fill}">${rank}</text>`;
-      body += pipAt(si, 285, fv ? 620 : 660, fv ? 1.6 : 1.35, false, fill, false);
-    } else if (fv === 1) {
-      body += aceArt(si, fill, red, specialA);
-    } else if (fv >= 2) {
-      const sc = fv >= 9 ? 0.96 : (fv === 8 ? 1.04 : (fv === 2 ? 1.22 : 1.10));
-      pipLayout(fv).forEach(p => { body += pipAt(si, p.x, p.y, sc, p.inv, fill, true); });
-    } else {
-      body += courtArt(rank, si, fill, red);
+      const pip = pipAt(si, 285, 520, 1.55, false, fill);
+      const fs = rank === '10' ? 200 : 260;
+      const label = rank === '10'
+        ? `<text x="215" y="340" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="8" paint-order="stroke fill">1</text>
+           <text x="355" y="340" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="8" paint-order="stroke fill">0</text>`
+        : `<text x="285" y="360" text-anchor="middle" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${fill}" stroke="${fill}" stroke-width="9" paint-order="stroke fill">${rank}</text>`;
+      return `<svg viewBox="0 0 570 870" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${innerFrame()}${label}${pip}</svg>`;
     }
-    const ix = 66, iy = 22;
+    let body = '';
+    if (fv === 1) body = aceArt(si, fill, red, si === 3);
+    else if (fv >= 2) {
+      const sc = fv >= 9 ? 0.92 : (fv === 8 ? 0.98 : (fv === 7 ? 1.02 : (fv === 2 ? 1.38 : 1.16)));
+      body = pipLayout(fv).map(p => pipAt(si, p.x, p.y, sc, p.inv, fill)).join('');
+    } else {
+      body = courtArt(rank, si, fill, red);
+    }
+    const ix = 72, iy = 10;
     const idx = indexGroup(rank, si, fill, ix, iy);
     const idx2 = `<g transform="rotate(180 285 435)">${indexGroup(rank, si, fill, ix, iy)}</g>`;
     return `<svg viewBox="0 0 570 870" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${innerFrame()}${body}${idx}${idx2}</svg>`;
@@ -10027,19 +9996,21 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function vecBack() {
     const id = nid();
+    // Fully opaque burgundy weave — every fill/stroke is solid
     return `<svg viewBox="0 0 570 870" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
-        <pattern id="${id}p" width="36" height="36" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <path d="M18 4L26 18L18 32L10 18Z" fill="none" stroke="#e0c070" stroke-width="1.1" opacity=".55"/>
+        <pattern id="${id}p" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="28" height="28" fill="#6b1520"/>
+          <rect x="9" y="9" width="10" height="10" fill="#8a1c28"/>
         </pattern>
       </defs>
-      <rect x="22" y="22" width="526" height="826" rx="24" fill="none" stroke="#e0c070" stroke-width="4"/>
-      <rect x="34" y="34" width="502" height="802" rx="18" fill="none" stroke="#e0c070" stroke-width="1.6" opacity=".7"/>
-      <rect x="40" y="40" width="490" height="790" rx="16" fill="url(#${id}p)" opacity=".55"/>
+      <rect x="0" y="0" width="570" height="870" rx="30" fill="#6b1520"/>
+      <rect x="18" y="18" width="534" height="834" rx="22" fill="url(#${id}p)" stroke="#d4b05a" stroke-width="6"/>
+      <rect x="32" y="32" width="506" height="806" rx="16" fill="none" stroke="#d4b05a" stroke-width="2.4"/>
       <g transform="translate(285 435)">
-        <circle r="86" fill="none" stroke="#e0c070" stroke-width="4"/>
-        <circle r="74" fill="none" stroke="#e0c070" stroke-width="1.6"/>
-        <text y="18" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="72" fill="#e8d39a" stroke="#3a0b12" stroke-width="3" paint-order="stroke fill">貳</text>
+        <circle r="92" fill="#6b1520" stroke="#d4b05a" stroke-width="6"/>
+        <circle r="76" fill="#8a1c28" stroke="#d4b05a" stroke-width="2.4"/>
+        <text y="22" text-anchor="middle" font-family="'Noto Serif TC','Noto Serif CJK TC','Source Han Serif TC','PMingLiU','Songti TC',serif" font-weight="900" font-size="76" fill="#d4b05a" stroke="#3a0b12" stroke-width="4" paint-order="stroke fill">貳</text>
       </g>
     </svg>`;
   }
@@ -10062,7 +10033,6 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
       return `<div class="pc vec back ${cls}" ${sa}>${vecBack()}</div>`;
     }
     if (c >= 52) {
-      // keep original joker if present
       if (_orig) return _orig(c, w, cls, attr);
       return `<div class="pc vec ${cls}" ${sa}></div>`;
     }
@@ -10090,7 +10060,6 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     };
     link.onload = () => done(true);
     link.onerror = () => {
-      // file:// fallback: try src path
       const l2 = document.createElement('link');
       l2.rel = 'stylesheet';
       l2.href = 'src/wsd_atlas.css';
@@ -10103,11 +10072,11 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function rerender() {
     try {
-      if (typeof CS !== 'undefined' && CS && CS.game && typeof renderC === 'function' && document.getElementById('cgame') && document.getElementById('cgame').classList.contains('on')) renderC();
+      if (typeof renderC === 'function' && typeof CS !== 'undefined' && CS && CS.game) { renderC(); return; }
+      if (typeof renderGame === 'function' && typeof G !== 'undefined' && G && G.kind) { renderGame(); return; }
+      if (typeof rerender === 'function') { /* noop self */ }
     } catch (e) {}
-    try {
-      if (typeof renderHome === 'function' && document.getElementById('home') && document.getElementById('home').classList.contains('on')) renderHome();
-    } catch (e) {}
+    try { if (typeof window.__rerender === 'function') window.__rerender(); } catch (e) {}
   }
 
   function applyCardHTML() {
@@ -10135,7 +10104,6 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     }
   }
 
-  // If user already had WSD on from a previous session, load it at startup
   if (wsdOn()) ensureWsd(ok => { if (ok) { applyCardHTML(); rerender(); } });
   applyCardHTML();
 
@@ -10189,18 +10157,19 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   if (document.body) startMo();
   else document.addEventListener('DOMContentLoaded', startMo);
 
-  function ver524() {
+  function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      if (e && !/v5\.24/.test(e.textContent)) e.textContent = 'v5.24';
+      if (e && !/v5\.25/.test(e.textContent)) e.textContent = 'v5.25';
     });
   }
   if (typeof renderHome === 'function') {
     const _rh = renderHome;
-    renderHome = function () { const r = _rh.apply(this, arguments); try { ver524(); } catch (e) {} return r; };
+    renderHome = function () { const r = _rh.apply(this, arguments); try { ver525(); } catch (e) {} return r; };
   }
-  ver524();
+  ver525();
 
   try { window.__faces524 = { vecHTML, vecFace, setWsd, wsdOn, ensureWsd, applyCardHTML }; } catch (e) {}
+  try { window.__faces525 = window.__faces524; } catch (e) {}
 })();
 
 
