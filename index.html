@@ -10231,7 +10231,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     if (standalone()) body = `<div style="padding:10px 0">✓ 你已經是從主畫面開啟的 App 模式。</div>`;
     else if (isIOS) body = `<a class="ib" href="naojiat.mobileconfig">下載 iOS 描述檔</a>
       <ol><li>請用 <b>Safari</b> 開啟，點上方按鈕並「允許」。</li><li>打開「設定」→ 最上方「已下載描述檔」→「安裝」。</li><li>回主畫面點「鬧熱牌局」即可。</li></ol>
-      <small>描述檔只加入主畫面捷徑，不安裝程式；未付費簽章會顯示「未驗證」屬正常。<br>也可以：Safari 下方「分享」→「加入主畫面」。</small>`;
+      <small>描述檔只加入主畫面捷徑，不安裝程式；未付費簽章會顯示「未驗證」屬正常。<br>若變成一般下載：打開「檔案」App →「下載項目」點 naojiat.mobileconfig。<br>也可以：Safari 下方「分享」→「加入主畫面」。</small>`;
     else if (isAndroid) body = `<button class="ib" id="i526go">安裝到主畫面</button>
       <ol><li>建議使用 Chrome。</li><li>若按鈕沒反應：右上角 ⋮ →「安裝應用程式」或「加到主畫面」。</li></ol><small id="i526n"></small>`;
     else body = `<button class="ib" id="i526go">安裝成桌面 App</button><small>手機安裝：用手機開啟 <b>${location.href.replace(/[#?].*$/, '').replace(/index\.html$/, '')}install.html</b></small>`;
