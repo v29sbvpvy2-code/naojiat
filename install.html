@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5a0a0e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="鬧熱牌局">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<title>安裝鬧熱牌局到手機</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;color:#fbefd4;
+  background:radial-gradient(ellipse at 50% 0%,#8a1418,#3a0507 60%,#1a0203);padding:env(safe-area-inset-top) 16px 32px}
+.wrap{max-width:560px;margin:0 auto;padding-top:22px}
+.hero{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.hero img{width:84px;height:84px;border-radius:20px;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+h1{margin:0;font-size:26px;color:#ffe3a0;letter-spacing:2px}
+.hero p{margin:4px 0 0;font-size:14px;opacity:.85}
+.card{background:linear-gradient(180deg,#4a1a10,#2a0d07);border:1.5px solid #c9a45a;border-radius:16px;padding:16px 16px 14px;margin:14px 0;box-shadow:0 6px 16px rgba(0,0,0,.4)}
+.card h2{margin:0 0 8px;font-size:18px;color:#ffd77a}
+.card.hl{border-color:#ffd23a;box-shadow:0 0 0 2px rgba(255,210,58,.35),0 6px 16px rgba(0,0,0,.4)}
+ol{margin:6px 0 0;padding-left:22px;line-height:1.75;font-size:15px}
+.btn{display:block;width:100%;text-align:center;text-decoration:none;font-weight:900;font-size:17px;border-radius:14px;padding:13px 10px;margin:10px 0 4px;border:2px solid #fff3d6;cursor:pointer;
+  background:linear-gradient(180deg,#ffd23a,#e27a0a);color:#5a0805}
+.btn.ghost{background:linear-gradient(180deg,#5a2a18,#33150b);color:#fbefd4;border-color:#c9a45a}
+.note{font-size:13px;opacity:.78;line-height:1.6;margin-top:8px}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:#ffd23a;color:#5a0805;font-weight:900;margin-left:6px;vertical-align:2px}
+.hide{display:none}
+.ok{color:#9affc0;font-weight:700}
+footer{margin-top:20px;text-align:center;font-size:12px;opacity:.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero"><img src="icons/icon-180.png" alt="鬧熱牌局圖示"><div><h1>鬧熱牌局</h1><p>台灣麻將・大老二・十三支・鬥地主・暗棋</p></div></div>
+
+  <div id="done" class="card hide"><h2 class="ok">✓ 已經是 App 模式</h2><div class="note">你正在從主畫面開啟鬧熱牌局，不需要再安裝。</div><a class="btn" href="./">進入遊戲</a></div>
+
+  <div id="ios" class="card">
+    <h2>iPhone／iPad：安裝描述檔 <span class="tag">推薦</span></h2>
+    <a class="btn" id="cfg" href="naojiat.mobileconfig">下載「鬧熱牌局」描述檔</a>
+    <ol>
+      <li>請用 <b>Safari</b> 開這一頁，點上面的按鈕，選「允許」。</li>
+      <li>畫面顯示「已下載描述檔」後，打開 <b>設定</b> App，點最上方的「<b>已下載描述檔</b>」<br>（或 設定 → 一般 → VPN 與裝置管理）。</li>
+      <li>點「<b>安裝</b>」，輸入手機密碼，再按一次「安裝」。</li>
+      <li>回到主畫面，就會看到「鬧熱牌局」圖示，點開即可全螢幕遊玩。</li>
+    </ol>
+    <div class="note">描述檔只會在主畫面加入一個網頁捷徑（Web Clip），不會安裝任何程式、不會管理或讀取你的手機。因為沒有付費簽章，安裝畫面會顯示「<b>未驗證</b>」，屬正常現象。不想要時，到 設定 → 一般 → VPN 與裝置管理 → 鬧熱牌局 → 移除描述檔 即可；或直接長按圖示刪除。<br>請務必使用 Safari；在 Chrome、LINE、Facebook 內建瀏覽器中點下載通常沒有反應。</div>
+  </div>
+
+  <div id="ios2" class="card">
+    <h2>iPhone／iPad：Safari 加入主畫面</h2>
+    <ol>
+      <li>用 <b>Safari</b> 打開 <a href="./" style="color:#ffd77a">遊戲首頁</a>。</li>
+      <li>點下方的「<b>分享</b>」按鈕（方框加向上箭頭）。</li>
+      <li>往下滑，點「<b>加入主畫面</b>」，再點「新增」。</li>
+    </ol>
+    <div class="note">這個方法不需要描述檔，效果相同。</div>
+  </div>
+
+  <div id="android" class="card">
+    <h2>Android：安裝 App</h2>
+    <button class="btn" id="pwa" type="button">安裝到主畫面</button>
+    <ol>
+      <li>建議使用 <b>Chrome</b> 開啟本頁。</li>
+      <li>點上面的按鈕，選「安裝」。</li>
+      <li>如果按鈕沒有反應：點右上角 <b>⋮</b> 選單 → 「<b>安裝應用程式</b>」或「加到主畫面」。</li>
+    </ol>
+    <div class="note" id="pwanote"></div>
+  </div>
+
+  <div id="desk" class="card">
+    <h2>電腦（Chrome／Edge）</h2>
+    <div class="note">網址列右側的「安裝」圖示 ⊕ 可以把鬧熱牌局裝成桌面 App。想裝到手機，請用手機掃描或開啟：<br><b id="url"></b></div>
+  </div>
+
+  <a class="btn ghost" href="./">返回遊戲</a>
+  <footer>鬧熱牌局・單機示範版，無真錢交易</footer>
+</div>
+<script>
+(function(){
+  var ua = navigator.userAgent || '';
+  var iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var android = /Android/i.test(ua);
+  var standalone = (window.matchMedia && matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches) || navigator.standalone === true;
+  var $ = function(id){ return document.getElementById(id); };
+  var q = new URLSearchParams(location.search), force = q.get('os');
+  if (force === 'ios') { iOS = true; android = false; } else if (force === 'android') { iOS = false; android = true; } else if (force === 'desk') { iOS = false; android = false; }
+  $('url').textContent = location.href.replace(/install\.html.*$/, '');
+  if (standalone) $('done').classList.remove('hide');
+  if (iOS) { $('android').classList.add('hide'); $('desk').classList.add('hide'); $('ios').classList.add('hl'); }
+  else if (android) { $('ios').classList.add('hide'); $('ios2').classList.add('hide'); $('desk').classList.add('hide'); $('android').classList.add('hl'); }
+  else { $('android').classList.add('hide'); }
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred = e; $('pwanote').textContent = '可以直接安裝 ✓'; });
+  window.addEventListener('appinstalled', function(){ $('pwanote').textContent = '安裝完成！到主畫面找「鬧熱牌局」。'; });
+  $('pwa').onclick = function(){
+    if (deferred) { deferred.prompt(); deferred.userChoice.finally(function(){ deferred = null; }); }
+    else $('pwanote').textContent = '瀏覽器尚未提供安裝按鈕：請點右上角 ⋮ →「安裝應用程式」或「加到主畫面」。';
+  };
+  if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function(){});
+})();
+</script>
+</body>
+</html>

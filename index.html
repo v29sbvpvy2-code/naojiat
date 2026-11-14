@@ -9,6 +9,13 @@
 <meta name="theme-color" content="#17191d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="鬧熱牌局">
+<meta name="application-name" content="鬧熱牌局">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <title>鬧熱牌局｜台灣麻將・十三支・大老二・鬥地主・暗棋</title>
 <style>
 /* 台灣麻將牌：大而厚的方正牌身，象牙白牌面＋厚實的有色牌背（雙層），圓角較小 */
@@ -2551,6 +2558,16 @@ body.noanim #cpops .pop.pop-b2.pop-b2-side-left{transform:translate(-108%,-50%)}
   filter:brightness(.7) saturate(.95);
   mix-blend-mode:normal !important;
 }
+/* ================= v5.26 安裝到手機（PWA／iOS 描述檔） ================= */
+#home .inst526{left:auto;right:150px;bottom:18px;background:linear-gradient(180deg,#7ef0b8,#1a9a5e);color:#063a22;border-color:#eafff3}
+body.standalone526 #home .inst526{display:none}
+.inst526m h2{margin:0 0 6px}
+.inst526m ol{margin:6px 0 0;padding-left:22px;line-height:1.7;font-size:14px;text-align:left}
+.inst526m .ib{display:block;text-align:center;text-decoration:none;font-weight:900;font-size:16px;border-radius:12px;padding:10px;margin:8px 0;border:2px solid #fff3d6;background:linear-gradient(180deg,#ffd23a,#e27a0a);color:#5a0805}
+.inst526m .ib.g{background:linear-gradient(180deg,#5a2a18,#33150b);color:#fbefd4;border-color:#c9a45a}
+.inst526m .hd{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.inst526m .hd img{width:56px;height:56px;border-radius:13px;box-shadow:0 4px 10px rgba(0,0,0,.45)}
+.inst526m small{display:block;opacity:.8;font-size:12px;line-height:1.55;margin-top:6px;text-align:left}
 
 </style>
 </head>
@@ -2581,6 +2598,7 @@ body.noanim #cpops .pop.pop-b2.pop-b2-side-left{transform:translate(-108%,-50%)}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
+<script>window.__VER = 'v5.26';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -7838,7 +7856,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><span class="hver">v5.25.1</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.26</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9365,7 +9383,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     });
   }
   function ver522() {
-    document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => { if (e && !/v5\.22/.test(e.textContent)) e.textContent = 'v5.22'; });
+    document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => { { const V = window.__VER || 'v5.22'; if (e && e.textContent !== V) e.textContent = V; } });
   }
   if (typeof renderHome === 'function') {
     const _rh = renderHome;
@@ -9691,7 +9709,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 (function () {
   function ver523() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      if (e && !/v5\.23/.test(e.textContent)) e.textContent = 'v5.23';
+      { const V = window.__VER || 'v5.23'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
@@ -10178,7 +10196,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      if (e && !/v5\.25\.1/.test(e.textContent)) e.textContent = 'v5.25.1';
+      { const V = window.__VER || 'v5.26'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
@@ -10189,6 +10207,42 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   try { window.__faces524 = { vecHTML, vecFace, setWsd, wsdOn, ensureWsd, applyCardHTML }; } catch (e) {}
   try { window.__faces525 = window.__faces524; } catch (e) {}
+})();
+
+// ================= v5.26 安裝到手機：PWA（Android beforeinstallprompt）＋ iOS 描述檔／加入主畫面 =================
+(function () {
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(ua);
+  const standalone = () => (window.matchMedia && matchMedia('(display-mode: standalone), (display-mode: fullscreen)').matches) || navigator.standalone === true;
+  if (standalone()) document.body.classList.add('standalone526');
+  let deferred = null;
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; });
+  window.addEventListener('appinstalled', () => { deferred = null; try { toast('安裝完成！到主畫面找「鬧熱牌局」'); } catch (e) {} });
+
+  // Service worker：只在 http(s) 註冊；新版在下次開啟時生效（頁面走網路優先）
+  if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+
+  OPEN.install = () => {
+    const hd = `<div class="hd"><img src="icons/icon-180.png" alt=""><div><h2>安裝到手機</h2><div style="opacity:.8;font-size:13px">從主畫面一鍵開啟，全螢幕遊玩</div></div></div>`;
+    let body;
+    if (standalone()) body = `<div style="padding:10px 0">✓ 你已經是從主畫面開啟的 App 模式。</div>`;
+    else if (isIOS) body = `<a class="ib" href="naojiat.mobileconfig">下載 iOS 描述檔</a>
+      <ol><li>請用 <b>Safari</b> 開啟，點上方按鈕並「允許」。</li><li>打開「設定」→ 最上方「已下載描述檔」→「安裝」。</li><li>回主畫面點「鬧熱牌局」即可。</li></ol>
+      <small>描述檔只加入主畫面捷徑，不安裝程式；未付費簽章會顯示「未驗證」屬正常。<br>也可以：Safari 下方「分享」→「加入主畫面」。</small>`;
+    else if (isAndroid) body = `<button class="ib" id="i526go">安裝到主畫面</button>
+      <ol><li>建議使用 Chrome。</li><li>若按鈕沒反應：右上角 ⋮ →「安裝應用程式」或「加到主畫面」。</li></ol><small id="i526n"></small>`;
+    else body = `<button class="ib" id="i526go">安裝成桌面 App</button><small>手機安裝：用手機開啟 <b>${location.href.replace(/[#?].*$/, '').replace(/index\.html$/, '')}install.html</b></small>`;
+    modal(`<div class="inst526m">${hd}${body}<a class="ib g" href="install.html" target="_blank" rel="noopener">完整安裝說明</a></div><div class="foot"><button class="btn mint" data-close>關閉</button></div>`, pn => {
+      const go = pn.querySelector('#i526go');
+      if (go) go.onclick = () => {
+        if (deferred) { deferred.prompt(); deferred.userChoice.finally(() => { deferred = null; }); }
+        else { const n = pn.querySelector('#i526n'); const m = '瀏覽器尚未提供安裝按鈕：請用選單「安裝應用程式」或「加到主畫面」。'; if (n) n.textContent = m; else try { toast(m); } catch (e) {} }
+      };
+    });
+  };
 })();
 
 

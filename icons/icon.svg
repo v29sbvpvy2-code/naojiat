@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#d42a2a"/><stop offset=".55" stop-color="#9c1016"/><stop offset="1" stop-color="#4e070b"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff0b8"/><stop offset=".5" stop-color="#e2b24c"/><stop offset="1" stop-color="#9c6a1e"/>
+    </linearGradient>
+    <linearGradient id="ivory" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffdf4"/><stop offset="1" stop-color="#eee3c6"/>
+    </linearGradient>
+    <linearGradient id="jade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2fae74"/><stop offset="1" stop-color="#0d5a3a"/>
+    </linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#2a0003" flood-opacity=".55"/></filter>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <g opacity=".16" fill="#ffd27a">
+    <path transform="rotate(0 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(30 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(60 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(90 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(120 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(150 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(180 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(210 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(240 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(270 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(300 256 230)" d="M256 230 L246 -60 L266 -60 Z"/><path transform="rotate(330 256 230)" d="M256 230 L246 -60 L266 -60 Z"/>
+  </g>
+  <rect x="16" y="16" width="480" height="480" rx="92" fill="none" stroke="url(#gold)" stroke-width="10"/>
+  <g transform="translate(256 262) scale(0.9) translate(-256 -262)">
+    <!-- 撲克牌（後） -->
+    <g transform="rotate(16 330 250)" filter="url(#sh)">
+      <rect x="250" y="110" width="176" height="252" rx="18" fill="#fff" stroke="#1a1a1a" stroke-width="4"/>
+      <text x="282" y="172" text-anchor="middle" font-family="'Source Serif Pro','Times New Roman',serif" font-weight="900" font-size="64" fill="#111">2</text>
+      <path transform="translate(282 205) scale(.42)" fill="#111" d="M0-68C8-30 32-10 48 10C60 30 50 46 30 44C14 42 6 32 0 12C-6 32-14 42-30 44C-50 46-60 30-48 10C-32-10-8-30 0-68ZM-4 16L-22 70L0 56L22 70L4 16Z"/>
+      <path transform="translate(352 262) scale(1.05)" fill="#111" d="M0-68C8-30 32-10 48 10C60 30 50 46 30 44C14 42 6 32 0 12C-6 32-14 42-30 44C-50 46-60 30-48 10C-32-10-8-30 0-68ZM-4 16L-22 70L0 56L22 70L4 16Z"/>
+    </g>
+    <!-- 紅中麻將牌（前） -->
+    <g transform="rotate(-9 200 290)" filter="url(#sh)">
+      <rect x="92" y="148" width="214" height="290" rx="30" fill="url(#jade)"/>
+      <rect x="92" y="132" width="214" height="282" rx="30" fill="url(#ivory)" stroke="#c9b48a" stroke-width="3"/>
+      <rect x="110" y="150" width="178" height="246" rx="20" fill="none" stroke="#e7dcc0" stroke-width="3"/>
+      <text x="199" y="340" text-anchor="middle" font-family="'Noto Serif CJK TC','Noto Serif CJK SC',serif" font-weight="900" font-size="200" fill="#c8101e" stroke="#7a0610" stroke-width="3">中</text>
+    </g>
+  </g>
+  <!-- 金色「鬧熱」橫幅 -->
+  <g transform="translate(256 430)">
+    <rect x="-112" y="-34" width="224" height="62" rx="31" fill="#3a0507" stroke="url(#gold)" stroke-width="5"/>
+    <text y="13" text-anchor="middle" font-family="'Noto Serif CJK TC',serif" font-weight="900" font-size="46" fill="url(#gold)" letter-spacing="6">鬧熱</text>
+  </g>
+</svg>
