@@ -10263,10 +10263,13 @@ window.__go = go; window.__OPEN = OPEN; window.__show = show; window.__matching 
     if (q.get('online') === '1') localStorage.setItem('mj4_online', '1');
     if (q.get('online') === '0') localStorage.removeItem('mj4_online');
     const srv = q.get('server'); if (srv && /^https:\/\/[a-z0-9.-]+(:\d+)?$/i.test(srv)) localStorage.setItem('mj4_server', srv);
+    // 正式線上網域（與後端同網域部署）預設開啟，伺服器就是本站；線上客戶端在 /play/
+    const SAME_HOST = ['oopop.okdolle.com'].includes(location.hostname);
+    if (q.get('online') !== '0' && SAME_HOST) localStorage.setItem('mj4_online', '1');
     if (localStorage.getItem('mj4_online') !== '1') return;
-    const server = localStorage.getItem('mj4_server') || 'https://play.example.com';
+    const server = SAME_HOST ? location.origin : (localStorage.getItem('mj4_server') || 'https://play.example.com');
     const b = document.createElement('a');
-    b.id = 'njOnline'; b.href = server + '/'; b.rel = 'noopener';
+    b.id = 'njOnline'; b.href = server + (server === location.origin ? '/play/' : '/'); b.rel = 'noopener';
     b.textContent = '線上對戰 Beta';
     b.style.cssText = 'position:fixed;right:12px;bottom:calc(env(safe-area-inset-bottom) + 12px);z-index:9999;padding:10px 16px;border-radius:999px;' +
       'background:linear-gradient(#f2d27f,#c99a33);color:#3a2500;font-weight:800;text-decoration:none;box-shadow:0 4px 14px #0007;font-size:15px';

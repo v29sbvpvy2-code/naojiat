@@ -1,5 +1,5 @@
 // 鬧熱牌局 Service Worker — 版本：v5.26（每次發版自動換快取名稱）
-const VER = 'v5.26';
+const VER = 'v5.26-o1';
 const CACHE = 'naojiat-' + VER;
 const CORE = ['./', './index.html', './install.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/favicon-32.png'];
 
@@ -19,6 +19,7 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;           // 其他網域（例如後端 API）不攔截
   if (url.pathname.endsWith('.mobileconfig')) return;       // 描述檔一律走網路
+  if (/^\/(v1|ws|play|admin|agent|grafana)(\/|$)/.test(url.pathname)) return;   // 同網域後端 API／線上客戶端／後台：永不快取
   const isPage = req.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('.html');
   if (isPage) {
     // 網路優先：有網路就拿最新版（下次開啟即更新），離線才用快取
