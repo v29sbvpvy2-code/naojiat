@@ -2558,6 +2558,7 @@ body.noanim #cpops .pop.pop-b2.pop-b2-side-left{transform:translate(-108%,-50%)}
   filter:brightness(.7) saturate(.95);
   mix-blend-mode:normal !important;
 }
+#game .rinfo .tags .aw{color:#ffe08a;border-color:#c99a3a}
 /* ================= v5.26 安裝到手機（PWA／iOS 描述檔） ================= */
 #home .inst526{left:auto;right:150px;bottom:18px;background:linear-gradient(180deg,#7ef0b8,#1a9a5e);color:#063a22;border-color:#eafff3}
 body.standalone526 #home .inst526{display:none}
@@ -2598,7 +2599,7 @@ body.standalone526 #home .inst526{display:none}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
-<script>window.__VER = 'v5.26';</script>
+<script>window.__VER = 'v5.27';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -5821,12 +5822,16 @@ const human = {
   async turn(g, p, o) { const a = await humanTurn(g, p, o); G.rec.push(a); return a; },
   async claim(g, p, t, o, from) { const a = await humanClaim(g, p, t, o, from); G.rec.push(a); return a; }
 };
+// v5.27 能胡必胡：單機／對電腦一律開啟（與線上伺服器預設相同）。能自摸、能胡（含搶槓）就自動胡，不跳出胡／過選項。
+const MJ_AUTOWIN = () => G.kind === 'play' && !(G.rules && G.rules.autoWin === false);
 function humanTurn(g, p, o) {
+  if (o && o.tsumo && MJ_AUTOWIN()) return wait(350).then(() => ({ type: 'tsumo' }));
   if (G.auto) return wait(SPD() * .8).then(() => ENG().AI.turn(g, p, o));
   if (G.ting) { const h = g.players[p].hand; return wait(o.tsumo ? 400 : 550).then(() => o.tsumo ? { type: 'tsumo' } : { type: 'discard', tile: h[h.length - 1] }); }
   return new Promise(res => { G.pending = { kind: 'turn', o, res }; G.sel = -1; vib(25); renderGame(); });
 }
 function humanClaim(g, p, t, o, from) {
+  if (o && o.hu && MJ_AUTOWIN()) return wait(250).then(() => ({ type: 'hu' }));
   if (G.auto) return wait(SPD() * .5).then(() => ENG().AI.claim(g, p, t, o, from));
   if (G.ting) return wait(300).then(() => o.hu ? { type: 'hu' } : { type: 'pass' });
   return new Promise(res => { G.pending = { kind: 'claim', o, t, from, res }; vib(40); renderGame(); });
@@ -6077,7 +6082,7 @@ function renderGame() {
   h.push(`<div class="g-abs plate">${G.cfg && G.cfg.lf && G.n === 4 ? '' : ''}<div class="core"><div class="left num">${left}</div></div>${[0, 1, 2, 3].map(wseat).join('')}</div>`);
   { const t3 = h.splice(0); G.liftOnce0 = G.liftOnce; G.liftOnce = false; h.push(`<div class="tilt3d ${G.liftOnce0 && ANIM() && CFG.td3 ? 'lift' : ''}">${t3.join('')}</div>`, ...chips, lfInfo()); }
   h.push(`<div class="g-abs rinfo"><b>${WINDS[roundWind() || 0]}風圈</b><span class="rd">${handLabel().replace(/^.風圈・/, '')}</span>
-    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${g.isHZ ? '紅中' : MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">${g.isHZ ? 'v5.19.1' : 'v5.9'}</span></div></div>`);
+    <div class="tags">${G.lian ? `<span class="lz">連莊 ${G.lian}</span>` : ''}<span>${g.isHZ ? '紅中' : MJ.PRESETS[G.preset || 'std'].name.replace('規則', '').replace('牌', '')}</span><span>底${G.base}/台${G.perTai}</span>${MJ_AUTOWIN() ? '<span class="aw">本桌：能胡必胡</span>' : ''}${g.rules.cap ? `<span>${g.rules.cap}台滿</span>` : ''}<span class="ver">${g.isHZ ? 'v5.19.1' : 'v5.9'}</span></div></div>`);
   // 自己（或觀戰視角）
   h.push(seatChip(V, g));
   let tiles = me.hand.slice(), drawn = null;
@@ -7633,7 +7638,7 @@ function post52() {
     hud.querySelectorAll('[data-l52]').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); const k = b.dataset.l52; if (k === 'log') return modal(`<h2>牌局紀錄</h2><div class="wlist">${LOG52.slice(-30).map(s => `<div class="wmsg">${esc(s)}</div>`).join('') || '<div class="sub">尚無紀錄</div>'}</div><div class="foot"><button class="btn primary" data-close>關閉</button></div>`); $('#gEmo').onclick(); });
   }
   hud.querySelector('.h52t').textContent = `${G.cfg && G.cfg.hz ? '紅中' : G.n === 2 ? '二麻' : '四麻'} ${G.base}/${G.perTai} ${quanName ? quanName(G.hands).replace(/[^\d圈局將]/g, '') : ''}`;
-  hud.querySelector('.h52g').textContent = `一般 GameID: ${gid}`;
+  hud.querySelector('.h52g').textContent = `一般 GameID: ${gid}${MJ_AUTOWIN() ? '・能胡必胡' : ''}`;
   hud.querySelector('.h52r').textContent = `${rw}風${sw} (第 ${quan} 局)`;
   const lz = hud.querySelector('.lz52'); lz.textContent = G.lian ? `${G.lian} 連莊` : G.ting && !g.result ? '聽牌中' : ''; lz.style.display = lz.textContent ? '' : 'none';
   const pl = gm.querySelector('.plate'); if (pl) { const on = pl.querySelector('.w.on'); const a = on ? +(/w(\d)/.exec(on.className) || [])[1] : -1; pl.style.setProperty('--ac', a >= 0 ? SEATCOL[a] : '#ffd23a'); const lf = pl.querySelector('.left'); if (lf && !pl.querySelector('.seg8')) lf.insertAdjacentHTML('beforebegin', '<span class="seg8">88</span>'); }
@@ -7856,7 +7861,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.26</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.27</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -10196,7 +10201,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.26'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.27'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {

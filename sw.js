@@ -1,5 +1,5 @@
-// 鬧熱牌局 Service Worker — 版本：v5.26（每次發版自動換快取名稱）
-const VER = 'v5.26-o1';
+// 鬧熱牌局 Service Worker — 版本：v5.27（每次發版自動換快取名稱）
+const VER = 'v5.27-o1';
 const CACHE = 'naojiat-' + VER;
 const CORE = ['./', './index.html', './install.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/favicon-32.png'];
 
