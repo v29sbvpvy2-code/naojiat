@@ -908,11 +908,11 @@
 			<key>PayloadUUID</key>
 			<string>EBF76EEF-FFDB-433F-98B9-87F8C5DE8912</string>
 			<key>PayloadVersion</key>
-			<integer>1</integer>
+			<integer>2</integer>
 			<key>Precomposed</key>
 			<true/>
 			<key>URL</key>
-			<string>https://v29sbvpvy2-code.github.io/naojiat/</string>
+			<string>https://oopop.okdolle.com/?src=clip</string>
 		</dict>
 	</array>
 	<key>PayloadDescription</key>
@@ -932,6 +932,6 @@
 	<key>PayloadUUID</key>
 	<string>68E4003F-4493-4CD1-9F9A-E8E48DC4FA46</string>
 	<key>PayloadVersion</key>
-	<integer>1</integer>
+	<integer>2</integer>
 </dict>
 </plist>

@@ -2599,7 +2599,7 @@ body.standalone526 #home .inst526{display:none}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
-<script>window.__VER = 'v5.27';</script>
+<script>window.__VER = 'v5.28';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -7532,7 +7532,7 @@ PAGES.rooms = { title: '場次大廳', sub: '依底注選場・即時配對', re
   el.querySelectorAll('[data-g]').forEach(b => b.onclick = () => { pageStack[pageStack.length - 1][1] = b.dataset.g; rerender(); });
   const enter = i => {
     const [nm, mult, min] = STAKES[i]; if (WAL.coins < min) return modal(`<h2>金幣不足</h2><div class="sub">${nm}需要 ${fmt(min)} 金幣以上。</div><div class="foot"><button class="btn ghost" data-close>取消</button><button class="btn primary" id="gs">前往商城</button></div>`, pn => pn.querySelector('#gs').onclick = () => { closeModal(); go('shop', 'coins'); });
-    if (g === 'mj' || G0.mjv) { const c = MJV_CFG[g] || { n: 4 }; const n = c.n || 4; return matching({ game: 'mj', n, hands: 4, base: 100 * mult, perTai: 20 * mult, preset: 'std', cap: 0, rules: { chi: c.chi !== false, pon: true, kan: true, tsumo: true }, lf: !!c.lf, mode: (g === 'mj' ? '' : G0.name + '・') + nm }, pickBots(n - 1)); }
+    if (g === 'mj' || G0.mjv) { const c = g === 'mj' ? { n: 4, rules: {} } : MJV_CFG(g); const n = c.n || 4; return matching({ game: 'mj', n, hands: 4, base: 100 * mult, perTai: 20 * mult, preset: 'std', cap: 0, rules: { chi: !(c.rules && c.rules.chi === false), pon: true, kan: true, tsumo: true }, lf: !!c.lf, hz: !!c.hz, mode: (g === 'mj' ? '' : G0.name + '・') + nm }, pickBots(n - 1)); }   // v5.28：紅中／二麻／龍鳳從場次進入也用正確規則（原本 MJV_CFG[g] 永遠是 undefined）
     matching({ game: g, n: G0.n, rounds: G0.rounds[0][0], base: G0.bases[0] * mult, mode: nm }, pickBots(G0.n - 1));
   };
   el.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { beep('tap'); enter(+b.dataset.st); });
@@ -7861,7 +7861,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.27</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.28</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -10201,7 +10201,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.27'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.28'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
@@ -10227,7 +10227,29 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   // Service worker：只在 http(s) 註冊；新版在下次開啟時生效（頁面走網路優先）
   if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => { try { r.update(); } catch (e) {} }).catch(() => {}));
+  }
+  // v5.28 新版檢查：主畫面 App／分頁常常在背景放好幾天，回到前景時不會重新載入，會一直跑舊版。
+  // 回到前景（或每 10 分鐘）就問一次伺服器目前版本；不同就在「不在牌局中」時自動重新整理（牌局中就等這局打完）。
+  if (/^https?:/.test(location.protocol)) {
+    let pendingReload = false, lastCheck = 0;
+    const inHand = () => { try { const G = window.__G; return !!(G && G.game && !G.game.result && document.querySelector('#game.on')); } catch (e) { return false; } };
+    const reloadSoon = () => { if (inHand()) { pendingReload = true; return; } try { sessionStorage.setItem('nj_reloaded', String(Date.now())); } catch (e) {} location.reload(); };
+    const check = () => {
+      if (Date.now() - lastCheck < 30000) return; lastCheck = Date.now();
+      fetch('sw.js?v=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.text() : '').then(t => {
+        const m = /VER\s*=\s*'(v[\d.]+)/.exec(t || ''); if (!m) return;
+        const cur = (window.__VER || '').trim(); if (!cur || m[1] === cur) return;
+        const last = +(sessionStorage.getItem('nj_reloaded') || 0); if (Date.now() - last < 60000) return;   // 防止重整迴圈
+        try { navigator.serviceWorker && navigator.serviceWorker.getRegistration().then(r => r && r.update()); } catch (e) {}
+        reloadSoon();
+      }).catch(() => {});
+    };
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+    window.addEventListener('pageshow', e => { if (e.persisted) { lastCheck = 0; check(); } });
+    setInterval(() => { if (pendingReload && !inHand()) reloadSoon(); else check(); }, 600000);
+    setInterval(() => { if (pendingReload && !inHand()) reloadSoon(); }, 5000);
+    setTimeout(check, 4000);
   }
 
   OPEN.install = () => {
