@@ -2571,18 +2571,14 @@ body.standalone526 #home .inst526{display:none}
 .inst526m small{display:block;opacity:.8;font-size:12px;line-height:1.55;margin-top:6px;text-align:left}
 
 
-/* ================= 亮面白底撲克牌面（原創競技風格，CFG.b2jj 選用；預設仍為台灣實體牌面） ================= */
+/* ================= 白底競技撲克牌面（原創霧面白底，CFG.b2jj 選用；預設仍為台灣實體牌面） ================= */
 .pc.jj{
   --ink:#191919;--red:#e21820;--stock:#ffffff;--edge:#c5cad3;
-  background:linear-gradient(180deg,#ffffff 0%,#f3f5f9 100%) !important;
-  background-image:linear-gradient(180deg,#ffffff 0%,#f3f5f9 100%) !important;
+  background:#ffffff !important;
+  background-image:none !important;
   border:1px solid #c5cad3;
   border-radius:calc(var(--w)*0.082);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 -1px 0 rgba(180,188,200,.35),
-    0 1px 2px rgba(0,0,0,.16),
-    0 6px 14px rgba(0,0,0,.26);
+  box-shadow:0 1px 2px rgba(0,0,0,.18),0 2px 5px rgba(0,0,0,.12);
   opacity:1 !important;
   mix-blend-mode:normal !important;
   backdrop-filter:none !important;
@@ -2591,14 +2587,10 @@ body.standalone526 #home .inst526{display:none}
   overflow:hidden;
 }
 .pc.jj svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;pointer-events:none}
-/* 亮面高光：僅此風格使用，不影響現行霧面實體牌 */
-.pc.jj::before{
-  content:"" !important;display:block !important;
-  position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
-  background:linear-gradient(165deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.12) 36%,rgba(255,255,255,0) 58%);
-  opacity:1 !important;
+.pc.jj::before,
+.pc.jj::after{
+  content:none !important;display:none !important;background:none !important;opacity:0 !important;
 }
-.pc.jj::after{content:none !important;display:none !important}
 .pc.jj.red{color:#e21820}
 .pc.jj.blk{color:#191919}
 
@@ -2606,16 +2598,11 @@ body.standalone526 #home .inst526{display:none}
   background:#16316a !important;
   background-image:none !important;
   border:1px solid #0c1c40;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    0 1px 2px rgba(0,0,0,.2),
-    0 6px 14px rgba(0,0,0,.3);
+  box-shadow:0 1px 2px rgba(0,0,0,.18),0 2px 5px rgba(0,0,0,.12);
 }
-.pc.jj.back::before{
-  content:"" !important;display:block !important;
-  position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
-  background:linear-gradient(165deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,.06) 32%,rgba(255,255,255,0) 58%);
-  opacity:1 !important;
+.pc.jj.back::before,
+.pc.jj.back::after{
+  content:none !important;display:none !important;background:none !important;opacity:0 !important;
 }
 
 #cgame .pc.jj,
@@ -2625,6 +2612,7 @@ body.standalone526 #home .inst526{display:none}
 #cgame .cards .pc.jj{
   opacity:1 !important;
   mix-blend-mode:normal !important;
+  filter:none;
 }
 #cgame .pc.jj.dim,
 #cgame .pile.old .pc.jj,
@@ -2633,16 +2621,12 @@ body.standalone526 #home .inst526{display:none}
   filter:brightness(.72) saturate(.96);
 }
 
-/* 選中上抬：白邊＋金框＋更深陰影，強調亮面厚度 */
+/* 選中上抬：實心細框，無光暈、無金邊反光 */
 #cgame[data-game=b2] .chand .pc.jj.sel,
 #cgame[data-game=ddz] .chand .pc.jj.sel,
 #cgame .chand .pc.jj.sel{
   transform:translateY(-28px);
-  box-shadow:
-    0 0 0 2px #ffffff,
-    0 0 0 4px #f3c55a,
-    0 12px 24px rgba(0,0,0,.5),
-    0 0 18px rgba(243,197,90,.35);
+  box-shadow:0 0 0 2px #222222,0 2px 5px rgba(0,0,0,.2);
 }
 @media (hover:hover){
   #cgame[data-game=b2] .chand .pc.jj:hover{transform:translateY(-8px)}
@@ -10293,7 +10277,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   try { window.__faces525 = window.__faces524; } catch (e) {}
 })();
 
-// ================= 亮面白底撲克牌面（原創競技風格：圓角白底、粗無襯線角標、亮面；人頭牌用字母＋徽章，不畫人物） =================
+// ================= 白底競技撲克牌面（原創霧面白底、粗無襯線角標；人頭牌用字母＋徽章，不畫人物） =================
 // 由 CFG.b2jj 選用；預設仍為台灣實體牌面。與 CFG.b2wsd 互斥。
 (function () {
   const FACE = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
@@ -10442,13 +10426,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   }
 
   function stock(id) {
-    return `<defs>
-      <linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#ffffff"/>
-        <stop offset="1" stop-color="#f2f4f8"/>
-      </linearGradient>
-    </defs>
-    <rect x="0" y="0" width="570" height="870" rx="42" fill="url(#${id}g)"/>
+    return `<rect x="0" y="0" width="570" height="870" rx="42" fill="#ffffff"/>
     <rect x="10" y="10" width="550" height="850" rx="34" fill="none" stroke="#d5dae2" stroke-width="2.2"/>`;
   }
 
@@ -10516,12 +10494,8 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
           <path d="M18 2 L34 18 L18 34 L2 18 Z" fill="none" stroke="#2a4e96" stroke-width="2"/>
           <circle cx="18" cy="18" r="3" fill="#2e56a4"/>
         </pattern>
-        <linearGradient id="${id}g" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#1c3c78"/>
-          <stop offset="1" stop-color="#10244e"/>
-        </linearGradient>
       </defs>
-      <rect x="0" y="0" width="570" height="870" rx="42" fill="url(#${id}g)"/>
+      <rect x="0" y="0" width="570" height="870" rx="42" fill="#16316a"/>
       <rect x="18" y="18" width="534" height="834" rx="32" fill="url(#${id}p)" stroke="#d4b05a" stroke-width="6"/>
       <rect x="32" y="32" width="506" height="806" rx="24" fill="none" stroke="#d4b05a" stroke-width="2.2"/>
       <g transform="translate(285 435)">
@@ -10610,7 +10584,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function FACE_ROW() {
     const on = jjOn();
-    return `<div class="srow"><div><b>亮面白底牌面</b><small style="display:block;opacity:.7">大字角標、圓角亮面，原創競技風格（人頭牌用字母與徽章，不畫人物）</small></div><button class="sw ${on ? 'on' : ''}" data-sw="b2jj"><i></i></button></div>`;
+    return `<div class="srow"><div><b>白底競技牌面</b><small style="display:block;opacity:.7">大字角標、圓角霧面白底，原創競技風格（人頭牌用字母與徽章，不畫人物）</small></div><button class="sw ${on ? 'on' : ''}" data-sw="b2jj"><i></i></button></div>`;
   }
 
   function bindJj(root) {
