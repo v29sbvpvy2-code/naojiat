@@ -2633,6 +2633,44 @@ body.standalone526 #home .inst526{display:none}
   #cgame[data-game=b2] .chand .pc.jj.sel:hover{transform:translateY(-28px)}
 }
 
+
+/* v5.29 bd2pick */
+/* v5.29 大老二選牌：快捷列、加大點擊、選中明顯抬起（只選牌，不出牌） */
+#cgame[data-game=b2] .cbar{top:262px}
+#cgame[data-game=b2] .b2pick{
+  left:50%;top:318px;transform:translateX(-50%);z-index:7;
+  display:flex;gap:6px;align-items:center;flex-wrap:nowrap;
+  max-width:92%;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding:2px 4px;pointer-events:auto;scrollbar-width:none;
+}
+#cgame[data-game=b2] .b2pick::-webkit-scrollbar{display:none}
+#cgame[data-game=b2] .b2pick-chip{
+  flex:0 0 auto;height:30px;padding:0 12px;border-radius:999px;
+  font:700 13px/30px var(--ui,sans-serif);letter-spacing:.06em;color:#f3e3bd;
+  background:rgba(24,14,8,.88);border:1px solid rgba(243,197,90,.55);
+  box-shadow:0 0 0 1px #2a0402,0 3px 8px rgba(0,0,0,.35);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;user-select:none;white-space:nowrap;
+}
+#cgame[data-game=b2] .b2pick-chip.on{
+  color:#2a1406;background:linear-gradient(180deg,#fff2c0,#f3c55a);border-color:#a8681a;
+}
+#cgame[data-game=b2] .b2pick-chip.ghost{opacity:.92}
+#cgame[data-game=b2] .b2pick-chip:active{transform:scale(.97)}
+#cgame[data-game=b2] .chand{height:168px}
+#cgame[data-game=b2] .chand .pc{touch-action:none}
+#cgame[data-game=b2] .chand .pc .hit529{
+  position:absolute;left:-6px;right:-10px;top:-16px;bottom:-22px;z-index:3;
+  pointer-events:auto;
+}
+#cgame[data-game=b2] .chand .pc.sel{
+  transform:translateY(-32px)!important;
+  z-index:5;
+}
+#cgame[data-game=b2] .chand .pc.jj.sel{
+  box-shadow:0 0 0 2px #222,0 6px 10px rgba(0,0,0,.28)!important;
+}
+#cgame[data-game=b2] .combo522{display:none}
+
 </style>
 </head>
 <body>
@@ -2662,7 +2700,7 @@ body.standalone526 #home .inst526{display:none}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
-<script>window.__VER = 'v5.28';</script>
+<script>window.__VER = 'v5.29';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -7924,7 +7962,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.28</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.29</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9423,6 +9461,199 @@ function lobby520() {
 const _rh520 = renderHome;
 renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby520(); } catch (e) { console.warn('l520', e); } return r; };
 
+// ================= v5.29 大老二選牌輔助：對子循環、葫蘆換對、快捷列（只選牌，不出牌） =================
+(function (root) {
+  const rk = c => c >> 2;
+  const byId = (a, b) => a - b;
+  function B2() {
+    return (typeof CG !== 'undefined' && CG.B2) || (root && root.CG && root.CG.B2);
+  }
+  function same(a, b) {
+    if (!a || !b || a.length !== b.length) return false;
+    const A = a.slice().sort(byId), C = b.slice().sort(byId);
+    return A.every((x, i) => x === C[i]);
+  }
+  function combos(arr, k, out, start, cur) {
+    if (typeof CG !== 'undefined' && CG.combos) return CG.combos(arr, k);
+    out = out || []; start = start || 0; cur = cur || [];
+    if (cur.length === k) { out.push(cur.slice()); return out; }
+    for (let i = start; i <= arr.length - (k - cur.length); i++) { cur.push(arr[i]); combos(arr, k, out, i + 1, cur); cur.pop(); }
+    return out;
+  }
+  function legalMoves(S, p) {
+    const L = B2().legalMoves(S, p);
+    return (L && L.moves) || [];
+  }
+  function sortSmallest(a, b) {
+    const ca = a.c || {}, cb = b.c || {};
+    return (ca.cls || 0) - (cb.cls || 0) || (ca.key || 0) - (cb.key || 0) || a.cards.length - b.cards.length;
+  }
+  function cycleList(list, current) {
+    if (!list.length) return null;
+    const i = list.findIndex(m => same(m.cards, current || []));
+    const n = i < 0 ? 0 : (i + 1) % list.length;
+    return { cards: list[n].cards.slice(), index: n, total: list.length, name: list[n].c && list[n].c.name, move: list[n] };
+  }
+  function isLeading(S) {
+    return !S.lead || !!S.selfTop;
+  }
+  function leadName(S) {
+    if (!S.lead || !S.lead.c || S.selfTop) return null;
+    return S.lead.c.name;
+  }
+  function fhParts(cards) {
+    if (!cards || !cards.length) return null;
+    const g = {};
+    for (const c of cards) { const r = rk(c); (g[r] = g[r] || []).push(c); }
+    const ranks = Object.keys(g).map(Number);
+    if (cards.length === 3 && ranks.length === 1 && g[ranks[0]].length === 3) {
+      return { tripR: ranks[0], trip: g[ranks[0]].slice().sort(byId), pairR: null, pair: [] };
+    }
+    const info = B2().classify(cards);
+    if (!info || info.name !== '葫蘆') return null;
+    let tripR = null, pairR = null;
+    for (const r of ranks) { if (g[r].length >= 3) tripR = r; else if (g[r].length === 2) pairR = r; }
+    if (tripR == null) return null;
+    return { tripR, trip: g[tripR].slice().sort(byId), pairR, pair: pairR != null ? g[pairR].slice().sort(byId) : [] };
+  }
+  function byRank(hand) {
+    const m = Array.from({ length: 13 }, () => []);
+    for (const c of hand) m[rk(c)].push(c);
+    m.forEach(g => g.sort(byId));
+    return m;
+  }
+  function legalFH(moves, trip, pair) {
+    const want = trip.concat(pair).sort(byId);
+    return moves.find(m => m.c && m.c.name === '葫蘆' && same(m.cards, want));
+  }
+
+  // 點選一張：對子循環／葫蘆換對／其他合法組合。free=true 時只切換單張。
+  function tap(S, p, card, sel, opts) {
+    opts = opts || {};
+    const cur = (sel || []).slice();
+    if (opts.free) {
+      const set = new Set(cur);
+      if (set.has(card)) set.delete(card); else set.add(card);
+      return { sel: [...set].sort(byId), mode: 'free', cycled: false };
+    }
+    const hand = S.hands[p];
+    const moves = legalMoves(S, p);
+    const ln = leadName(S);
+    const parts = fhParts(cur);
+    const cardR = rk(card);
+    const groups = byRank(hand);
+
+    const wantPair = ln === '對子' || isLeading(S) || (cur.length === 2 && B2().classify(cur) && B2().classify(cur).name === '對子');
+    const pairMoves = moves.filter(m => m.c && m.c.name === '對子' && m.cards.includes(card)).sort(sortSmallest);
+
+    // —— 葫蘆：已選三條（或完整葫蘆）時，點另一點數就換成該點數的對子，再點同點循環花色
+    if (parts && parts.tripR != null && cardR !== parts.tripR && groups[cardR].length >= 2) {
+      const pairs = combos(groups[cardR], 2);
+      let idx = 0;
+      if (parts.pairR === cardR) {
+        const i = pairs.findIndex(pr => same(pr, parts.pair));
+        idx = i < 0 ? 0 : (i + 1) % pairs.length;
+      }
+      // 若跟牌是葫蘆（或自由出牌），優先合法能出的組合；沒有合法的仍換成該對，方便再切
+      const ranked = pairs.map((pr, i) => ({ i, pr, legal: legalFH(moves, parts.trip, pr) })).sort((a, b) => {
+        if (!!a.legal !== !!b.legal) return a.legal ? -1 : 1;
+        return (a.legal && b.legal) ? sortSmallest(a.legal, b.legal) : a.i - b.i;
+      });
+      if (parts.pairR === cardR) {
+        const curI = ranked.findIndex(x => same(x.pr, parts.pair));
+        const n = curI < 0 ? 0 : (curI + 1) % ranked.length;
+        const pick = ranked[n];
+        return { sel: parts.trip.concat(pick.pr).sort(byId), mode: 'fh-pair', cycled: true, legal: !!pick.legal };
+      }
+      const pick = ranked[0];
+      return { sel: parts.trip.concat(pick.pr).sort(byId), mode: 'fh-pair', cycled: false, legal: !!pick.legal };
+    }
+
+    // —— 點三條（跟葫蘆，或已經在組葫蘆）：先選這點當三條的最小能出葫蘆；再點同一張循環
+    const tripHave = groups[cardR].length >= 3;
+    const fhContext = ln === '葫蘆' || (parts && parts.tripR === cardR);
+    if (tripHave && fhContext) {
+      const trips = combos(groups[cardR], 3);
+      const fhs = moves.filter(m => m.c && m.c.name === '葫蘆').sort(sortSmallest);
+      const withThis = fhs.filter(m => {
+        const p = fhParts(m.cards);
+        return p && p.tripR === cardR && m.cards.includes(card);
+      });
+      const list = withThis.length ? withThis : fhs.filter(m => { const p = fhParts(m.cards); return p && p.tripR === cardR; });
+      if (list.length) {
+        const cyc = cycleList(list, cur);
+        return { sel: cyc.cards, mode: 'fh', cycled: cyc.index > 0 || same(list[0].cards, cur), legal: true, total: cyc.total, index: cyc.index };
+      }
+      // 沒有完整能出的葫蘆：先選這張所在的三條，等玩家再點對子
+      const t = trips.find(tr => tr.includes(card)) || trips[0];
+      return { sel: t.slice().sort(byId), mode: 'fh-trip', cycled: false, legal: false };
+    }
+
+    // —— 對子：跟對、或自由出牌／領先時，點一張就選含它的對子，再點同一張換搭檔
+    if (pairMoves.length && wantPair) {
+      // 自由出牌時：若這張也在更大牌型裡，對子仍優先（再點可循環到其他牌型？）
+      // 需求：領先時自動選對子。其他牌型交給快捷列或再循環。這裡對子優先。
+      const cyc = cycleList(pairMoves, cur);
+      return { sel: cyc.cards, mode: 'pair', cycled: same(pairMoves[0].cards, cur) || cyc.index > 0, legal: true, total: cyc.total, index: cyc.index };
+    }
+
+    // —— 跟順：優先選含這張、能壓過的順子
+    if (ln === '順子') {
+      const sts = moves.filter(m => m.c && m.c.name === '順子' && m.cards.includes(card)).sort(sortSmallest);
+      if (sts.length) {
+        const cyc = cycleList(sts, cur);
+        return { sel: cyc.cards, mode: 'straight', cycled: cyc.index > 0 || same(sts[0].cards, cur), legal: true, total: cyc.total, index: cyc.index };
+      }
+    }
+
+    // —— 其他合法組合（含炸彈）循環
+    const alts = moves.filter(m => m.cards.includes(card)).sort((a, b) => {
+      const leadN = S.lead && S.lead.c && !S.selfTop ? S.lead.c.n : 0;
+      const pa = (leadN && a.cards.length === leadN && !a.c.bomb) ? 0 : a.c.bomb ? 2 : 1;
+      const pb = (leadN && b.cards.length === leadN && !b.c.bomb) ? 0 : b.c.bomb ? 2 : 1;
+      if (pa !== pb) return pa - pb;
+      return sortSmallest(a, b);
+    });
+    if (alts.length) {
+      const cyc = cycleList(alts, cur);
+      return { sel: cyc.cards, mode: 'combo', cycled: cyc.index > 0 || same(alts[0].cards, cur), legal: true, total: cyc.total, index: cyc.index, name: cyc.name };
+    }
+
+    // 沒有能出的組合：只切換這張，方便手動組牌
+    const set = new Set(cur);
+    if (set.has(card)) set.delete(card); else set.add(card);
+    return { sel: [...set].sort(byId), mode: 'toggle', cycled: false, legal: false };
+  }
+
+  function quickGroups(S, p) {
+    const order = ['單張', '對子', '順子', '葫蘆', '鐵支', '同花順'];
+    const groups = {};
+    for (const m of legalMoves(S, p)) {
+      const n = m.c && m.c.name;
+      if (!n) continue;
+      (groups[n] = groups[n] || []).push(m);
+    }
+    for (const n of Object.keys(groups)) groups[n].sort(sortSmallest);
+    return order.filter(n => groups[n] && groups[n].length).map(n => ({ name: n, moves: groups[n] }));
+  }
+
+  function cycleGroup(moves, current) {
+    return cycleList(moves, current);
+  }
+
+  // 手牌由左到右滑過的區間（含兩端）
+  function rangeCards(hand, a, b) {
+    const i = hand.indexOf(a), j = hand.indexOf(b);
+    if (i < 0 || j < 0) return null;
+    const lo = Math.min(i, j), hi = Math.max(i, j);
+    return hand.slice(lo, hi + 1);
+  }
+
+  const api = { tap, quickGroups, cycleGroup, cycleList, fhParts, rangeCards, legalMoves, same, isLeading, leadName };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  try { root.B2Pick = api; } catch (e) {}
+})(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this);
+
 // ================= v5.22 精緻化＋大老二手勢／自動出完／上打直接出牌 =================
 (function () {
   const EASE = 'cubic-bezier(.22,1,.36,1)';
@@ -9484,6 +9715,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
           decorate(cg.querySelector('.ctable'), '貳');
           fanArc();
           comboChip();
+          renderPickBar();
           if (CS._deal522) { cg.classList.add('deal522'); [...cg.querySelectorAll('.chand .pc')].forEach((el, i) => el.style.setProperty('--i522', i)); CS._deal522 = false; }
           maybeHint();
         }
@@ -9491,10 +9723,11 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
       } catch (e) {}
       return r;
     };
+    try { window.__renderC = renderC; } catch (e) {}
   }
   if (typeof startCRound === 'function') {
     const _scr = startCRound;
-    startCRound = function () { CS._deal522 = true; return _scr.apply(this, arguments); };
+    startCRound = function () { CS._deal522 = true; CS._b2free = false; return _scr.apply(this, arguments); };
   }
 
   // ---- settlement count-up ----
@@ -9588,8 +9821,14 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     const d = document.createElement('div'); d.className = 'combo522'; d.textContent = c.name;
     document.querySelector('#ctbl').appendChild(d);
   }
-  function smartTap(card) {
+  function smartTap(card, ev) {
     if (!pendingB2()) return;
+    const free = !!(CS._b2free || (ev && ev.shiftKey));
+    if (typeof B2Pick !== 'undefined') {
+      const r = B2Pick.tap(CS.st, 0, card, [...CS.sel], { free });
+      applySel(r.sel);
+      return;
+    }
     if (anchor === card && alts.length) {
       altI = (altI + 1) % alts.length;
       applySel(alts[altI].cards);
@@ -9608,6 +9847,44 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     applySel(alts[0].cards);
   }
   function clearSel() { CS.sel = new Set(); anchor = null; alts = []; if (typeof renderC === 'function') renderC(); }
+
+  function renderPickBar() {
+    document.querySelectorAll('.b2pick').forEach(e => e.remove());
+    if (!pendingB2() || typeof B2Pick === 'undefined') return;
+    const groups = B2Pick.quickGroups(CS.st, 0);
+    const cur = [...CS.sel];
+    const chips = groups.map(g => {
+      const i = g.moves.findIndex(m => B2Pick.same(m.cards, cur));
+      const n = g.moves.length;
+      const lab = i >= 0 ? (n > 1 ? g.name + ' ' + (i + 1) + '/' + n : g.name) : (n > 1 ? g.name + ' ·' + n : g.name);
+      return '<button type="button" class="b2pick-chip' + (i >= 0 ? ' on' : '') + '" data-b2g="' + g.name + '">' + lab + '</button>';
+    }).join('');
+    const d = document.createElement('div');
+    d.className = 'b2pick g-abs';
+    d.innerHTML = chips
+      + '<button type="button" class="b2pick-chip ghost" data-b2g="clear">重選</button>'
+      + '<button type="button" class="b2pick-chip ghost' + (CS._b2free ? ' on' : '') + '" data-b2g="free">單選</button>';
+    const host = document.querySelector('#cgame');
+    if (host) host.appendChild(d);
+    document.querySelectorAll('#chand .pc').forEach(el => {
+      if (!el.querySelector('.hit529')) {
+        const h = document.createElement('i'); h.className = 'hit529'; el.appendChild(h);
+      }
+    });
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('.b2pick [data-b2g]');
+    if (!b || !pendingB2()) return;
+    e.preventDefault(); e.stopPropagation();
+    const k = b.getAttribute('data-b2g');
+    if (k === 'clear') { CS._b2free = false; clearSel(); return; }
+    if (k === 'free') { CS._b2free = !CS._b2free; if (typeof renderC === 'function') renderC(); return; }
+    if (typeof B2Pick === 'undefined') return;
+    const g = B2Pick.quickGroups(CS.st, 0).find(x => x.name === k);
+    if (!g) return;
+    const cyc = B2Pick.cycleGroup(g.moves, [...CS.sel]);
+    if (cyc) applySel(cyc.cards);
+  }, true);
 
   // ---- play / pass with validation ----
   function tryPlay() {
@@ -9637,6 +9914,35 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     return true;
   }
 
+  function cardFromPoint(x, y) {
+    const els = document.querySelectorAll('#chand [data-c]');
+    let best = null, bestD = 1e9;
+    for (const el of els) {
+      const r = el.getBoundingClientRect();
+      if (y >= r.top - 22 && y <= r.bottom + 26 && x >= r.left - 6 && x <= r.right + 6) {
+        const d = Math.abs(x - (r.left + Math.min(24, r.width * 0.35)));
+        if (d < bestD) { bestD = d; best = +el.dataset.c; }
+      }
+    }
+    return best;
+  }
+  function paintRange(from, to) {
+    if (typeof B2Pick === 'undefined' || from == null || to == null || !CS.st) return;
+    const range = B2Pick.rangeCards(CS.st.hands[0], from, to);
+    if (!range || range.length < 2) return;
+    const sts = B2Pick.legalMoves(CS.st, 0).filter(m => m.c && m.c.name === '順子' && m.cards.every(c => range.includes(c)));
+    let pick = range;
+    if (sts.length) {
+      sts.sort((a, b) => b.cards.length - a.cards.length || (a.c.key - b.c.key));
+      const exact = sts.find(m => B2Pick.same(m.cards, range));
+      pick = (exact || sts[0]).cards;
+    }
+    CS.sel = new Set(pick);
+    document.querySelectorAll('#chand [data-c]').forEach(el => el.classList.toggle('sel', CS.sel.has(+el.dataset.c)));
+    const play = document.querySelector('#cgame [data-cact="play"]');
+    if (play) play.disabled = !CS.sel.size;
+  }
+
   // ---- pointer gestures (thresholds so mobile scroll is not stolen) ----
   let ptr = null, longT = null, didGest = false, lastTap = 0;
   function onDown(e) {
@@ -9648,8 +9954,16 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     const x = e.clientX, y = e.clientY;
     ptr = { x, y, t: performance.now(), card, hand, moved: false, gest: null, id: e.pointerId };
     didGest = false;
-    if (card && CS.sel.has(+card.dataset.c)) {
-      longT = setTimeout(() => { if (ptr && !ptr.moved) { clearSel(); ptr = null; didGest = true; } }, 480);
+    if (card) {
+      longT = setTimeout(() => {
+        if (ptr && !ptr.moved && ptr.card) {
+          const c = +ptr.card.dataset.c;
+          if (typeof B2Pick !== 'undefined') applySel(B2Pick.tap(CS.st, 0, c, [...CS.sel], { free: true }).sel);
+          else { CS.sel.has(c) ? CS.sel.delete(c) : CS.sel.add(c); if (typeof renderC === 'function') renderC(); }
+          ptr = null; didGest = true;
+          if (typeof toast === 'function') toast('單張點選（也可開「單選」）');
+        }
+      }, 480);
     }
   }
   function onMove(e) {
@@ -9658,16 +9972,18 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     if (dist > 10) { ptr.moved = true; if (longT) { clearTimeout(longT); longT = null; } }
     if (dist < 16) return;
     const vert = Math.abs(dy) > Math.abs(dx) * 1.25;
-    if (vert && Math.abs(dy) > 28) {
+    if (vert && Math.abs(dy) > 28 && ptr.gest !== 'range') {
       ptr.gest = dy < 0 ? 'up' : 'down';
       if (e.cancelable) e.preventDefault();
       didGest = true;
       ghost(e, dy);
-    } else if (!vert && ptr.card && CS.sel.size && dy < -20) {
-      ptr.gest = 'drag';
+    } else if (!vert && ptr.card && Math.abs(dx) > 16) {
+      ptr.gest = 'range';
       if (e.cancelable) e.preventDefault();
       didGest = true;
-      ghost(e, dy);
+      const start = +ptr.card.dataset.c;
+      const now = cardFromPoint(e.clientX, e.clientY);
+      if (now != null) paintRange(start, now);
     }
   }
   function onUp(e) {
@@ -9676,13 +9992,10 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     if (!ptr) return;
     const dx = e.clientX - ptr.x, dy = e.clientY - ptr.y;
     const vert = Math.abs(dy) > Math.abs(dx) * 1.2;
-    if (ptr.gest === 'up' || (vert && dy < -48 && CS.sel.size)) { didGest = true; tryPlay(); }
+    if (ptr.gest === 'range') { didGest = true; if (typeof renderC === 'function') renderC(); }
+    else if (ptr.gest === 'up' || (vert && dy < -48 && CS.sel.size)) { didGest = true; tryPlay(); }
     else if (ptr.gest === 'down' || (vert && dy > 48 && ptr.hand)) { didGest = true; tryPass(); }
-    else if (ptr.gest === 'drag' && CS.sel.size) {
-      const hand = document.querySelector('#chand');
-      const hr = hand ? hand.getBoundingClientRect() : { top: 1e9 };
-      if (e.clientY < hr.top - 8) { didGest = true; tryPlay(); }
-    } else if (!ptr.moved && ptr.card && gestOn()) {
+    else if (!ptr.moved && ptr.card && gestOn()) {
       didGest = true;
       smartTap(+ptr.card.dataset.c);
     } else if (!ptr.moved && !ptr.card) {
@@ -9716,6 +10029,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   // swallow the leftover click after a gesture so the old toggle handler doesn't fire
   document.addEventListener('click', e => {
     if (!gestOn() || !isB2()) return;
+    if (e.target.closest && e.target.closest('.b2pick')) return;
     if (didGest && e.target.closest && (e.target.closest('#chand') || e.target.closest('#ctbl') || e.target.closest('.ctable'))) {
       e.stopImmediatePropagation(); e.preventDefault();
     }
@@ -9736,9 +10050,11 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     const box = document.createElement('div');
     box.className = 'hint522';
     box.innerHTML = `<div class="box"><h3>大老二操作</h3><ul>
-      <li>點一張牌，會自動選上含這張、能出的最佳牌組；再點同一張可切換其他組合。</li>
-      <li>把選好的牌<b>上滑</b>或拖到牌桌上就是出牌；不合法會晃一下並說明原因。</li>
-      <li>在手牌區<b>下滑</b>，或連點桌面兩下，就是不出。</li>
+      <li>點一張牌，跟對或自由出牌時會自動選含這張的對子；再點同一張可換花色搭檔。</li>
+      <li>出葫蘆：先點三條，再點另一點數就換成那門對子；再點可換花色。手牌上方快捷列也可直接選。</li>
+      <li>橫滑手牌可一次選順子區間。長按一張，或開「單選」，改為一張張手動點。</li>
+      <li>把選好的牌<b>上滑</b>才是出牌（不會自動出）；不合法會晃一下並說明原因。</li>
+      <li>在手牌區<b>下滑</b>，或連點桌面兩下，就是不出。快捷列「重選」可清空。</li>
       <li>兩家都過時<b>直接出牌</b>：壓過上一手是繼續上打，其他合法牌型會自動開新輪。</li>
       <li>鍵盤：Enter 出牌、空白鍵不出。原本的按鈕都還在。</li>
     </ul><button class="btn primary" type="button">知道了</button></div>`;
@@ -9749,7 +10065,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     const pn = document.querySelector('#panel'); if (!pn || pn.querySelector('[data-sw="b2gest"]')) return;
     const td = pn.querySelector('[data-sw="anim"], [data-sw="td3"], [data-sw="real520"], .srow');
     const host = td && td.closest && td.closest('.srow');
-    const html = `<div class="srow"><div><b>大老二手勢</b><small style="display:block;opacity:.7">上滑出牌・下滑不出・點牌智慧選組</small></div><button class="sw ${gestOn() ? 'on' : ''}" data-sw="b2gest"><i></i></button></div>
+    const html = `<div class="srow"><div><b>大老二手勢</b><small style="display:block;opacity:.7">上滑出牌・下滑不出・點牌智慧選組・快捷列</small></div><button class="sw ${gestOn() ? 'on' : ''}" data-sw="b2gest"><i></i></button></div>
       <div class="srow"><div><b>自動出完</b><small style="display:block;opacity:.7">整手剛好能出時自動打出</small></div><button class="sw ${autoOn() ? 'on' : ''}" data-sw="b2auto"><i></i></button></div>`;
     if (host) host.insertAdjacentHTML('afterend', html);
     else pn.insertAdjacentHTML('beforeend', html);
@@ -9770,8 +10086,12 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   const mo = new MutationObserver(() => { try { if (document.querySelector('#panel .srow')) injectSettings(); } catch (e) {} });
   if (document.querySelector('#modal')) mo.observe(document.querySelector('#modal'), { childList: true, subtree: true });
 
-  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn };
+  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn, clearSel, renderPickBar };
 })();
+
+
+
+
 
 // ================= v5.23：結算按鈕不擋分數、大老二底欄對比、牌型喊牌避開牌面 =================
 (function () {
@@ -10264,7 +10584,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.28'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.29'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
@@ -10278,7 +10598,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 })();
 
 // ================= 白底競技撲克牌面（原創霧面白底、粗無襯線角標；人頭牌用字母＋徽章，不畫人物） =================
-// 由 CFG.b2jj 選用；預設仍為台灣實體牌面。與 CFG.b2wsd 互斥。
+// 預設為白底競技（CFG.b2face==='jj' 或未設定）。台灣實體 b2face==='tw'；萬盛達 b2wsd / b2face==='wsd'。
 (function () {
   const FACE = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
   const rk = c => (typeof CG !== 'undefined' ? CG.rk(c) : (c >> 2));
@@ -10290,7 +10610,15 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   let uid = 0;
   const nid = () => 'jjf-' + (++uid);
 
-  function jjOn() { try { return typeof CFG !== 'undefined' && CFG.b2jj === true; } catch (e) { return false; } }
+  function faceMode() {
+    try {
+      if (typeof CFG === 'undefined') return 'jj';
+      if (CFG.b2wsd === true || CFG.b2face === 'wsd') return 'wsd';
+      if (CFG.b2face === 'tw') return 'tw';
+      return 'jj';
+    } catch (e) { return 'jj'; }
+  }
+  function jjOn() { return faceMode() === 'jj'; }
 
   // Clean, classic pips (unit box centred at 0,0) — slightly slimmer than the chunky physical-deck set.
   function pipG(suit, fill) {
@@ -10546,18 +10874,25 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     return false;
   }
 
-  function setJj(on) {
+  function setFace(mode) {
+    if (mode !== 'tw' && mode !== 'wsd') mode = 'jj';
     try {
-      CFG.b2jj = !!on;
-      if (on) CFG.b2wsd = false;
+      CFG.b2face = mode;
+      CFG.b2jj = mode === 'jj';
+      CFG.b2wsd = mode === 'wsd';
       if (typeof save === 'function') save();
     } catch (e) {}
     const F = window.__faces524;
-    if (F && F.applyCardHTML) F.applyCardHTML();
-    else applyJjFirst();
-    rerender();
+    if (mode === 'wsd' && F && F.setWsd) {
+      F.setWsd(true);
+    } else {
+      if (F && F.applyCardHTML) F.applyCardHTML();
+      else applyJjFirst();
+      rerender();
+    }
     try { syncSwitches(); } catch (e) {}
   }
+  function setJj(on) { setFace(on ? 'jj' : 'tw'); }
 
   function hookApply() {
     const F = window.__faces524;
@@ -10572,7 +10907,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     const _setWsd = F.setWsd;
     if (typeof _setWsd === 'function') {
       F.setWsd = function (on) {
-        if (on) { try { CFG.b2jj = false; } catch (e) {} }
+        if (on) { try { CFG.b2jj = false; CFG.b2face = 'wsd'; } catch (e) {} }
         const r = _setWsd.apply(this, arguments);
         try { syncSwitches(); } catch (e2) {}
         return r;
@@ -10583,37 +10918,43 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   }
 
   function FACE_ROW() {
-    const on = jjOn();
-    return `<div class="srow"><div><b>白底競技牌面</b><small style="display:block;opacity:.7">大字角標、圓角霧面白底，原創競技風格（人頭牌用字母與徽章，不畫人物）</small></div><button class="sw ${on ? 'on' : ''}" data-sw="b2jj"><i></i></button></div>`;
+    const m = faceMode();
+    const chip = (id, lab) => `<button type="button" class="chip ${m === id ? 'on' : ''}" data-face="${id}">${lab}</button>`;
+    return `<div class="srow srow-face"><div><b>撲克牌面</b><small style="display:block;opacity:.7">大老二、鬥地主、十三支。預設「白底競技」（霧面大字角標；人頭牌用字母與徽章，不畫人物）</small></div><div class="chips">${chip('jj', '白底競技')}${chip('tw', '台灣實體')}${chip('wsd', '萬盛達')}</div></div>`;
   }
 
   function bindJj(root) {
-    const btn = root && root.querySelector('[data-sw="b2jj"]');
-    if (btn && !btn._jjBound) {
+    if (!root) return;
+    root.querySelectorAll('[data-face]').forEach(btn => {
+      if (btn._jjBound) return;
       btn._jjBound = true;
-      btn.onclick = ev => { ev && ev.stopPropagation && ev.stopPropagation(); ev && ev.preventDefault && ev.preventDefault(); setJj(!jjOn()); };
-    }
+      btn.onclick = ev => { ev && ev.stopPropagation && ev.stopPropagation(); ev && ev.preventDefault && ev.preventDefault(); setFace(btn.getAttribute('data-face')); };
+    });
   }
 
   function syncSwitches() {
-    document.querySelectorAll('[data-sw="b2jj"]').forEach(btn => btn.classList.toggle('on', jjOn()));
-    document.querySelectorAll('[data-sw="b2wsd"]').forEach(btn => {
-      let wsd = false; try { wsd = !!(CFG && CFG.b2wsd); } catch (e) {}
-      btn.classList.toggle('on', wsd && !jjOn());
-    });
+    const m = faceMode();
+    document.querySelectorAll('[data-face]').forEach(btn => btn.classList.toggle('on', btn.getAttribute('data-face') === m));
+    document.querySelectorAll('[data-sw="b2jj"]').forEach(btn => btn.classList.toggle('on', m === 'jj'));
+    document.querySelectorAll('[data-sw="b2wsd"]').forEach(btn => btn.classList.toggle('on', m === 'wsd'));
   }
 
   function injectFaceSetting() {
     const roots = new Set();
     const panel = document.querySelector('#panel');
     if (panel) roots.add(panel);
-    document.querySelectorAll('[data-sw="b2wsd"], [data-sw="b2auto"], [data-sw="tileClassic"], [data-sw="td3"]').forEach(el => {
+    document.querySelectorAll('[data-sw="b2wsd"], [data-sw="b2auto"], [data-sw="tileClassic"], [data-sw="td3"], [data-face]').forEach(el => {
       const r = el.closest('#panel') || el.closest('.setw') || el.closest('.sbody') || el.closest('#page');
       if (r) roots.add(r);
     });
     roots.forEach(pn => {
-      if (!pn || pn.querySelector('[data-sw="b2jj"]')) return;
-      const after = pn.querySelector('[data-sw="b2wsd"]') || pn.querySelector('[data-sw="b2auto"]') || pn.querySelector('[data-sw="tileClassic"]');
+      if (!pn) return;
+      pn.querySelectorAll('[data-sw="b2jj"], [data-sw="b2wsd"]').forEach(btn => {
+        const row = btn.closest('.srow');
+        if (row && !row.classList.contains('srow-face')) row.style.display = 'none';
+      });
+      if (pn.querySelector('[data-face]')) { bindJj(pn); return; }
+      const after = pn.querySelector('[data-sw="b2wsd"]') || pn.querySelector('[data-sw="b2auto"]') || pn.querySelector('[data-sw="tileClassic"]') || pn.querySelector('[data-sw="td3"]');
       const host = after && after.closest && after.closest('.srow');
       if (!host) return;
       host.insertAdjacentHTML('afterend', FACE_ROW());
@@ -10648,7 +10989,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   hookApply();
 
   try {
-    window.__facesjj = { vecHTML, vecFace, vecJoker, vecBack, setJj, jjOn, applyCardHTML: () => hookApply() };
+    window.__facesjj = { vecHTML, vecFace, vecJoker, vecBack, setJj, setFace, jjOn, faceMode, applyCardHTML: () => hookApply() };
   } catch (e) {}
 })();
 
