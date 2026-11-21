@@ -2700,7 +2700,7 @@ body.standalone526 #home .inst526{display:none}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
-<script>window.__VER = 'v5.29';</script>
+<script>window.__VER = 'v5.30';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -4810,7 +4810,7 @@ if (!SHOP.v51) { SHOP.v51 = 1; if (SHOP.felt === 'royal') SHOP.felt = 'moss'; if
 if (!SHOP.tw) { SHOP.tw = 1; ['felt-royal', 'back-blue'].forEach(k => { if (!SHOP.owned.includes(k)) SHOP.owned.push(k); }); if (SHOP.felt === 'emerald') SHOP.felt = 'royal'; if (SHOP.back === 'green') SHOP.back = 'blue'; }
 const CHAT = LS.get('chat', {});
 const QS = Object.assign({ n: 4, hands: 4, base: 100, perTai: 20, match: 'quick', chi: true, pon: true, kan: true, tsumo: true, preset: 'std', cap: 0, c: {} }, LS.get('qs', {}));
-const save = () => { LS.set('acc', ACC); LS.set('wallet', WAL); LS.set('cfg', CFG); LS.set('stats', ST); LS.set('hist', HIST.slice(0, 40)); LS.set('replays', REPLAYS.slice(0, 15));
+const save = () => { try { window.NJS && window.NJS.reconcile(); } catch (e) {} LS.set('acc', ACC); LS.set('wallet', WAL); LS.set('cfg', CFG); LS.set('stats', ST); LS.set('hist', HIST.slice(0, 40)); LS.set('replays', REPLAYS.slice(0, 15));
   LS.set('sign', SIGN); LS.set('mail', MAIL); LS.set('miss', MISS); LS.set('friends', FRIENDS); LS.set('club', CLUB); LS.set('shop', SHOP); LS.set('chat', CHAT); LS.set('qs', QS); };
 if (!MAIL) MAIL = [
   { id: 'm1', from: '系統', title: '歡迎來到鬧熱牌局！', body: '感謝你的加入！附上見面禮 2,000 金幣與 10 張房卡（虛擬道具），麻將、十三支、大老二、鬥地主、暗棋一次玩個夠。', reward: { coins: 2000 }, claimed: false, read: false, date: today() },
@@ -4821,7 +4821,78 @@ if (ST.todayDate !== today()) { ST.todayDate = today(); ST.todayHands = 0; ST.to
 const xp = () => ST.hands * 10 + ST.wins * 25 + ST.matches * 20;
 const level = () => Math.floor(Math.sqrt(xp() / 40)) + 1;
 const title = () => { const l = level(); return l < 5 ? '新手雀友' : l < 10 ? '進階雀友' : l < 20 ? '牌桌高手' : '一代雀神'; };
-const addCoins = (c, j = 0) => { WAL.coins += c; WAL.jade += j; save(); refreshWallet(); };
+const addCoins = (c, j = 0, k) => { WAL.coins += c; WAL.jade += j; try { window.NJS && window.NJS.add(k || (c < 0 ? 'spend' : 'reward'), c); } catch (e) {} save(); refreshWallet(); };
+// ================= v5.30 單機帳號伺服器記帳（NJS）=================
+// 玩家 ID（MJ+7 碼）第一次連上網路時向 oopop 伺服器登記、拿裝置權杖；伺服器一次性採用本機金幣（有上限），
+// 之後以伺服器餘額為準。離線時每局輸贏／獎勵排進佇列，連上網路（開啟、切回前景、每 5 分鐘、每局結束）就同步。
+// 只有模擬遊戲幣；伺服器不能也不會影響發牌或勝負。
+window.NJS = (function () {
+  const API = (() => { try { const o = localStorage.getItem('mj4_offline_api'); if (o && /^https?:\/\/[^\s]+$/.test(o)) return o.replace(/\/$/, ''); } catch (e) {}
+    return /^(oopop\.okdolle\.com|localhost|127\.0\.0\.1)$/.test(location.hostname) ? location.origin : 'https://oopop.okdolle.com'; })();
+  const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+  const ok = () => location.protocol !== 'file:' && ACC && /^MJ\d{7}$/.test(ACC.uid || '');
+  let S = LS.get('njsync', null);
+  const fresh = () => ({ v: 1, mj: ACC && ACC.uid, regKey: (rid() + rid() + rid()).replace(/[^A-Za-z0-9]/g, '').slice(0, 32), token: null, base: null, q: [], blocked: 0 });
+  const cur = () => { if (!S || !ACC || S.mj !== ACC.uid) { S = fresh(); LS.set('njsync', S); } return S; };
+  const put = () => LS.set('njsync', S);
+  const pend = () => S.q.reduce((a, e) => a + e.d, 0);
+  function add(k, d, ref, g) {
+    if (!ok() || !Number.isFinite(d) || !(d = Math.round(d))) return; cur(); if (!S.token || S.base == null) return;
+    const e = { id: rid(), d, k, ts: Date.now() }; if (ref) e.ref = String(ref).slice(0, 200); if (g && /^[a-z0-9]{1,12}$/.test(g)) e.g = g;
+    S.q.push(e); if (S.q.length > 2000) S.q.splice(0, S.q.length - 2000); put(); soon();
+  }
+  function reconcile() {   // anything that changed coins without add() (safety net)
+    if (!ok()) return; cur(); if (!S.token || S.base == null) return;
+    const diff = Math.round(WAL.coins - (S.base + pend())); if (diff) add(diff < 0 ? 'spend' : 'misc', diff);
+  }
+  let busy = false, timer = 0, warned = false;
+  const soon = () => { clearTimeout(timer); timer = setTimeout(sync, 1500); };
+  async function post(path, body, tok) {
+    const h = { 'Content-Type': 'application/json' }; if (tok) h['X-Device-Token'] = tok;
+    const r = await fetch(API + '/v1/offline/' + path, { method: 'POST', headers: h, body: JSON.stringify(body), cache: 'no-store', credentials: 'omit' });
+    let j = null; try { j = await r.json(); } catch (e) {} return { status: r.status, j: j || {} };
+  }
+  function apply(coins) {
+    S.base = coins; WAL.coins = coins + pend(); put(); LS.set('wallet', WAL); try { refreshWallet(); } catch (e) {}
+  }
+  async function sync() {
+    if (busy || !ok() || (typeof navigator !== 'undefined' && navigator.onLine === false)) return;
+    cur(); if (S.blocked && Date.now() - S.blocked < 6 * 3600e3) return;
+    busy = true;
+    try {
+      if (!S.token) {
+        const sent = Math.max(0, Math.round(WAL.coins - pend()));
+        const r = await post('register', { mjId: ACC.uid, regKey: S.regKey, coins: sent, nick: (ACC.nick || ACC.name || '').slice(0, 16) || undefined });
+        if (r.status === 409) { S.blocked = Date.now(); put(); if (!warned) { warned = true; toast('這個玩家 ID 已綁定在其他裝置，金幣暫存在本機；請聯絡客服', 4000); } return; }
+        if (r.status !== 200 && r.status !== 201) return;
+        S.token = r.j.token; S.blocked = 0;
+        const diff = Math.round(WAL.coins - pend() - sent); if (diff) S.q.push({ id: rid(), d: diff, k: diff < 0 ? 'spend' : 'misc', ts: Date.now() });
+        apply(r.j.coins);
+        if (r.j.capped) toast('金幣已同步到伺服器帳號（首次同步上限 ' + fmt(r.j.cap) + '）', 4000);
+      }
+      for (let round = 0; round < 25; round++) {
+        const batch = S.q.slice(0, 100), ids = new Set(batch.map(e => e.id));
+        const r = await post('sync', { mjId: ACC.uid, nick: (ACC.nick || ACC.name || '').slice(0, 16) || undefined, entries: batch.map(e => { const o = { id: e.id, d: e.d, k: e.k }; if (e.g) o.g = e.g; if (e.ref) o.ref = e.ref; return o; }) }, S.token);
+        if (r.status === 401) { S.token = null; put(); setTimeout(sync, 500); return; }
+        if (r.status === 403) { S.blocked = Date.now(); put(); return; }
+        if (r.status !== 200) return;
+        S.q = S.q.filter(e => !ids.has(e.id));
+        if ((r.j.results || []).some(x => !x.ok)) toast('部分離線紀錄未通過伺服器檢查，金幣以伺服器為準', 3000);
+        S.last = Date.now(); apply(r.j.coins);
+        if (!S.q.length) break;
+      }
+    } catch (e) { /* offline: keep the queue */ } finally { busy = false; }
+  }
+  if (typeof window !== 'undefined') {
+    window.addEventListener('online', () => sync());
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') sync(); });
+    window.addEventListener('pageshow', () => sync());
+    setInterval(() => { if (document.visibilityState !== 'hidden') sync(); }, 5 * 60e3);
+    setTimeout(sync, 1200);
+  }
+  return { add, reconcile, sync, api: API, coins: () => WAL.coins, state: () => (cur(), JSON.parse(JSON.stringify(Object.assign({}, S, { token: S.token ? '***' : null })))),
+    t: { addCoins: (c) => addCoins(c), hand: (d) => { WAL.coins += d; add('hand', d, null, 'mj'); save(); refreshWallet(); } } };
+})();
 
 // ---------- 縮放 ----------
 let STW = 960;
@@ -6028,7 +6099,7 @@ function handOver(res) {
     const others = G.players.map((_, i) => i).filter(i => i !== 0);
     setTimeout(() => { if (res.winner !== 0) emote(res.winner, pick(BOT_EMO.win)); else if (Math.random() < .6) emote(pick(others), pick(BOT_EMO.lose)); }, 900);
   }
-  res.delta = delta; WAL.coins += delta;
+  res.delta = delta; WAL.coins += delta; try { window.NJS.add('hand', delta, null, 'mj'); } catch (e) {}
   ST.hands++; ST.todayHands++;
   if (G.kind === 'play') v5Track(G.n === 2 || (G.cfg && G.cfg.lf) ? 'mj' : 'mj', res);
   if (res.type === 'win' && res.winner === 0) { ST.wins++; ST.todayWins++; if (res.selfDraw) ST.tsumo++; ST.best = Math.max(ST.best, res.total); }
@@ -6039,7 +6110,7 @@ function handOver(res) {
   if (G.cfg.club && CLUB && res.type === 'win' && res.total >= 10 && CLUB.pool > 0) {
     const prize = Math.floor(CLUB.pool / 2); CLUB.pool -= prize; res.jackpot = prize;
     G.jackpots.push(`${nameOf(res.winner)} ${res.total} 台獨得彩金 ${fmt(prize)}`);
-    if (res.winner === 0) { WAL.coins += prize; res.delta += prize; }
+    if (res.winner === 0) { WAL.coins += prize; res.delta += prize; try { window.NJS.add('hand', prize, null, 'jackpot'); } catch (e) {} }
   }
   // 牌譜
   const rid = 'r' + Date.now().toString(36) + rnd(1000);
@@ -6653,7 +6724,7 @@ function cRoundOver(pts, detail, text, mag) {
   if (CS.rec) crecEnd(text);
   const base = (CS.game === 'b2' && CS.st && CS.st.result && CS.st.result.abs) ? 1 : CS.base, delta = pts[0] * base; // v5.19 大老二新計分直接是金幣
   pts.forEach((v, i) => CS.scores[i] += v * base);
-  WAL.coins += delta;
+  WAL.coins += delta; try { window.NJS.add('hand', delta, null, String(CS.game || 'card').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12)); } catch (e) {}
   const g = CS.game; CST[g] = CST[g] || { rounds: 0, wins: 0, matches: 0, firsts: 0, net: 0 };
   CST[g].rounds++; if (pts[0] > 0) CST[g].wins++; CST[g].net += delta;
   CS.log.push({ text });
@@ -7112,7 +7183,7 @@ PAGES.events = { title: '活動', sub: '限時活動・任務・獎勵路線・�
 const REFILL_TO = 5000, REFILL_BELOW = 2000;
 function dailyRefill() {
   if (!ACC || V5.refill === today() || WAL.coins >= REFILL_BELOW) return false;
-  const add = REFILL_TO - WAL.coins; V5.refill = today(); saveV5(); addCoins(add);
+  const add = REFILL_TO - WAL.coins; V5.refill = today(); saveV5(); addCoins(add, 0, 'refill');
   modal(`<h2 class="grad">每日金幣補給</h2><div class="sub">你的金幣低於 ${fmt(REFILL_BELOW)}，今天免費補到 <b>${fmt(REFILL_TO)}</b>（+${fmt(add)}）。每天一次，全部是遊戲幣。</div><div class="foot"><button class="btn primary" data-close>收下</button></div>`);
   beep('coins'); return true;
 }
@@ -9110,7 +9181,7 @@ if (typeof window !== 'undefined' && typeof CG !== 'undefined' && CG.B2) {
     const r = GIFT.check(code, ACC && ACC.uid, usedList());
     if (!r.ok) return r;
     LS.set('giftUsed', usedList().concat(r.nonce));
-    WAL.coins += r.amount; save(); try { refreshWallet(); } catch (e) {}
+    WAL.coins += r.amount; try { window.NJS.add('gift', r.amount, code); } catch (e) {} save(); try { refreshWallet(); } catch (e) {}
     try { beep('coin'); } catch (e) {}
     return r;
   }
@@ -10584,7 +10655,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.29'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.30'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
