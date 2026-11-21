@@ -891,8 +891,6 @@
 			bP8/AAAA//+DjmrnAAAABklEQVQDANZMZDIFmwasAAAAAElFTkSu
 			QmCC
 			</data>
-			<key>IgnoreManifestScope</key>
-			<false/>
 			<key>IsRemovable</key>
 			<true/>
 			<key>Label</key>
@@ -906,9 +904,9 @@
 			<key>PayloadType</key>
 			<string>com.apple.webClip.managed</string>
 			<key>PayloadUUID</key>
-			<string>EBF76EEF-FFDB-433F-98B9-87F8C5DE8912</string>
+			<string>E89E3D83-B2B5-4467-AEED-E5F3B29BCA97</string>
 			<key>PayloadVersion</key>
-			<integer>2</integer>
+			<integer>1</integer>
 			<key>Precomposed</key>
 			<true/>
 			<key>URL</key>
@@ -930,8 +928,8 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>68E4003F-4493-4CD1-9F9A-E8E48DC4FA46</string>
+	<string>6B327756-A85D-4327-9F76-729B8035A4BD</string>
 	<key>PayloadVersion</key>
-	<integer>2</integer>
+	<integer>1</integer>
 </dict>
 </plist>
