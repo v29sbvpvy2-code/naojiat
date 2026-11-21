@@ -2634,8 +2634,8 @@ body.standalone526 #home .inst526{display:none}
 }
 
 
-/* v5.31 bd2pick */
-/* v5.31 大老二選牌：加大手牌、上抬不擋角標、快捷列讓位 */
+/* v5.32 bd2pick */
+/* v5.32 大老二選牌：加大手牌、上抬不擋角標、快捷列讓位、怪物牌提示 */
 #cgame[data-game=b2],
 #cgame[data-game=b2] .ctable,
 #cgame[data-game=b2] #ctbl,
@@ -2646,11 +2646,48 @@ body.b2-portrait #rotate{display:none !important}
 #cgame[data-game=b2]{
   --lift:60px;
   --handH:250px;
+  --monH:0px;
 }
 #cgame[data-game=b2] .cbar{
   top:auto;
-  bottom:calc(8px + var(--handH, 250px) + 44px);
+  bottom:calc(8px + var(--handH, 250px) + 44px + var(--monH, 0px));
   z-index:6;
+}
+#cgame[data-game=b2] .b2mon{
+  left:50%;top:auto;
+  bottom:calc(8px + var(--handH, 250px) + 42px);
+  transform:translateX(-50%);z-index:7;
+  display:flex;gap:6px;align-items:center;flex-wrap:nowrap;
+  max-width:92%;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding:2px 4px;pointer-events:auto;scrollbar-width:none;
+}
+#cgame[data-game=b2] .b2mon::-webkit-scrollbar{display:none}
+#cgame[data-game=b2] .b2mon-k{
+  flex:0 0 auto;font:700 12px/1 var(--serif,serif);
+  letter-spacing:.12em;color:#efe6d0;opacity:.9;padding:0 2px;
+  text-shadow:none;filter:none;
+}
+#cgame[data-game=b2] .b2mon-chip{
+  flex:0 0 auto;height:28px;padding:0 10px;border-radius:8px;
+  font:700 12px/28px var(--ui,sans-serif);letter-spacing:.04em;color:#efe6d0;
+  background:rgba(22,16,12,.88);border:1px solid rgba(210,190,150,.5);
+  box-shadow:none;cursor:pointer;filter:none;
+  -webkit-tap-highlight-color:transparent;user-select:none;white-space:nowrap;
+}
+#cgame[data-game=b2] .b2mon-chip.on{
+  color:#2a1406 !important;background:#e6d3a4 !important;border-color:#8a6a2e !important;
+}
+#cgame[data-game=b2] .b2mon-chip:active{transform:scale(.97)}
+#cgame[data-game=b2] .b2pick-chip.mon{border-color:rgba(210,190,150,.7)}
+#cgame[data-game=b2] .b2pick-chip.muted{
+  opacity:.62;background:rgba(24,14,8,.7);border-color:rgba(210,190,150,.35);
+}
+#cgame[data-game=b2] .chand .pc .b2mon-tag{
+  position:absolute;left:3px;right:auto;top:auto;bottom:3px;z-index:4;
+  width:14px;height:14px;border-radius:3px;
+  font:700 9px/14px var(--ui,sans-serif);text-align:center;letter-spacing:0;
+  color:#2a1406;background:#d9c79a;border:1px solid #5a4030;
+  pointer-events:none;box-shadow:none;filter:none;
 }
 #cgame[data-game=b2] .b2pick{
   left:50%;top:auto;bottom:calc(8px + var(--handH, 250px) + 10px);
@@ -2716,7 +2753,7 @@ body.b2-portrait #rotate{display:none !important}
 #cgame[data-game=b2] .combo522{display:none}
 #cgame[data-game=b2] .me-chip{
   top:auto !important;
-  bottom:calc(8px + var(--handH, 250px) + 78px);
+  bottom:calc(8px + var(--handH, 250px) + 78px + var(--monH, 0px));
   left:8px;
 }
 #cgame[data-game=b2] .pile.p0{top:36%}
@@ -2760,7 +2797,7 @@ body.b2-portrait #cgame[data-game=b2] .bfan.f3{left:8px;top:260px}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
-<script>window.__VER = 'v5.31';</script>
+<script>window.__VER = 'v5.32';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -8126,7 +8163,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.31</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.32</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9805,6 +9842,82 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     return cycleList(moves, current);
   }
 
+  const FACE_N = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
+  const SUIT_N = ['♣', '♦', '♥', '♠'];
+
+  // 只看傳入的這手牌（呼叫端必須傳玩家自己的手牌，絕不掃對手）。
+  // 鐵支＝四條加一張；同花順＝同花且符合本規章順子（A2345 最小、23456 最大、10JQKA 合法）。
+  function monsterLabel(m) {
+    if (m.name === '鐵支') {
+      const f = FACE_N[m.key];
+      return f === '10' ? '鐵支 四條10' : ('鐵支 ' + f + f + f + f);
+    }
+    const cards = m.cards || (m.variants && m.variants[0] && m.variants[0].cards) || [];
+    const si = m.si != null ? m.si : (m.c && m.c.si);
+    const suit = cards.length ? SUIT_N[cards[0] & 3] : '';
+    let range = '';
+    if (si === 0) range = 'A-5';
+    else if (si === 9) range = '2-6';
+    else if (si === 8) range = '10-A';
+    else if (si >= 1 && si <= 7) range = FACE_N[si - 1] + '-' + FACE_N[si - 1 + 4];
+    return '同花順 ' + suit + range;
+  }
+
+  function monsters(hand) {
+    const B = B2();
+    if (!B || !hand || !hand.length) return [];
+    const raw = B.plays(hand).filter(m => m.c && (m.c.name === '鐵支' || m.c.name === '同花順'));
+    const iron = new Map();
+    const sfs = [];
+    for (const m of raw) {
+      if (m.c.name === '鐵支') {
+        const k = m.c.key;
+        if (!iron.has(k)) {
+          iron.set(k, { name: '鐵支', key: k, c: m.c, variants: [], cards: m.cards.filter(c => rk(c) === k) });
+        }
+        iron.get(k).variants.push(m);
+      } else {
+        sfs.push({ name: '同花順', key: m.c.key, si: m.c.si, c: m.c, variants: [m], cards: m.cards.slice().sort(byId) });
+      }
+    }
+    const list = sfs.concat([...iron.values()]);
+    list.sort((a, b) => (b.c.cls || 0) - (a.c.cls || 0) || (b.c.key || 0) - (a.c.key || 0));
+    for (const m of list) {
+      m.variants.sort(sortSmallest);
+      m.label = monsterLabel(m);
+      // 角標只標核心牌：鐵支的四條、同花順的五張（不含每個踢腳）。
+      m.cardSet = new Set(m.cards || []);
+    }
+    return list;
+  }
+
+  // 點徽章：優先選能壓過桌面的變體（由小到大循環）；都不能出時仍選牌，並回傳原因（不出牌）。
+  function pickMonster(S, p, monster, currentSel) {
+    if (!monster || !monster.variants || !monster.variants.length) return { sel: currentSel || [], legal: false, why: '沒有這手怪物牌' };
+    const B = B2();
+    const legal = legalMoves(S, p);
+    const legalVars = monster.variants.filter(v => {
+      if (!legal.some(L => same(L.cards, v.cards))) return false;
+      return !(B && B.whyIllegal(S, p, v.cards));
+    });
+    const pool = legalVars.length ? legalVars : monster.variants;
+    const cyc = cycleList(pool, currentSel || []);
+    let why = null;
+    if (!legalVars.length) {
+      why = (B && B.whyIllegal(S, p, pool[0].cards)) || '這手怪物牌現在還不能出';
+    }
+    return { sel: cyc.cards, legal: !!legalVars.length, why, whySoft: softWhy(why), label: monster.label, name: monster.name, cycled: cyc.index > 0 || same(pool[0].cards, currentSel || []) };
+  }
+
+  function softWhy(why) {
+    if (!why) return '這手怪物牌現在還不能出';
+    if (/第一手/.test(why)) return '第一手要含梅花 3，這手怪物牌先留著';
+    if (/四隻 2 的鐵支是最大/.test(why)) return '桌上是四隻 2 的鐵支，什麼牌都壓不過';
+    if (/含 ♠2 的同花順/.test(why)) return '桌上是含 ♠2 的同花順，只有四隻 2 的鐵支能壓';
+    if (/還沒|輪到/.test(why)) return '還沒輪到你出牌，先幫你選起來';
+    return why;
+  }
+
   // 手牌由左到右滑過的區間（含兩端）
   function rangeCards(hand, a, b) {
     const i = hand.indexOf(a), j = hand.indexOf(b);
@@ -9813,7 +9926,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     return hand.slice(lo, hi + 1);
   }
 
-  const api = { tap, quickGroups, cycleGroup, cycleList, fhParts, rangeCards, legalMoves, same, isLeading, leadName };
+  const api = { tap, quickGroups, cycleGroup, cycleList, fhParts, rangeCards, legalMoves, same, isLeading, leadName, monsters, monsterLabel, pickMonster, softWhy };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   try { root.B2Pick = api; } catch (e) {}
 })(typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : this);
@@ -9823,6 +9936,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   const EASE = 'cubic-bezier(.22,1,.36,1)';
   const gestOn = () => CFG.b2gest !== false;
   const autoOn = () => CFG.b2auto !== false;
+  const monsterOn = () => CFG.b2monster !== false;
   const isB2 = () => typeof CS !== 'undefined' && CS.game === 'b2' && CS.st;
   const pendingB2 = () => isB2() && CS.pending && CS.pending.kind === 'b2' && !CS.auto && !CS.result;
 
@@ -9932,6 +10046,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
           comboChip();
           syncHandVars();
           renderPickBar();
+          renderMonsters();
           if (CS._deal522) { cg.classList.add('deal522'); [...cg.querySelectorAll('.chand .pc')].forEach((el, i) => el.style.setProperty('--i522', i)); CS._deal522 = false; }
           maybeHint();
         }
@@ -10069,15 +10184,32 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     if (!pendingB2() || typeof B2Pick === 'undefined') return;
     const groups = B2Pick.quickGroups(CS.st, 0);
     const cur = [...CS.sel];
+    const monNames = new Set();
+    if (monsterOn()) {
+      for (const g of groups) {
+        if (g.name === '鐵支' || g.name === '同花順') { g._lab = '怪物・' + g.name; monNames.add(g.name); }
+      }
+    }
     const chips = groups.map(g => {
       const i = g.moves.findIndex(m => B2Pick.same(m.cards, cur));
       const n = g.moves.length;
-      const lab = i >= 0 ? (n > 1 ? g.name + ' ' + (i + 1) + '/' + n : g.name) : (n > 1 ? g.name + ' ·' + n : g.name);
-      return '<button type="button" class="b2pick-chip' + (i >= 0 ? ' on' : '') + '" data-b2g="' + g.name + '">' + lab + '</button>';
+      const base = g._lab || g.name;
+      const lab = i >= 0 ? (n > 1 ? base + ' ' + (i + 1) + '/' + n : base) : (n > 1 ? base + ' ·' + n : base);
+      const monCls = (g.name === '鐵支' || g.name === '同花順') && monsterOn() ? ' mon' : '';
+      return '<button type="button" class="b2pick-chip' + monCls + (i >= 0 ? ' on' : '') + '" data-b2g="' + g.name + '">' + lab + '</button>';
     }).join('');
+    let muted = '';
+    if (monsterOn()) {
+      const mons = B2Pick.monsters(CS.st.hands[0] || []);
+      mons.forEach((m, i) => {
+        if (m.variants.some(v => groups.some(g => g.moves.some(mv => B2Pick.same(mv.cards, v.cards))))) return;
+        const on = m.variants.some(v => B2Pick.same(v.cards, cur));
+        muted += '<button type="button" class="b2pick-chip mon muted' + (on ? ' on' : '') + '" data-b2mon="' + i + '">怪物・' + m.label + '</button>';
+      });
+    }
     const d = document.createElement('div');
     d.className = 'b2pick g-abs';
-    d.innerHTML = chips
+    d.innerHTML = chips + muted
       + '<button type="button" class="b2pick-chip ghost" data-b2g="clear">重選</button>'
       + '<button type="button" class="b2pick-chip ghost' + (CS._b2free ? ' on' : '') + '" data-b2g="free">單選</button>';
     const host = document.querySelector('#cgame');
@@ -10258,6 +10390,57 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     else if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); tryPass(); }
   });
 
+
+  function ownMonsters() {
+    if (!isB2() || typeof B2Pick === 'undefined' || !CS.st || !CS.st.hands) return [];
+    return B2Pick.monsters(CS.st.hands[0] || []);
+  }
+  function renderMonsters() {
+    document.querySelectorAll('.b2mon').forEach(e => e.remove());
+    document.querySelectorAll('.b2mon-tag').forEach(e => e.remove());
+    const cg = document.querySelector('#cgame');
+    if (cg) cg.style.setProperty('--monH', '0px');
+    if (!isB2() || !monsterOn() || typeof B2Pick === 'undefined') return;
+    const list = ownMonsters();
+    if (!list.length) return;
+    const marked = new Set();
+    list.forEach(m => m.cardSet && m.cardSet.forEach(c => marked.add(c)));
+    document.querySelectorAll('#chand [data-c]').forEach(el => {
+      if (marked.has(+el.dataset.c) && !el.querySelector('.b2mon-tag')) {
+        const t = document.createElement('i');
+        t.className = 'b2mon-tag';
+        t.textContent = '怪';
+        t.setAttribute('aria-hidden', 'true');
+        el.appendChild(t);
+      }
+    });
+    if (!cg) return;
+    const cur = CS.sel ? [...CS.sel] : [];
+    const d = document.createElement('div');
+    d.className = 'b2mon g-abs';
+    d.innerHTML = '<span class="b2mon-k">怪物牌</span>' + list.map((m, i) => {
+      const on = m.variants.some(v => B2Pick.same(v.cards, cur));
+      return '<button type="button" class="b2mon-chip' + (on ? ' on' : '') + '" data-b2mon="' + i + '">' + m.label + '</button>';
+    }).join('');
+    cg.appendChild(d);
+    cg.style.setProperty('--monH', '34px');
+  }
+  function tapMonster(i) {
+    if (!isB2() || typeof B2Pick === 'undefined') return;
+    const list = ownMonsters();
+    const m = list[i];
+    if (!m) return;
+    const r = B2Pick.pickMonster(CS.st, 0, m, CS.sel ? [...CS.sel] : []);
+    applySel(r.sel);
+    if (!r.legal && typeof toast === 'function') toast(r.whySoft || r.why || '這手怪物牌現在還不能出', 2200);
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('[data-b2mon]');
+    if (!b || !isB2()) return;
+    e.preventDefault(); e.stopPropagation();
+    tapMonster(+b.getAttribute('data-b2mon'));
+  }, true);
+
   // ---- one-time hint + settings ----
   function maybeHint() {
     if (!isB2() || !gestOn()) return;
@@ -10277,21 +10460,36 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     box.querySelector('button').onclick = () => { if (typeof LS !== 'undefined') LS.set('b2gestHint', true); box.remove(); };
     (document.querySelector('#cgame') || document.body).appendChild(box);
   }
+  const SW_SEL = '[data-sw="b2gest"],[data-sw="b2auto"],[data-sw="b2monster"]';
+  function settingsHosts() {
+    return [document.querySelector('#panel'), document.querySelector('#page')].filter(Boolean);
+  }
   function injectSettings() {
-    const pn = document.querySelector('#panel'); if (!pn || pn.querySelector('[data-sw="b2gest"]')) return;
-    const td = pn.querySelector('[data-sw="anim"], [data-sw="td3"], [data-sw="real520"], .srow');
-    const host = td && td.closest && td.closest('.srow');
     const html = `<div class="srow"><div><b>大老二手勢</b><small style="display:block;opacity:.7">上滑出牌・下滑不出・點牌智慧選組・快捷列</small></div><button class="sw ${gestOn() ? 'on' : ''}" data-sw="b2gest"><i></i></button></div>
-      <div class="srow"><div><b>自動出完</b><small style="display:block;opacity:.7">整手剛好能出時自動打出</small></div><button class="sw ${autoOn() ? 'on' : ''}" data-sw="b2auto"><i></i></button></div>`;
-    if (host) host.insertAdjacentHTML('afterend', html);
-    else pn.insertAdjacentHTML('beforeend', html);
-    pn.querySelectorAll('[data-sw="b2gest"],[data-sw="b2auto"]').forEach(b => {
-      b.onclick = () => { const k = b.dataset.sw; CFG[k] = !(k === 'b2gest' ? gestOn() : autoOn()); if (typeof save === 'function') save(); injectSettingsRedo(); };
-    });
+      <div class="srow"><div><b>自動出完</b><small style="display:block;opacity:.7">整手剛好能出時自動打出</small></div><button class="sw ${autoOn() ? 'on' : ''}" data-sw="b2auto"><i></i></button></div>
+      <div class="srow"><div><b>怪物牌提示</b><small style="display:block;opacity:.7">手中有鐵支或同花順時顯示徽章，點一下就選起來；只看自己的牌</small></div><button class="sw ${monsterOn() ? 'on' : ''}" data-sw="b2monster"><i></i></button></div>`;
+    for (const pn of settingsHosts()) {
+      if (pn.querySelector('[data-sw="b2gest"]')) continue;
+      const td = pn.querySelector('[data-sw="anim"], [data-sw="td3"], [data-sw="real520"], .srow');
+      const host = td && td.closest && td.closest('.srow');
+      if (host) host.insertAdjacentHTML('afterend', html);
+      else pn.insertAdjacentHTML('beforeend', html);
+      pn.querySelectorAll(SW_SEL).forEach(b => {
+        b.onclick = () => {
+          const k = b.dataset.sw;
+          const cur = k === 'b2gest' ? gestOn() : k === 'b2auto' ? autoOn() : monsterOn();
+          CFG[k] = !cur;
+          if (typeof save === 'function') save();
+          injectSettingsRedo();
+          if (k === 'b2monster' && typeof renderC === 'function' && isB2()) renderC();
+        };
+      });
+    }
   }
   function injectSettingsRedo() {
-    const pn = document.querySelector('#panel'); if (!pn) return;
-    pn.querySelectorAll('[data-sw="b2gest"],[data-sw="b2auto"]').forEach(b => b.closest('.srow').remove());
+    for (const pn of settingsHosts()) {
+      pn.querySelectorAll(SW_SEL).forEach(b => { const row = b.closest('.srow'); if (row) row.remove(); });
+    }
     injectSettings();
   }
   if (typeof gameSettings === 'function') {
@@ -10299,16 +10497,20 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     gameSettings = function () { const r = _gs.apply(this, arguments); try { injectSettings(); } catch (e) {} return r; };
   }
   // also when settings page renders
-  const mo = new MutationObserver(() => { try { if (document.querySelector('#panel .srow')) injectSettings(); } catch (e) {} });
-  if (document.querySelector('#modal')) mo.observe(document.querySelector('#modal'), { childList: true, subtree: true });
+  const mo = new MutationObserver(() => { try { if (document.querySelector('#panel .srow') || document.querySelector('#page .srow')) injectSettings(); } catch (e) {} });
+  const moRoot = document.querySelector('#modal') || document.body;
+  if (moRoot) mo.observe(moRoot, { childList: true, subtree: true });
+  const page = document.querySelector('#page');
+  if (page && page !== moRoot) mo.observe(page, { childList: true, subtree: true });
 
-  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn, clearSel, renderPickBar, tryFitB2 };
+    function setMonsterOn(on) {
+    CFG.b2monster = on !== false;
+    if (typeof save === 'function') save();
+    injectSettingsRedo();
+    if (typeof renderC === 'function' && isB2()) renderC();
+  }
+  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn, monsterOn, setMonsterOn, clearSel, renderPickBar, renderMonsters, tryFitB2 };
 })();
-
-
-
-
-
 
 
 // ================= v5.23：結算按鈕不擋分數、大老二底欄對比、牌型喊牌避開牌面 =================
@@ -10802,7 +11004,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.31'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.32'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
