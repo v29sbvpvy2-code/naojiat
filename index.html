@@ -2625,20 +2625,36 @@ body.standalone526 #home .inst526{display:none}
 #cgame[data-game=b2] .chand .pc.jj.sel,
 #cgame[data-game=ddz] .chand .pc.jj.sel,
 #cgame .chand .pc.jj.sel{
-  transform:translateY(-28px);
+  transform:translateY(calc(-1 * var(--lift, 60px)));
   box-shadow:0 0 0 2px #222222,0 2px 5px rgba(0,0,0,.2);
 }
 @media (hover:hover){
-  #cgame[data-game=b2] .chand .pc.jj:hover{transform:translateY(-8px)}
-  #cgame[data-game=b2] .chand .pc.jj.sel:hover{transform:translateY(-28px)}
+  #cgame[data-game=b2] .chand .pc.jj:hover{transform:none}
+  #cgame[data-game=b2] .chand .pc.jj.sel:hover{transform:translateY(calc(-1 * var(--lift, 60px)))}
 }
 
 
-/* v5.29 bd2pick */
-/* v5.29 大老二選牌：快捷列、加大點擊、選中明顯抬起（只選牌，不出牌） */
-#cgame[data-game=b2] .cbar{top:262px}
+/* v5.31 bd2pick */
+/* v5.31 大老二選牌：加大手牌、上抬不擋角標、快捷列讓位 */
+#cgame[data-game=b2],
+#cgame[data-game=b2] .ctable,
+#cgame[data-game=b2] #ctbl,
+#stage.b2port{overflow:visible}
+body.b2-portrait #rotate{display:none !important}
+#stage.b2port{height:var(--H, 1169px)}
+
+#cgame[data-game=b2]{
+  --lift:60px;
+  --handH:250px;
+}
+#cgame[data-game=b2] .cbar{
+  top:auto;
+  bottom:calc(8px + var(--handH, 250px) + 44px);
+  z-index:6;
+}
 #cgame[data-game=b2] .b2pick{
-  left:50%;top:318px;transform:translateX(-50%);z-index:7;
+  left:50%;top:auto;bottom:calc(8px + var(--handH, 250px) + 10px);
+  transform:translateX(-50%);z-index:7;
   display:flex;gap:6px;align-items:center;flex-wrap:nowrap;
   max-width:92%;overflow-x:auto;-webkit-overflow-scrolling:touch;
   padding:2px 4px;pointer-events:auto;scrollbar-width:none;
@@ -2656,20 +2672,64 @@ body.standalone526 #home .inst526{display:none}
 }
 #cgame[data-game=b2] .b2pick-chip.ghost{opacity:.92}
 #cgame[data-game=b2] .b2pick-chip:active{transform:scale(.97)}
-#cgame[data-game=b2] .chand{height:168px}
+
+/* 手牌：滿寬置中，預留上抬頭空間；選中只上移、不放大、不提高 z-index */
+#cgame[data-game=b2] .chand{
+  left:50% !important;
+  right:auto;
+  top:auto !important;
+  bottom:8px;
+  transform:translateX(-50%);
+  height:var(--handH, 250px);
+  overflow:visible;
+  z-index:4;
+  pointer-events:none;
+}
+#cgame[data-game=b2] .chand:not(.chand-multi) .pc{top:var(--lift, 60px)}
+#cgame[data-game=b2] .chand-multi{
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-top:var(--lift, 60px);gap:var(--lift, 60px);box-sizing:border-box;
+}
+#cgame[data-game=b2] .chand-row{position:relative;flex:none;pointer-events:none}
+#cgame[data-game=b2] .chand-row .pc{top:0}
+#cgame[data-game=b2] .chand .pc,
+#cgame[data-game=b2] .chand-row{pointer-events:auto}
 #cgame[data-game=b2] .chand .pc{touch-action:none}
 #cgame[data-game=b2] .chand .pc .hit529{
-  position:absolute;left:-6px;right:-10px;top:-16px;bottom:-22px;z-index:3;
+  position:absolute;left:0;right:0;top:-10px;bottom:-8px;z-index:0;
   pointer-events:auto;
 }
-#cgame[data-game=b2] .chand .pc.sel{
-  transform:translateY(-32px)!important;
-  z-index:5;
+#cgame[data-game=b2] .chand .pc.sel,
+#cgame[data-game=b2] .chand .pc.jj.sel,
+#cgame[data-game=b2] .chand .pc.vec.sel,
+#cgame[data-game=b2] .chand .pc.wsd.sel,
+#cgame[data-game=b2] .chand .pc.sel:hover,
+#cgame[data-game=b2] .chand .pc.jj.sel:hover{
+  transform:translateY(calc(-1 * var(--lift, 60px))) !important;
+  box-shadow:0 0 0 2px #222,0 4px 8px rgba(0,0,0,.25) !important;
+  /* 不設 z-index，沿用各牌自己的層級，避免挡住右側角標 */
+  filter:none !important;
 }
-#cgame[data-game=b2] .chand .pc.jj.sel{
-  box-shadow:0 0 0 2px #222,0 6px 10px rgba(0,0,0,.28)!important;
+@media (hover:hover){
+  #cgame[data-game=b2] .chand .pc:hover{transform:none}
 }
 #cgame[data-game=b2] .combo522{display:none}
+#cgame[data-game=b2] .me-chip{
+  top:auto !important;
+  bottom:calc(8px + var(--handH, 250px) + 78px);
+  left:8px;
+}
+#cgame[data-game=b2] .pile.p0{top:36%}
+#cgame[data-game=b2] .pile .cards .pc{margin-left:-22px}
+#cgame[data-game=b2] .pile .cards .pc:first-child{margin-left:0}
+
+/* 直向大老二：對手與資訊靠上，桌面出牌居中 */
+body.b2-portrait #cgame[data-game=b2] .cinfo{transform:scale(.92);transform-origin:left top}
+body.b2-portrait #cgame[data-game=b2] .pile.p2{top:70px}
+body.b2-portrait #cgame[data-game=b2] .pile.p1{top:180px;right:24px}
+body.b2-portrait #cgame[data-game=b2] .pile.p3{top:180px;left:24px}
+body.b2-portrait #cgame[data-game=b2] .bfan.f1{right:8px;top:260px}
+body.b2-portrait #cgame[data-game=b2] .bfan.f3{left:8px;top:260px}
 
 </style>
 </head>
@@ -2700,7 +2760,7 @@ body.standalone526 #home .inst526{display:none}
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
 
-<script>window.__VER = 'v5.30';</script>
+<script>window.__VER = 'v5.31';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -6796,23 +6856,56 @@ function cchip(p) {
 function handCards(cards, opts = {}) {
   const w = opts.w || 62, n = cards.length, avail = opts.avail != null ? opts.avail : STW - 330;
   const maxF = opts.maxFrac || .66, minF = opts.minFrac || 0;
+  const rows = opts.rows || 1;
+  const lift = opts.lift != null ? opts.lift : Math.round(w * 87 / 57 * 0.36);
+  const cardH = opts.cardH != null ? opts.cardH : Math.round(w * 87 / 57);
+  const rowOf = (rowCards, startIdx) => {
+    const m = rowCards.length;
+    let step = m > 1 ? Math.min(w * maxF, (avail - w) / (m - 1)) : 0;
+    if (m > 1 && minF && step < w * minF) step = w * minF;
+    const width = w + step * Math.max(0, m - 1);
+    const inner = rowCards.map((c, j) => {
+      const i = startIdx + j;
+      return cardHTML(c, w, (CS.sel.has(c) ? 'sel ' : '') + (opts.dim && opts.dim(c) ? 'dim' : ''), `data-c="${c}" style="--w:${w}px;--lift:${lift}px;left:${j * step}px;z-index:${i}"`);
+    }).join('');
+    return `<div class="chand-row" style="width:${width}px;height:${cardH}px">${inner}</div>`;
+  };
+  const rowGap = rows >= 2 ? lift : 0;
+  const height = lift + rows * cardH + Math.max(0, rows - 1) * rowGap;
+  if (rows >= 2 && n > 13) {
+    const n1 = Math.ceil(n / 2);
+    return `<div class="g-abs chand chand-multi" id="chand" style="--lift:${lift}px;--handH:${height}px;width:${avail}px;height:${height}px">${rowOf(cards.slice(0, n1), 0)}${rowOf(cards.slice(n1), n1)}</div>`;
+  }
   let step = n > 1 ? Math.min(w * maxF, (avail - w) / (n - 1)) : 0;
   if (n > 1 && minF && step < w * minF) step = w * minF;
-  return `<div class="g-abs chand" id="chand" style="width:${w + step * Math.max(0, n - 1)}px">${cards.map((c, i) => cardHTML(c, w, (CS.sel.has(c) ? 'sel ' : '') + (opts.dim && opts.dim(c) ? 'dim' : ''), `data-c="${c}" style="--w:${w}px;left:${i * step}px"`)).join('')}</div>`;
+  const width = w + step * Math.max(0, n - 1);
+  return `<div class="g-abs chand" id="chand" style="width:${width}px;height:${height}px;--lift:${lift}px;--handH:${height}px">${cards.map((c, i) => cardHTML(c, w, (CS.sel.has(c) ? 'sel ' : '') + (opts.dim && opts.dim(c) ? 'dim' : ''), `data-c="${c}" style="--w:${w}px;--lift:${lift}px;left:${i * step}px;z-index:${i}"`)).join('')}</div>`;
 }
-// v5.21：大老二手牌約 1.5×（寬螢幕 1.58×）；步距保證角標（點數＋花色）完整露出
+// v5.31：手牌加大、用滿寬、減少重疊；直向必要時分兩排。上抬距離約牌高 36%。
 function b2HandOpts(n) {
-  const target = Math.round(62 * 1.5); // 93；全視窗同一設計座標，避免 844×390 溢高
-  const avail = Math.max(520, STW - 330);
-  const minF = 0.26;
-  let w = target;
-  if (n > 1) {
-    const fit = Math.floor(avail / (1 + minF * (n - 1)));
-    w = Math.min(w, Math.max(Math.round(62 * 1.4), fit));
-  }
-  return { w, avail, minFrac: minF, maxFrac: 0.48 };
+  n = n || 13;
+  const port = typeof document !== 'undefined' && document.body && document.body.classList.contains('b2-portrait');
+  const H = port ? (parseInt((document.documentElement.style.getPropertyValue('--H') || '0'), 10) || 1169) : 540;
+  const side = port ? 16 : 20;
+  const avail = Math.max(port ? 500 : 700, (typeof STW === 'number' ? STW : 960) - side * 2);
+  const rows = (port && n > 13) ? 2 : 1;
+  const nRow = rows === 2 ? Math.ceil(n / 2) : Math.max(n, 1);
+  const minStrip = 30; // 角標（點數＋花色）至少露出
+  const liftRatio = 0.36;
+  const tableMin = port ? 280 : 190;
+  const handBudget = Math.max(200, H - tableMin - (port ? 16 : 8));
+  const maxH = Math.floor((handBudget - (rows - 1) * 10) / (rows + liftRatio));
+  const maxW = Math.floor(maxH * 57 / 87);
+  const fitW = nRow > 1 ? Math.floor(avail - minStrip * (nRow - 1)) : avail;
+  const target = port ? 136 : 122;
+  let w = Math.min(target, maxW, fitW);
+  w = Math.max(w, port ? 88 : 108);
+  if (nRow > 1 && w + minStrip * (nRow - 1) > avail) w = Math.max(72, Math.floor(avail - minStrip * (nRow - 1)));
+  const cardH = Math.round(w * 87 / 57);
+  const lift = Math.round(cardH * liftRatio);
+  return { w, avail, minFrac: minStrip / w, maxFrac: 0.92, rows, lift, cardH };
 }
-function b2PileW() { return Math.round(42 * 1.5); } // 63
+function b2PileW() { return Math.round(42 * 1.72); } // 72，桌面出牌略加大
 
 function pileHTML(p) {
   const a = CS.acts[p]; if (!a) return '';
@@ -8033,7 +8126,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.29</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.31</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -9776,9 +9869,60 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
       return r;
     };
   }
+  function tryFitB2() {
+    const playing = typeof CS !== 'undefined' && CS.game === 'b2';
+    const shown = playing && !!document.querySelector('#cgame.on');
+    const port = innerHeight > innerWidth && innerWidth <= 820;
+    const stage = document.getElementById('stage');
+    const rot = document.getElementById('rotate');
+    if (shown && port) {
+      if (rot) rot.style.setProperty('display', 'none', 'important');
+      const k = innerWidth / 540;
+      const H = Math.max(840, Math.round(innerHeight / k));
+      try { STW = 540; } catch (e) {}
+      const r = document.documentElement.style;
+      r.setProperty('--k', k);
+      r.setProperty('--W', '540px');
+      r.setProperty('--H', H + 'px');
+      if (stage) { stage.style.height = H + 'px'; stage.classList.add('b2port'); }
+      document.body.classList.add('b2-portrait');
+      return true;
+    }
+    document.body.classList.remove('b2-portrait');
+    if (stage) { stage.style.height = ''; stage.classList.remove('b2port'); }
+    if (rot) rot.style.removeProperty('display');
+    return false;
+  }
+  function syncHandVars() {
+    const cg = document.querySelector('#cgame');
+    const ch = document.querySelector('#chand');
+    if (!cg || !ch) return;
+    const h = ch.style.getPropertyValue('--handH') || ch.style.height;
+    const l = ch.style.getPropertyValue('--lift');
+    if (h) cg.style.setProperty('--handH', h);
+    if (l) cg.style.setProperty('--lift', l);
+  }
+  if (typeof fit === 'function' && !fit._b2hook) {
+    const _fit = fit;
+    fit = function () {
+      if (tryFitB2()) return;
+      return _fit.apply(this, arguments);
+    };
+    fit._b2hook = true;
+  }
+  if (typeof show === 'function' && !show._b2hook) {
+    const _show = show;
+    show = function (id) {
+      const r = _show.apply(this, arguments);
+      try { if (typeof fit === 'function') fit(); } catch (e) {}
+      return r;
+    };
+    show._b2hook = true;
+  }
   if (typeof renderC === 'function') {
     const _rc = renderC;
     renderC = function () {
+      try { tryFitB2(); } catch (e) {}
       const r = _rc.apply(this, arguments);
       try {
         const cg = document.querySelector('#cgame');
@@ -9786,6 +9930,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
           decorate(cg.querySelector('.ctable'), '貳');
           fanArc();
           comboChip();
+          syncHandVars();
           renderPickBar();
           if (CS._deal522) { cg.classList.add('deal522'); [...cg.querySelectorAll('.chand .pc')].forEach((el, i) => el.style.setProperty('--i522', i)); CS._deal522 = false; }
           maybeHint();
@@ -10157,8 +10302,10 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   const mo = new MutationObserver(() => { try { if (document.querySelector('#panel .srow')) injectSettings(); } catch (e) {} });
   if (document.querySelector('#modal')) mo.observe(document.querySelector('#modal'), { childList: true, subtree: true });
 
-  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn, clearSel, renderPickBar };
+  window.__p522 = { tryPlay, tryPass, smartTap, autoOn, gestOn, clearSel, renderPickBar, tryFitB2 };
 })();
+
+
 
 
 
@@ -10655,7 +10802,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.30'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.31'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
