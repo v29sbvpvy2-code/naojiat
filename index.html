@@ -77,6 +77,12 @@ html,body{margin:0;height:100%;overflow:hidden;background:#06161a;color:var(--cr
   linear-gradient(160deg,#0a2a30 0%,#071b20 55%,#050f14 100%)}
 #bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(#000,transparent 85%)}
 #stage{position:fixed;left:50%;top:50%;width:var(--W,960px);height:540px;transform:translate(-50%,-50%) scale(var(--k));transform-origin:center}
+#orient{position:fixed;inset:0;overflow:hidden;z-index:0}
+/* v5.33：直向手機把遊戲根節點轉 90°，一進去就是橫向畫面（iOS 不吃 manifest orientation） */
+html.force-land #orient{inset:auto;left:50%;top:50%;width:100vh;height:100vw;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center center;overflow:hidden}
+html.force-land #rotate{display:none !important}
+html.force-land .fxcv{width:100%;height:100%}
+
 .screen{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease;transform:scale(.985)}
 .screen.on{opacity:1;pointer-events:auto;transform:none}
 button{font-family:var(--ui);cursor:pointer;border:0;color:inherit}
@@ -2771,6 +2777,7 @@ body.b2-portrait #cgame[data-game=b2] .bfan.f3{left:8px;top:260px}
 </style>
 </head>
 <body>
+<div id="orient">
 <div id="bg"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe48a"/><stop offset="1" stop-color="#f0a020"/></linearGradient>
@@ -2796,8 +2803,9 @@ body.b2-portrait #cgame[data-game=b2] .bfan.f3{left:8px;top:260px}
   <div class="modal" id="modal"><div class="panel glass" id="panel"></div></div>
 </div>
 <div id="rotate"><svg viewBox="0 0 64 64" fill="none" stroke="#1d1a2e" stroke-width="3.5" stroke-linejoin="round"><rect x="20" y="6" width="24" height="44" rx="5"/><circle cx="32" cy="43" r="2" fill="#1d1a2e"/></svg>請橫放手機<small>本遊戲為橫向畫面設計</small></div>
+</div>
 
-<script>window.__VER = 'v5.32';</script>
+<script>window.__VER = 'v5.33';</script>
 <script>
 // ==ENGINE START==
 const MJ = (() => {
@@ -4991,16 +4999,84 @@ window.NJS = (function () {
     t: { addCoins: (c) => addCoins(c), hand: (d) => { WAL.coins += d; add('hand', d, null, 'mj'); save(); refreshWallet(); } } };
 })();
 
-// ---------- 縮放 ----------
+// ---------- 縮放（v5.33：直向手機以 CSS 旋轉成橫向，fit 用對調後的邏輯寬高） ----------
 let STW = 960;
+function isPhonePort() {
+  return innerHeight > innerWidth && Math.min(innerWidth, innerHeight) <= 820;
+}
+function isForcedLand() {
+  return document.documentElement.classList.contains('force-land');
+}
+function viewSize() {
+  if (isForcedLand()) return { w: innerHeight, h: innerWidth };
+  return { w: innerWidth, h: innerHeight };
+}
+function toOrient(x, y) {
+  if (!isForcedLand()) return { x, y };
+  const vw = innerWidth, vh = innerHeight, cx = vw / 2, cy = vh / 2;
+  return { x: (y - cy) + vh / 2, y: -(x - cx) + vw / 2 };
+}
+function viewDelta(dx, dy) {
+  if (!isForcedLand()) return { dx, dy };
+  return { dx: dy, dy: -dx };
+}
+function syncOrient() {
+  const on = isPhonePort();
+  const html = document.documentElement;
+  if (html.classList.contains('force-land') !== on) html.classList.toggle('force-land', on);
+  const el = document.getElementById('orient');
+  if (el) {
+    if (on) { el.style.width = innerHeight + 'px'; el.style.height = innerWidth + 'px'; }
+    else { el.style.width = ''; el.style.height = ''; }
+  }
+  return on;
+}
+function tryLockLandscape() {
+  try {
+    const el = document.documentElement;
+    const fs = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (fs && !document.fullscreenElement && !document.webkitFullscreenElement) {
+      const p = fs.call(el);
+      if (p && typeof p.then === 'function') p.catch(function () {});
+    }
+  } catch (e) {}
+  try {
+    if (screen.orientation && typeof screen.orientation.lock === 'function') {
+      screen.orientation.lock('landscape').catch(function () {});
+    }
+  } catch (e) {}
+}
 function fit() {
-  let k = innerHeight / 540, W = innerWidth / k;
-  if (W < 960) { k = innerWidth / 960; W = 960; }
+  syncOrient();
+  const { w: vw, h: vh } = viewSize();
+  let k = vh / 540, W = vw / k;
+  if (W < 960) { k = vw / 960; W = 960; }
   STW = Math.min(Math.round(W), 1280);
   const r = document.documentElement.style; r.setProperty('--k', k); r.setProperty('--W', STW + 'px');
   try { if (G.game) renderGame(); } catch (e) {}
 }
 addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 200));
+try { if (screen.orientation) screen.orientation.addEventListener('change', () => setTimeout(fit, 50)); } catch (e) {}
+addEventListener('fullscreenchange', () => setTimeout(fit, 50));
+try { if (window.visualViewport) visualViewport.addEventListener('resize', () => fit()); } catch (e) {}
+window.__orient = { sync: syncOrient, viewSize, toOrient, viewDelta, tryLock: tryLockLandscape, isForced: isForcedLand };
+(function hookOrientMount() {
+  const body = document.body;
+  if (!body || body.__orientHooked) return;
+  body.__orientHooked = true;
+  const rootOf = () => document.getElementById('orient') || body;
+  const ap = body.appendChild;
+  body.appendChild = function (n) {
+    const r = rootOf();
+    return (r !== body && n && n.nodeType === 1) ? r.appendChild(n) : ap.call(this, n);
+  };
+  const ins = body.insertAdjacentHTML;
+  body.insertAdjacentHTML = function (pos, html) {
+    const r = rootOf();
+    if (r !== body && (pos === 'beforeend' || pos === 'afterbegin')) return r.insertAdjacentHTML(pos, html);
+    return ins.call(this, pos, html);
+  };
+})();
 
 // ---------- 音效與背景音樂 ----------
 let AC = null, bgmTimer = null, bgmGain = null;
@@ -5049,7 +5125,7 @@ function bgmUpdate() {
   } catch (e) {}
 }
 let gestured = false;
-addEventListener('pointerdown', () => { if (!gestured) { gestured = true; bgmUpdate(); } }, { capture: true });
+addEventListener('pointerdown', () => { try { tryLockLandscape(); } catch (e) {} if (!gestured) { gestured = true; bgmUpdate(); } }, { capture: true });
 
 // ---------- 介面工具 ----------
 function toast(msg, ms = 2200) {
@@ -5231,7 +5307,8 @@ function flyTile(t, from, toEl, w, ms = 300, onland) {
 function particles(opts = {}) {
   if (!ANIM()) return;
   try {
-    const cv = document.createElement('canvas'), W = innerWidth, H = innerHeight, dpr = Math.min(LITE() ? 1 : 2, devicePixelRatio || 1);
+    const vs = (typeof viewSize === 'function') ? viewSize() : { w: innerWidth, h: innerHeight };
+    const cv = document.createElement('canvas'), W = vs.w, H = vs.h, dpr = Math.min(LITE() ? 1 : 2, devicePixelRatio || 1);
     cv.className = 'fxcv'; cv.width = W * dpr; cv.height = H * dpr; document.body.appendChild(cv);
     const c = cv.getContext('2d'); if (!c) { cv.remove(); return; } c.scale(dpr, dpr);
     const small = Math.min(W, H) < 500 || LITE(), K = small ? .6 : 1;
@@ -5277,9 +5354,9 @@ function coinFlow(fromEls, toEl, n = 6) {
     const tr = toEl.getBoundingClientRect(), tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
     fromEls.forEach((fe, k) => { if (!fe) return; const fr = fe.getBoundingClientRect();
       for (let i = 0; i < n; i++) { const c = document.createElement('i'); c.className = 'fxcoin'; const sx = fr.left + fr.width / 2 + (Math.random() - .5) * 30, sy = fr.top + fr.height / 2;
-        c.style.left = sx + 'px'; c.style.top = sy + 'px'; document.body.appendChild(c);
+        const sPos = (typeof toOrient === 'function') ? toOrient(sx, sy) : { x: sx, y: sy }; const tPos = (typeof toOrient === 'function') ? toOrient(tx, ty) : { x: tx, y: ty }; c.style.left = sPos.x + 'px'; c.style.top = sPos.y + 'px'; (document.getElementById('orient') || document.body).appendChild(c);
         const sw = (Math.random() - .5) * 80, up = 50 + Math.random() * 50;
-        const a = c.animate([{ transform: 'translate(0,0) scale(.5) rotateY(0)', opacity: 0 }, { transform: `translate(${(tx - sx) * .35 + sw}px,${(ty - sy) * .35 - up}px) scale(1.15) rotateY(360deg)`, opacity: 1, offset: .45 }, { transform: `translate(${tx - sx}px,${ty - sy}px) scale(.7) rotateY(900deg)`, opacity: .95 }], { duration: 780, delay: k * 160 + i * 70, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'backwards' });
+        const a = c.animate([{ transform: 'translate(0,0) scale(.5) rotateY(0)', opacity: 0 }, { transform: `translate(${(tPos.x - sPos.x) * .35 + sw}px,${(tPos.y - sPos.y) * .35 - up}px) scale(1.15) rotateY(360deg)`, opacity: 1, offset: .45 }, { transform: `translate(${tPos.x - sPos.x}px,${tPos.y - sPos.y}px) scale(.7) rotateY(900deg)`, opacity: .95 }], { duration: 780, delay: k * 160 + i * 70, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'backwards' });
         a.onfinish = () => { c.remove(); try { toEl.classList.remove('coinhit'); void toEl.offsetWidth; toEl.classList.add('coinhit'); } catch (e) {} }; setTimeout(() => c.remove(), 2500); }
     });
     setTimeout(() => sfx('coins'), 200);
@@ -8163,7 +8240,7 @@ renderHome = function () {
     ${Object.entries(CATS).map(([k, [nm, list]]) => `<div class="catm glass" data-cat="${k}"><div class="cmh"><b>${nm}</b><button class="cmx" aria-label="關閉">✕</button></div><div class="games">${list.map(gc).join('')}${k === 'mj' ? '<button class="hbtn" data-go="lobby"><b>🀄 牌局大廳</b><small>找桌・觀戰</small></button>' : ''}</div></div>`).join('')}
     <div class="hrow2 pills52"><button class="pill52" data-go="friendroom"><i>🏠</i>好友房</button><button class="pill52" data-go="club"><i>🏯</i>公會</button><button class="shop52" data-go="shop" data-arg="cards">${MASCOT_SVG}<b>商<br>城</b><em>NEW</em></button></div>
     <div class="online52"><button class="wbtn" data-open="world" aria-label="世界頻道">💬</button><span class="srv52">台灣一服 ${sigHTML()}</span><span>在線玩家: <b id="lonl">${fmt(LIVE.online)}</b></span><button class="wbtn" data-go="chat" aria-label="聊天">✉</button></div>
-    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.32</span>`;
+    ${LS.get('giftDone', false) ? '' : '<button class="gift52" data-open="gift">🎁 新手好禮</button>'}<button class="gift52" data-open="redeem">🎟️ 兌換碼</button><button class="gift52 inst526" data-open="install">📲 安裝到手機</button><span class="hver">v5.33</span>`;
   const h = $('#home');
   h.querySelectorAll('.cat52').forEach(b => b.onclick = e => { e.stopPropagation(); beep('tap'); openCat(b.dataset.cat); });
   h.querySelectorAll('.cmx').forEach(b => b.onclick = e => { e.stopPropagation(); openCat(null); });
@@ -8180,7 +8257,7 @@ renderHome = function () {
   const ch = h.querySelector('.lchar');
   ch.addEventListener('pointerdown', e => { ch.classList.remove('tap52'); void ch.offsetWidth; ch.classList.add('tap52'); bubble52(pick(TAPS52)); }, true);
   ch.addEventListener('pointerdown', e => { if (!ANIM() || CFG.lite) return; for (let i = 0; i < 9; i++) { const sp = document.createElement('i'); sp.className = 'spk58'; const a = Math.PI * 2 * i / 9 + Math.random() * .4, r = 34 + Math.random() * 30;
-    sp.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--sx:${(Math.cos(a) * r).toFixed(0)}px;--sy:${(Math.sin(a) * r - 10).toFixed(0)}px;animation-delay:${i * 12}ms`; document.body.appendChild(sp); setTimeout(() => sp.remove(), 900); } }, true);
+    const spP = (typeof toOrient === 'function') ? toOrient(e.clientX, e.clientY) : { x: e.clientX, y: e.clientY }; sp.style.cssText = `left:${spP.x}px;top:${spP.y}px;--sx:${(Math.cos(a) * r).toFixed(0)}px;--sy:${(Math.sin(a) * r - 10).toFixed(0)}px;animation-delay:${i * 12}ms`; (document.getElementById('orient') || document.body).appendChild(sp); setTimeout(() => sp.remove(), 900); } }, true);
   setTimeout(() => bubble52(`${esc(ACC.nick)}，歡迎回到鬧熱牌館！`), 700);
 };
 setInterval(() => { const c = document.querySelector('#home .lchar'); if (!c || CFG.lite) return; c.classList.remove('wave52'); void c.offsetWidth; c.classList.add('wave52'); if (Math.random() < .4) bubble52(pick(TAPS52)); }, 9000);
@@ -9986,7 +10063,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   function tryFitB2() {
     const playing = typeof CS !== 'undefined' && CS.game === 'b2';
     const shown = playing && !!document.querySelector('#cgame.on');
-    const port = innerHeight > innerWidth && innerWidth <= 820;
+    const port = !document.documentElement.classList.contains('force-land') && innerHeight > innerWidth && innerWidth <= 820;
     const stage = document.getElementById('stage');
     const rot = document.getElementById('rotate');
     if (shown && port) {
@@ -10316,7 +10393,9 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
   }
   function onMove(e) {
     if (!ptr) return;
-    const dx = e.clientX - ptr.x, dy = e.clientY - ptr.y, dist = Math.hypot(dx, dy);
+    const rawDx = e.clientX - ptr.x, rawDy = e.clientY - ptr.y;
+    const vd = (typeof viewDelta === 'function') ? viewDelta(rawDx, rawDy) : { dx: rawDx, dy: rawDy };
+    const dx = vd.dx, dy = vd.dy, dist = Math.hypot(dx, dy);
     if (dist > 10) { ptr.moved = true; if (longT) { clearTimeout(longT); longT = null; } }
     if (dist < 16) return;
     const vert = Math.abs(dy) > Math.abs(dx) * 1.25;
@@ -10338,7 +10417,8 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
     if (longT) { clearTimeout(longT); longT = null; }
     ghost(null);
     if (!ptr) return;
-    const dx = e.clientX - ptr.x, dy = e.clientY - ptr.y;
+    const rawUp = (typeof viewDelta === 'function') ? viewDelta(e.clientX - ptr.x, e.clientY - ptr.y) : { dx: e.clientX - ptr.x, dy: e.clientY - ptr.y };
+    const dx = rawUp.dx, dy = rawUp.dy;
     const vert = Math.abs(dy) > Math.abs(dx) * 1.2;
     if (ptr.gest === 'range') { didGest = true; if (typeof renderC === 'function') renderC(); }
     else if (ptr.gest === 'up' || (vert && dy < -48 && CS.sel.size)) { didGest = true; tryPlay(); }
@@ -10362,10 +10442,11 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
       g = document.createElement('div'); g.className = 'ghost522';
       const w = 48;
       g.innerHTML = [...CS.sel].slice(0, 5).map((c, i) => (typeof cardHTML === 'function' ? cardHTML(c, w, '', `style="--w:${w}px;display:inline-block;margin-left:${i ? -18 : 0}px"`) : '')).join('');
-      document.body.appendChild(g);
+      (document.getElementById('orient') || document.body).appendChild(g);
     }
-    g.style.left = (e.clientX - 30) + 'px';
-    g.style.top = (e.clientY - 40) + 'px';
+    const gp = (typeof toOrient === 'function') ? toOrient(e.clientX, e.clientY) : { x: e.clientX, y: e.clientY };
+    g.style.left = (gp.x - 30) + 'px';
+    g.style.top = (gp.y - 40) + 'px';
   }
 
   const host = () => document.getElementById('cgame') || document;
@@ -11004,7 +11085,7 @@ renderHome = function () { const r = _rh520.apply(this, arguments); try { lobby5
 
   function ver525() {
     document.querySelectorAll('#home .hver, #game .rinfo .ver').forEach(e => {
-      { const V = window.__VER || 'v5.32'; if (e && e.textContent !== V) e.textContent = V; }
+      { const V = window.__VER || 'v5.33'; if (e && e.textContent !== V) e.textContent = V; }
     });
   }
   if (typeof renderHome === 'function') {
